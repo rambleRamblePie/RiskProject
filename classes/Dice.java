@@ -5,8 +5,7 @@ class Dice {
 	private int faceValue;
 	
 	public void roll() {
-		faceValue = (int) 1 + Math.floor(Math.random() * 6);
-		if (faceValue)
+		faceValue = 1 + (int) Math.floor(Math.random() * 6);
 	}
 	
 	public int getFaceValue() {
