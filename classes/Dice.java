@@ -14,6 +14,9 @@ class Dice {
 	
 	
 	/*
+	// javac Dice.java
+	// java * ???
+	
 	public static void main (String args[]) {
 		Dice d = new Dice();
 		

@@ -1,9 +1,15 @@
 class Territory {
 	
-	private mapDataTypePlaceholder adjacentTerritories;
+	private String name;
+	private mapDataTypePlaceholder<Territory> adjacentTerritories;
 	private int ID;
 	private int continent; // the continent ID that this territory belongs to
 		// or maybe use a function continentInstance.getParentContinent()?
+	
+	private User occupyingUser;
+	private int armyPower;
+	
+	
 	
 	public int getID () { return ID; }
 	
@@ -12,5 +18,6 @@ class Territory {
 		return null;
 	}
 	
+	// missing more methods
 	
 }
