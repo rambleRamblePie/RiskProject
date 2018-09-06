@@ -5,7 +5,7 @@ class World {
 	private ArrayList<Continent> continents;
 	
 	World() {
-		// maybe read from a file instead
+		// maybe read continents from a file instead
 		continents.add(new Continent("North America", 5));
 		continents.add(new Continent("South America", 2));
 		continents.add(new Continent("Europe", 5));
@@ -15,7 +15,7 @@ class World {
 	}
 	
 	public getContinentByIndex(int i) {
-		//throw if not a valid index?
+		//throw if not a valid index? handle it later
 		return continents.get(i);
 	}
 	

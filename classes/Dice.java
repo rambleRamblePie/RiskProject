@@ -13,10 +13,14 @@ class Dice {
 	}
 	
 	
-	/*
-	// javac Dice.java
-	// java * ???
 	
+}
+
+
+// javac Dice.java
+// java *.class
+/*
+class test {
 	public static void main (String args[]) {
 		Dice d = new Dice();
 		
@@ -24,8 +28,6 @@ class Dice {
 			d.roll();
 			System.out.println("value: " + d.getFaceValue());
 		}
-		
-		return;
 	}
-	*/
 }
+*/

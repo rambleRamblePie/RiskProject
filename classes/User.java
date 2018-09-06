@@ -6,7 +6,7 @@ class User {
 	
 	public void Action(); // Move, Battle
 	//Not exactly sure how this function should look
-	// Alex: Maybe use an enum?
+	// Maybe use an enum as an argument to select different actions?
 	
 	public User(String n, int startingArmy) {
 		username = n;
@@ -18,8 +18,25 @@ class User {
 	public void setTurnPosition(int pos) {
 		turnPosition = pos;
 	}
-	
 	public int getTurnPosition() {
 		return turnPosition;
+	}
+	
+	public int addArmyPower(int p) {
+		if (p < 0)
+			throw new java.lang.IllegalArgumentException();
+		
+		armyPower += p;
+		return armyPower;
+	}
+	public int removeArmyPower(int p) {
+		if (p < 0)
+			throw new java.lang.IllegalArgumentException();
+		
+		if (p > armyPower)
+			armyPower = 0;
+		else
+			armyPower -= p;
+		return armyPower;
 	}
 }
