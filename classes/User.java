@@ -4,7 +4,7 @@ class User {
 	private int score;
 	private int armyPower;
 	
-	public void Action(); // Move, Battle
+	public void Action() {} // Move, Battle
 	//Not exactly sure how this function should look
 	// Maybe use an enum as an argument to select different actions?
 	

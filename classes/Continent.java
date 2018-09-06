@@ -8,7 +8,7 @@ class Continent {
 	private int bonusArmy;
 	
 	
-	Continent(String n, int b = 5) {
+	Continent(String n, int b) {
 		name = n;
 		bonusArmy = b;
 		// need to add territories, probably from a file

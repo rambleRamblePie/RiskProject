@@ -14,12 +14,13 @@ class World {
 		continents.add(new Continent("Austrailia", 2));
 	}
 	
-	public getContinentByIndex(int i) {
+	public Continent getContinentByIndex(int i) {
 		//throw if not a valid index? handle it later
 		return continents.get(i);
 	}
 	
 	public boolean checkForGameEnd() {
 		// game ends when only one player has armies on the board
+		throw new java.lang.UnsupportedOperationException();
 	}
 }

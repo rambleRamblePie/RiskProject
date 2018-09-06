@@ -3,9 +3,9 @@ import java.util.*;
 class Territory {
 	
 	private String name;
-	private mapDataTypePlaceholder<Territory> adjacentTerritories;
+	private ArrayList<Territory> adjacentTerritories;
 	// private int ID;
-	private int continent;
+	private Continent continent;
 	
 	private User occupyingUser;
 	private int armyPower;
@@ -22,11 +22,10 @@ class Territory {
 	}
 	
 	
-	public int getID () { return ID; }
+	// public int getID () { return ID; }
 	
 	public ArrayList<Territory> getAdjacentTerritories() {
 		throw new java.lang.UnsupportedOperationException();
-		return null;
 	}
 	
 	public void setOccupyingUser(User user) {

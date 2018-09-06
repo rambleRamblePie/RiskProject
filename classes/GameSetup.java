@@ -1,4 +1,4 @@
-import java.util.*
+import java.util.*;
 
 class GameSetup {
 	
@@ -7,8 +7,6 @@ class GameSetup {
 	private ArrayList<User> players;
 	
 	GameSetup(int nPlayers) {
-		if (nPlayers)
-		
 		numPlayers = nPlayers;
 		switch(numPlayers) {
 			case 2:

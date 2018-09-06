@@ -1,17 +1,19 @@
 public interface TroopType {
-    int power;
-    int getPower();
+	// int power; java interfaces do not allow this
+	public int getPower();
 }
 
-class Infantry {
-    final static int power = 1;
+class Infantry implements TroopType {
+	final static int power = 1;
+	public int getPower() { return power; }
 }
 
-class Cavalry {
-    final static int power = 5;
+class Cavalry implements TroopType {
+	final static int power = 5;
+	public int getPower() { return power; }
 }
 
-class Artillery {
-    final static int power = 10;
-
+class Artillery implements TroopType {
+	final static int power = 10;
+	public int getPower() { return power; }
 }
