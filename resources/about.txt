@@ -1,0 +1,3 @@
+this directory should include data about continents, territories, cards, etc.
+
+sample: file.open("../resources/adjacent territories.dat")
