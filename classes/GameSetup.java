@@ -6,7 +6,7 @@ class GameSetup {
 	private int startingArmyPowerPerPlayer;
 	private ArrayList<User> players;
 	
-	GameSetup(int nPlayers) {
+	GameSetup(int nPlayers, String[] playerNames) {
 		numPlayers = nPlayers;
 		switch(numPlayers) {
 			case 2:
@@ -29,7 +29,8 @@ class GameSetup {
 		
 		players = new ArrayList<User>();
 		for (int i = 0; i < numPlayers; i++) {
-			players.add(new User("placeholder name", startingArmyPowerPerPlayer));
+			//System.out.println(playerNames[i]);
+			players.add(new User(playerNames[i], startingArmyPowerPerPlayer));
 			// need to prompt for name...
 			// need to determine player positions by dice roll
 		}
