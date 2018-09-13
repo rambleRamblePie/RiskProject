@@ -4,9 +4,22 @@ class User {
 	private int score;
 	private int armyPower;
 	
-	public void Action() {} // Move, Battle
-	//Not exactly sure how this function should look
-	// Maybe use an enum as an argument to select different actions?
+	public enum Actions {
+		MOVE, ATTACK, PLACE_ARMY
+	}
+	
+	public void Action(enum Action, Continent c, Territory t) {
+		switch (Actions){
+			case MOVE:
+				System.out.println(username + " is Moving __ units from __ to __");
+			case ATTACK:
+				System.out.println(username + " is Attacking __ from __ with __ units");
+			case PLACE_ARMY:
+				System.out.println(username + " is placing an army at__");
+
+
+		}
+	} // Move, Battle, Place Army
 	
 	public User(String n, int startingArmy) {
 		username = n;
