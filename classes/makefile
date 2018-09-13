@@ -1,4 +1,4 @@
-JCLOC = compiled\ classes/
+JCLOC = "compiled classes/"
 JFLAGS = -source 8 -d $(JCLOC)
 JC = javac
 
