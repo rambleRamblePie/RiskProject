@@ -23,4 +23,13 @@ class World {
 		// game ends when only one player has armies on the board
 		throw new java.lang.UnsupportedOperationException();
 	}
+	
+	// this will be used for the GameSetup class
+	// for determining if there are 
+	public ArrayList<Territories> getUnoccupied() {
+		
+		
+		
+		return null;
+	}
 }

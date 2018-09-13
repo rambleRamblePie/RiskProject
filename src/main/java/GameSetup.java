@@ -52,6 +52,7 @@ class GameSetup {
 			}
 			die.remove();
 		}
+		// instead, player 1 goes first
 		
 		// take turns placing armies on the board
 		while(armyLeftToPlaceTotal > 0) {
