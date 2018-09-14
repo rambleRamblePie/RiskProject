@@ -42,6 +42,10 @@ class Territory {
 		return armyPower;
 	}
 	
+	public String getTerritory(){
+		return name;
+	}
+	
 	public Continent getContinent() {
 		return continent;
 	}
