@@ -8,8 +8,8 @@ class User {
 		MOVE, ATTACK, PLACE_ARMY
 	}
 	
-	public void Action(enum Action, Continent c, Territory t) {
-		switch (Actions){
+	public void Action(Actions a, Continent c) {
+		switch (a){
 			case MOVE:
 				System.out.println(username + " is Moving __ units from __ to __");
 				//remove army power from one territory
@@ -60,5 +60,8 @@ class User {
 		else
 			armyPower -= p;
 		return armyPower;
+	}
+	public String getUsername() {
+		return username;
 	}
 }
