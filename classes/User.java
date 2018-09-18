@@ -14,6 +14,7 @@ class User {
 				System.out.println(username + " is Moving __ units from __ to __");
 				//remove army power from one territory
 				//add to an adjacent territory
+				//
 			case ATTACK:
 				System.out.println(username + " is Attacking __ from __ with __ units");
 				//get number of attacking armies, and defending armies
@@ -23,6 +24,7 @@ class User {
 				//if there are no defending troops on attacked territory, change ownership
 			case PLACE_ARMY:
 				System.out.println(username + " is placing an army at__");
+				//this is a comment
 
 
 		}
