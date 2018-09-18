@@ -2,11 +2,13 @@ import java.util.*;
 
 class GameSetup {
 	
+	private World world;
 	private int numPlayers;
 	private int startingArmyPowerPerPlayer;
 	private ArrayList<User> players;
 	
 	GameSetup(int nPlayers, ArrayList<String> names) {
+		world = new World();
 		numPlayers = nPlayers;
 		int armyLeftToPlaceTotal;
 		switch(numPlayers) {
@@ -36,6 +38,15 @@ class GameSetup {
 			players.add(new User(names.get(i), startingArmyPowerPerPlayer));
 		}
 		
+		determineTurns();
+		placeBeginningArmies();
+	}
+	
+	public World getWorldInstance() {
+		return world;
+	}
+	
+	private void determineTurns() {
 		// determine turn positions of players
 		/*
 		ArrayList<Dice> die = new ArrayList<Dice>();
@@ -55,13 +66,34 @@ class GameSetup {
 		}
 		*/
 		// instead, player 1 goes first
-		
-		// take turns placing armies on the board
-		while(armyLeftToPlaceTotal > 0) {
-			
-		}
-		
 	}
 	
+	private void placeBeginningArmies() {
+		// take turns placing armies on the board
+		int turn = 0;
+		boolean successfulArmyPlacement = false;
+		Territory selectedTerritory;
+		Player currentPlayer;
+		while(armyLeftToPlaceTotal > 0) {
+			currentPlayer = players.get(turn);
+			selectedTerritory = world.getTerritory(ui.prompt(currentPlayer.getUsername()));
+			
+			// world is empty
+			if () {
+				
+			} else if (selectedTerritory.getOccupyingUser() != currentPlayer) {
+				// display territory occupied
+				successfulArmyPlacement = false
+			} else if () // ???
+			
+			if (!successfulArmyPlacement) {
+				continue;
+			}
+			
+			turn += 1;
+			turn %= numPlayers;
+			armyLeftToPlaceTotal--;
+		}
+	}
 	
 }
