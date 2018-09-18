@@ -6,7 +6,7 @@ https://docs.google.com/document/d/1d5d2bB72MDlnfXZmAud7WaaHd31uRfvRchUe9y6lsEA/
 maven guide: https://spring.io/guides/gs/maven/
 
 ```bash
-mvn package
+mvn test
 ```
 
 
