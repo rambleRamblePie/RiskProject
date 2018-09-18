@@ -26,7 +26,7 @@ class World {
 	
 	// this will be used for the GameSetup class
 	// for determining if there are 
-	public ArrayList<Territories> getUnoccupied() {
+	public ArrayList<Territory> getUnoccupied() {
 		
 		
 		

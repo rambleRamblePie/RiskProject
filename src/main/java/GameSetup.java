@@ -33,10 +33,11 @@ class GameSetup {
 		// create players
 		players = new ArrayList<User>();
 		for (int i = 0; i < numPlayers; i++) {
-			players.add(new User(names[i], startingArmyPowerPerPlayer));
+			players.add(new User(names.get(i), startingArmyPowerPerPlayer));
 		}
 		
 		// determine turn positions of players
+		/*
 		ArrayList<Dice> die = new ArrayList<Dice>();
 		for (int i = 0; i < numPlayers; i++) {
 			die.add(new Dice());
@@ -52,6 +53,7 @@ class GameSetup {
 			}
 			die.remove();
 		}
+		*/
 		// instead, player 1 goes first
 		
 		// take turns placing armies on the board
