@@ -14,6 +14,6 @@ public class Deck {
 
     need an add function when cards are returned
 
-    need a suffle function
+    need a shuffle function
      */
 }
