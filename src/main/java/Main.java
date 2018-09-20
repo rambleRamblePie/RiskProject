@@ -14,5 +14,6 @@ public class Main {
         }
         
         //GameSetup game = new GameSetup(numPlayers, playerNames);
+		// game.playGame(); or create another class to actually handle the game
     }
 }

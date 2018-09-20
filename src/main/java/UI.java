@@ -1,24 +1,28 @@
-class UI {
-	/*
+// singleton
+
+// this is terminal-based for now
+// GUI perhaps later
+enum UI {
+	INSTANCE;
+	
 	UI() {
-		system.out.prinln("UI initiated");
+		System.out.prinln("UI initiated");
 	}
 	
 	String prompt(String p, ArrayList<String> options = null) {
-		system.out.println(p);
+		System.out.println(p);
 		
 		return null;
 	}
 	
 	void display(String s) {
-		system.out.println(s);
+		System.out.println(s);
 	}
 	
 	void display(ArrayList<String> lines) {
 		for (line : lines) {
-			system.out.println(line);
+			System.out.println(line);
 		}
 	}
-	*/
 	
 }
