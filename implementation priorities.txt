@@ -1,0 +1,19 @@
+Ordered by implementation priority
+
+Important for core functionality:
+	GameSetup
+	World
+	User
+	Dice (implemented)
+	Continent
+	Territory
+
+
+Need to do later:
+	Cards
+	Gameplay (redundant)	
+
+Not necessary for project:
+	UI
+	TroopType
+	Army (redundant)?
