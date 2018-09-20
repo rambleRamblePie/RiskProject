@@ -28,8 +28,9 @@ class Territory {
 		throw new java.lang.UnsupportedOperationException();
 	}
 	
-	public void setOccupyingUser(User user) {
+	public void setOccupyingUser(User user, int power) {
 		occupyingUser = user;
+		armyPower = power;
 	}
 	public User getOccupyingUser() {
 		return occupyingUser;
@@ -50,5 +51,9 @@ class Territory {
 	
 	public Continent getContinent() {
 		return continent;
+	}
+	
+	public String getName() {
+		return name;
 	}
 }
