@@ -1,17 +1,27 @@
+import java.util.*;
+
 // singleton
 
 // this is terminal-based for now
 // GUI perhaps later
-enum UI {
+public enum UI {
 	INSTANCE;
 	
 	UI() {
-		System.out.prinln("UI initiated");
+		System.out.println("UI initiated");
 	}
 	
-	String prompt(String p, ArrayList<String> options = null) {
+	String prompt(String p) {
 		System.out.println(p);
 		
+		return null;
+	}
+	
+	String prompt(String p, ArrayList<String> options) {
+		System.out.println(p);
+		
+		// for each option, do:
+		// System.out.println("\t" + option);
 		return null;
 	}
 	
@@ -20,7 +30,7 @@ enum UI {
 	}
 	
 	void display(ArrayList<String> lines) {
-		for (line : lines) {
+		for (String line : lines) {
 			System.out.println(line);
 		}
 	}
