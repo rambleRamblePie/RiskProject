@@ -32,4 +32,18 @@ class World {
 		
 		return null;
 	}
+	
+	public Territory getTerritory(String name) {
+		// go through all continents
+		// in each continent, look for a territory with the same name
+		
+		return null;
+	}
+	
+	
+	public void printAllTerritories() {
+		// iterate through continents/territories
+		// print each:
+		
+	}
 }

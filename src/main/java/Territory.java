@@ -43,7 +43,17 @@ class Territory {
 		return armyPower;
 	}
 	
+	
+	//added for Card class
+	public String getTerritory(){
+		return name;
+	}
+	
 	public Continent getContinent() {
 		return continent;
+	}
+	
+	public String getName() {
+		return name;
 	}
 }

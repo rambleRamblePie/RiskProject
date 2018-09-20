@@ -73,27 +73,39 @@ class GameSetup {
 		int turn = 0;
 		boolean successfulArmyPlacement = false;
 		Territory selectedTerritory;
-		Player currentPlayer;
+		User currentPlayer;
+		int armyLeftToPlaceTotal = numPlayers * startingArmyPowerPerPlayer;
 		while(armyLeftToPlaceTotal > 0) {
 			currentPlayer = players.get(turn);
-			selectedTerritory = world.getTerritory(ui.prompt(currentPlayer.getUsername()));
+			// give player a list of territories that are available
+			// (use a function)
+			// player can enter in a number instead of typing the territory name
 			
-			// world is empty
-			if () {
+			//selectedTerritory = world.getTerritory(ui.prompt(currentPlayer.getUsername()));
+			selectedTerritory = null;
+			// world has empty territories
+			/*if () {
 				
-			} else if (selectedTerritory.getOccupyingUser() != currentPlayer) {
+			} else */if (selectedTerritory.getOccupyingUser() != currentPlayer) {
 				// display territory occupied
-				successfulArmyPlacement = false
-			} else if () // ???
+				successfulArmyPlacement = false;
+			}/* else if () // ??? */
 			
 			if (!successfulArmyPlacement) {
 				continue;
 			}
+			
+			// set occupying user of selectedTerritory to the currentPlayer
+			// set army to 1 if unoccipied, else army++
 			
 			turn += 1;
 			turn %= numPlayers;
 			armyLeftToPlaceTotal--;
 		}
 	}
+	
+	
+	// need a function to add cards to a deck
+	// and store deck in this class
 	
 }
