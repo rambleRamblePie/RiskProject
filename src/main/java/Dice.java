@@ -9,6 +9,7 @@ class Dice {
 	}
 	
 	public int getFaceValue() {
+		roll();
 		return faceValue;
 	}
 	

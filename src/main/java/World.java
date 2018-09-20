@@ -23,4 +23,27 @@ class World {
 		// game ends when only one player has armies on the board
 		throw new java.lang.UnsupportedOperationException();
 	}
+	
+	// this will be used for the GameSetup class
+	// for determining if there are 
+	public ArrayList<Territory> getUnoccupied() {
+		
+		
+		
+		return null;
+	}
+	
+	public Territory getTerritory(String name) {
+		// go through all continents
+		// in each continent, look for a territory with the same name
+		
+		return null;
+	}
+	
+	
+	public void printAllTerritories() {
+		// iterate through continents/territories
+		// print each:
+		
+	}
 }
