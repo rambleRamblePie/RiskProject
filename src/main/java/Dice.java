@@ -1,7 +1,7 @@
 import java.lang.Math;
 
 class Dice {
-	
+	Dice(){}
 	private int faceValue;
 	
 	public void roll() {
