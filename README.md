@@ -6,11 +6,9 @@ https://docs.google.com/document/d/1d5d2bB72MDlnfXZmAud7WaaHd31uRfvRchUe9y6lsEA/
 
 maven guide: https://spring.io/guides/gs/maven/
 
-How to compile and run test cases:
-```bash
-mvn test
-```
-
+How to compile and run test cases: `mvn test`
+How to run the program: `java -cp target/risk-game-0.1.jar Main`
+Both require you to be in the root directory.
 
 Updates - 
 -----------------

@@ -13,7 +13,7 @@ public class Main {
             playerNames.add(sc.nextLine());
         }
         
-        //GameSetup game = new GameSetup(numPlayers, playerNames);
+        GameSetup game = new GameSetup(numPlayers, playerNames);
 		// game.playGame(); or create another class to actually handle the game
     }
 }
