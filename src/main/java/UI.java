@@ -1,5 +1,5 @@
 class UI {
-	
+	/*
 	UI() {
 		system.out.prinln("UI initiated");
 	}
@@ -19,6 +19,6 @@ class UI {
 			system.out.println(line);
 		}
 	}
-	
+	*/
 	
 }

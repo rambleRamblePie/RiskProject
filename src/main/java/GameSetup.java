@@ -73,18 +73,19 @@ class GameSetup {
 		int turn = 0;
 		boolean successfulArmyPlacement = false;
 		Territory selectedTerritory;
-		Player currentPlayer;
+		User currentPlayer;
+		int armyLeftToPlaceTotal = numPlayers * startingArmyPowerPerPlayer;
 		while(armyLeftToPlaceTotal > 0) {
 			currentPlayer = players.get(turn);
-			selectedTerritory = world.getTerritory(ui.prompt(currentPlayer.getUsername()));
-			
-			// world is empty
-			if () {
+			//selectedTerritory = world.getTerritory(ui.prompt(currentPlayer.getUsername()));
+			selectedTerritory = null;
+			// world has empty territories
+			/*if () {
 				
-			} else if (selectedTerritory.getOccupyingUser() != currentPlayer) {
+			} else */if (selectedTerritory.getOccupyingUser() != currentPlayer) {
 				// display territory occupied
-				successfulArmyPlacement = false
-			} else if () // ???
+				successfulArmyPlacement = false;
+			}/* else if () // ??? */
 			
 			if (!successfulArmyPlacement) {
 				continue;

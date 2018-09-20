@@ -52,4 +52,8 @@ class Territory {
 	public Continent getContinent() {
 		return continent;
 	}
+	
+	public String getName() {
+		return name;
+	}
 }
