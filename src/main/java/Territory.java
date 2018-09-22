@@ -4,36 +4,40 @@ class Territory {
 	
 	private String name;
 	private ArrayList<String> adjacentTerritories;
-	// private int ID;
 	private Continent continent;
-	
-	private User occupyingUser;
+	private boolean occupied;
+	private User occupant;
 	private int armyPower;
+	private boolean hasUser;
 	
 	
-	Territory(String n) {
-		this.name = n;
-		occupyingUser = null;
+	Territory(String name) {
+		this.name = name;
+		hasUser = false;
 		armyPower = 0;
 	}
 
+	// Used when spawning territories
 	public void addAdjacencies(ArrayList<String> adjacencies) {
 
 		this.adjacentTerritories = adjacencies;
 	}
-	
-	// public int getID () { return ID; }
-	
+
+	// Checking if we can attack
 	public ArrayList<String> getAdjacentTerritories() {
 		return adjacentTerritories;
 	}
 	
-	public void setOccupyingUser(User user, int power) {
-		occupyingUser = user;
-		armyPower = power;
+	public void setOccupyingUser(User user) {
+		this.occupant = user;
+		hasUser = true;
 	}
-	public User getOccupyingUser() {
-		return occupyingUser;
+
+	public void setNumArmies(int armies){
+		armyPower = armies;
+	}
+	public User getUser() {
+		return occupant;
 	}
 	
 	public void setArmyPower(int n) {
