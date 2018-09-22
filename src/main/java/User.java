@@ -131,7 +131,7 @@ class User {
 		return username;
 	}
 
-	public void addCountry(Territory territory) {
+	public void addTerritory(Territory territory) {
 
 		System.out.println(username + " now occupies " + territory.getName() + "!");
 		territoriesHeld.put(territory.getName(), territory);
