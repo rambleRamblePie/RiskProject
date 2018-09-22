@@ -1,12 +1,15 @@
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.HashMap;
 
 class User {
 	private String username;
 	private int turnPosition;
 	private int score;
 	private int armyPower;
-	
+	private HashMap<String,Territory> territoriesHeld;
+	private HashMap<String,Continent> continentsHeld;
+	/*
 	public enum Actions {
 		MOVE, ATTACK, PLACE_ARMY
 	}
@@ -85,12 +88,15 @@ class User {
 
 		}
 	} // Move, Battle, Place Army
-	
+	*/
 	public User(String n, int startingArmy) {
-		username = n;
-		armyPower = startingArmy;
+		this.username = n;
+		this.armyPower = startingArmy;
 		turnPosition = 0;
 		score = 0;
+
+		territoriesHeld = new HashMap<String,Territory>();
+		continentsHeld = new HashMap<String,Continent>();
 	}
 	
 	public void setTurnPosition(int pos) {
@@ -104,20 +110,30 @@ class User {
 		if (p < 0)
 			throw new java.lang.IllegalArgumentException();
 		
-		armyPower += p;
+		armyPower = armyPower + p;
 		return armyPower;
 	}
+
 	public int removeArmyPower(int p) {
 		if (p < 0)
 			throw new java.lang.IllegalArgumentException();
 		
 		if (p > armyPower)
 			armyPower = 0;
+
 		else
-			armyPower -= p;
+			armyPower = armyPower - p;
+
 		return armyPower;
 	}
+
 	public String getUsername() {
 		return username;
+	}
+
+	public void addCountry(Territory territory) {
+
+		System.out.println(username + " now occupies " + territory.getName() + "!");
+		territoriesHeld.put(territory.getName(), territory);
 	}
 }
