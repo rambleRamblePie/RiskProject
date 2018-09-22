@@ -13,8 +13,8 @@ class Continent {
 		bonusArmy = b;
 		// need to add territories, probably from a file
 		// group territories by continent in the file
-		
-		territories.add(new Territory(this, "Texas", 25)); // sample
+
+		// territories.add(new Territory(this, "Texas", 25)); // sample
 	}
 	
 	public String getName() {
