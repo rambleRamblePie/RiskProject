@@ -3,7 +3,7 @@ import java.util.*;
 class Territory {
 	
 	private String name;
-	private ArrayList<Territory> adjacentTerritories;
+	private ArrayList<String> adjacentTerritories;
 	// private int ID;
 	private Continent continent;
 	
@@ -11,21 +11,21 @@ class Territory {
 	private int armyPower;
 	
 	
-	Territory(Continent c, String n, int line) {
-		continent = c;
-		name = n;
-		
-		// read in adjacentTerritories from the specified line in the adjacentTerritories data file
-		
+	Territory(String n) {
+		this.name = n;
 		occupyingUser = null;
 		armyPower = 0;
 	}
-	
+
+	public void addAdjacencies(ArrayList<String> adjacencies) {
+
+		this.adjacentTerritories = adjacencies;
+	}
 	
 	// public int getID () { return ID; }
 	
-	public ArrayList<Territory> getAdjacentTerritories() {
-		throw new java.lang.UnsupportedOperationException();
+	public ArrayList<String> getAdjacentTerritories() {
+		return adjacentTerritories;
 	}
 	
 	public void setOccupyingUser(User user, int power) {
