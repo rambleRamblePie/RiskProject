@@ -1,19 +1,27 @@
 import java.util.Scanner;
 import java.util.*;
+import java.util.List;
+import java.io.PrintWriter;
+import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
         User[] userList;
         Scanner sc = new Scanner(System.in);
+
+        // Grab the number of players
         System.out.println("How many people are playing?");
         int numPlayers = sc.nextInt();
         sc.nextLine();
-        //ArrayList<String> playerNames = new ArrayList<String>();
+
+        // Grab the players names
         String[] playerNames = new String[numPlayers];
         for(int i=0; i<numPlayers; i++) {
-            System.out.println("What is player " + (i+1) + "'s name? The player who enters their name first will go first and so on");
+            System.out.println("What is Player " + (i+1) + "'s name? The player who enters their name first will go first and so on");
             playerNames[i] = sc.nextLine();
         }
+
+        // Array that will hold users
         userList = new User[numPlayers];
 
         // Spawn Territories
@@ -56,7 +64,7 @@ public class Main {
         Territory Yakutsk = new Territory("Yakutsk");
         Territory EasternAustralia = new Territory("EasternAustralia");
         Territory Indonesia = new Territory("Indonesia");
-        Territory LotR = new Territory("LotR");
+        Territory Peru = new Territory("Peru");
         Territory NewGuinea = new Territory("NewGuinea");
         Territory WesternAustralia = new Territory("WesternAustralia");
 
@@ -71,6 +79,7 @@ public class Main {
         String[] quebecList = new String[] {"Ontario","Greenland","EasternUnitedStates"};
         String[] westernUSList = new String[] {"Alberta","Ontario","EasternUnitedStates","CentralAmerica"};
         String[] argentinaList = new String[] {"Venezuela","Brazil"};
+        String[] peruList = new String[] {"Argentina", "Brazil", "Venezuela"};
         String[] brazilList = new String[] {"Venezuela","NorthAfrica","Argentina"};
         String[] venezuelaList = new String[] {"CentralAmerica","Brazil","Argentina"};
         String[] greatBritianList = new String[] {"Iceland","Scandinavia","NorthernEurope","WesternEurope"};
@@ -98,9 +107,8 @@ public class Main {
         String[] siberiaList = new String[] {"Ural","Yakutsk","Irkutsk","Mongolia","China","Afghanistan"};
         String[] uralList = new String[] {"Ukraine","Siberia","Afghanistan"};
         String[] yakutskList = new String[] {"Siberia","Kamchatka","Irkutsk"};
-        String[] easternAustraliaList = new String[] {"NewGuinea","LotR","WesternAustralia"};
+        String[] easternAustraliaList = new String[] {"NewGuinea","Peru","WesternAustralia"};
         String[] indonesiaList = new String[] {"Siam","NewGuinea","WesternAustralia"};
-        String[] lotrList = new String[] {"EasternAustralia"};
         String[] newGuineaList = new String[] {"Indonesia","EasternAustralia","WesternAustralia"};
         String[] westernAustraliaList = new String[] {"Indonesia","NewGuinea","EasternAustralia"};
 
@@ -112,7 +120,7 @@ public class Main {
         ArrayList<String> AlaskaADJ = new ArrayList<String>();
         AlaskaADJ.addAll(Arrays.asList(alaskaList));
         Alaska.addAdjacencies(AlaskaADJ);
-        
+
         ArrayList<String> AlbertaADJ = new ArrayList<String>();
         AlbertaADJ.addAll(Arrays.asList(albertaList));
         Alberta.addAdjacencies(AlbertaADJ);
@@ -148,6 +156,10 @@ public class Main {
         ArrayList<String> ArgentinaADJ = new ArrayList<String>();
         ArgentinaADJ.addAll(Arrays.asList(argentinaList));
         Argentina.addAdjacencies(ArgentinaADJ);
+
+        ArrayList<String> PeruADJ = new ArrayList<String>();
+        PeruADJ.addAll(Arrays.asList(peruList));
+        Peru.addAdjacencies(PeruADJ);
 
         ArrayList<String> BrazilADJ = new ArrayList<String>();
         AlaskaADJ.addAll(Arrays.asList(brazilList));
@@ -265,10 +277,6 @@ public class Main {
         IndonesiaADJ.addAll(Arrays.asList(indonesiaList));
         Indonesia.addAdjacencies(IndonesiaADJ);
 
-        ArrayList<String> LotRADJ = new ArrayList<String>();
-        LotRADJ.addAll(Arrays.asList(lotrList));
-        LotR.addAdjacencies(LotRADJ);
-
         ArrayList<String> NewGuineaADJ = new ArrayList<String>();
         NewGuineaADJ.addAll(Arrays.asList(newGuineaList));
         NewGuinea.addAdjacencies(NewGuineaADJ);
@@ -321,12 +329,111 @@ public class Main {
         }
         */
 
+        // Creating ArrayLists for Continent Parameters
+        ArrayList<String> northAmericaList = new ArrayList<String>();
+        northAmericaList.add("Alaska");
+        northAmericaList.add("Alberta");
+        northAmericaList.add("CentralAmerica");
+        northAmericaList.add("EasternUnitedStates");
+        northAmericaList.add("Greenland");
+        northAmericaList.add("NorthwestTerritory");
+        northAmericaList.add("Ontario");
+        northAmericaList.add("Quebec");
+        northAmericaList.add("WesternUnitedStates");
+
+
+        ArrayList<String> southAmericaList = new ArrayList<String>();
+        southAmericaList.add("Venezuela");
+        southAmericaList.add("Peru");
+        southAmericaList.add("Brazil");
+        southAmericaList.add("Argentina");
+
+
+        ArrayList<String> europeList = new ArrayList<String>();
+        europeList.add("GreatBritain");
+        europeList.add("Iceland");
+        europeList.add("NorthernEurope");
+        europeList.add("Scandinavia");
+        europeList.add("SouthernEurope");
+        europeList.add("Ukraine");
+        europeList.add("WesternEurope");
+
+
+        ArrayList<String> africaList = new ArrayList<String>();
+        africaList.add("Congo");
+        africaList.add("EastAfrica");
+        africaList.add("Egypt");
+        africaList.add("Madagascar");
+        africaList.add("NorthAfrica");
+        africaList.add("SouthAfrica");
+
+
+        ArrayList<String> asiaList = new ArrayList<String>();
+        asiaList.add("Afghanistan");
+        asiaList.add("China");
+        asiaList.add("India");
+        asiaList.add("Irkutsk");
+        asiaList.add("Japan");
+        asiaList.add("Kamchatka");
+        asiaList.add("MiddleEast");
+        asiaList.add("Mongolia");
+        asiaList.add("Siam");
+        asiaList.add("Siberia");
+        asiaList.add("Ural");
+        asiaList.add("Yakutsk");
+
+
+        ArrayList<String> australiaList = new ArrayList<String>();
+        australiaList.add("EasternAustralia");
+        australiaList.add("Indonesia");
+        australiaList.add("NewGuinea");
+        australiaList.add("WesternAustralia");
+
+
+        // Spawn Continents
+        Continent NorthAmerica = new Continent("NorthAmerica", 5, northAmericaList);
+        Continent SouthAmerica = new Continent("SouthAmerica", 2, southAmericaList);
+        Continent Europe = new Continent("Europe", 5, europeList);
+        Continent Africa = new Continent("Africa", 3, africaList);
+        Continent Asia = new Continent("Asia", 7, asiaList);
+        Continent Australia = new Continent("Australia", 2, australiaList);
+
+        // Testing Purposes
+        System.out.println(Australia.getName());
+        System.out.println(NorthAmerica.getBonusArmyAmount());
+        System.out.println(Europe.getTerritoriesOfContinent());
+
+
         // If loop to divide up territories based on number of players, will use HashMap for Users
         // Will look into iterating through HashMap to setOccupyingUser for each when spawning
         if(numPlayers == 2)
         {
             // Add player 1's countries to HashMap
             userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
+
+            // Setting occupant
+            Alaska.setOccupyingUser(userList[0]);
+            NorthwestTerritory.setOccupyingUser(userList[0]);
+            Greenland.setOccupyingUser(userList[0]);
+            Alberta.setOccupyingUser(userList[0]);
+            Ontario.setOccupyingUser(userList[0]);
+            Venezuela.setOccupyingUser(userList[0]);
+            Brazil.setOccupyingUser(userList[0]);
+            NorthAfrica.setOccupyingUser(userList[0]);
+            Egypt.setOccupyingUser(userList[0]);
+            EastAfrica.setOccupyingUser(userList[0]);
+            NorthernEurope.setOccupyingUser(userList[0]);
+            SouthernEurope.setOccupyingUser(userList[0]);
+            WesternEurope.setOccupyingUser(userList[0]);
+            Indonesia.setOccupyingUser(userList[0]);
+            NewGuinea.setOccupyingUser(userList[0]);
+            WesternAustralia.setOccupyingUser(userList[0]);
+            Siam.setOccupyingUser(userList[0]);
+            India.setOccupyingUser(userList[0]);
+            China.setOccupyingUser(userList[0]);
+            Mongolia.setOccupyingUser(userList[0]);
+            Peru.setOccupyingUser(userList[0]);
+
             userList[0].addTerritory(Alaska);
             userList[0].addTerritory(NorthwestTerritory);
             userList[0].addTerritory(Greenland);
@@ -347,10 +454,34 @@ public class Main {
             userList[0].addTerritory(India);
             userList[0].addTerritory(China);
             userList[0].addTerritory(Mongolia);
-            userList[0].addTerritory(LotR);
+            userList[0].addTerritory(Peru);
 
             // Add player 2's countries to HashMap
             userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
+
+            // Setting occupant
+            Quebec.setOccupyingUser(userList[1]);
+            WesternUnitedStates.setOccupyingUser(userList[1]);
+            EasternUnitedStates.setOccupyingUser(userList[1]);
+            CentralAmerica.setOccupyingUser(userList[1]);
+            Argentina.setOccupyingUser(userList[1]);
+            Congo.setOccupyingUser(userList[1]);
+            SouthAfrica.setOccupyingUser(userList[1]);
+            Madagascar.setOccupyingUser(userList[1]);
+            Iceland.setOccupyingUser(userList[1]);
+            Scandinavia.setOccupyingUser(userList[1]);
+            Ukraine.setOccupyingUser(userList[1]);
+            GreatBritian.setOccupyingUser(userList[1]);
+            EasternAustralia.setOccupyingUser(userList[1]);
+            Japan.setOccupyingUser(userList[1]);
+            Irkutsk.setOccupyingUser(userList[1]);
+            Yakutsk.setOccupyingUser(userList[1]);
+            Kamchatka.setOccupyingUser(userList[1]);
+            Siberia.setOccupyingUser(userList[1]);
+            Afghanistan.setOccupyingUser(userList[1]);
+            Ural.setOccupyingUser(userList[1]);
+            MiddleEast.setOccupyingUser(userList[1]);
+
             userList[1].addTerritory(Quebec);
             userList[1].addTerritory(WesternUnitedStates);
             userList[1].addTerritory(EasternUnitedStates);
@@ -377,6 +508,7 @@ public class Main {
         }
         else if(numPlayers == 3)
         {
+            // Add player 1's countries to HashMap
             userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
             userList[0].addTerritory(Alaska);
             userList[0].addTerritory(NorthwestTerritory);
@@ -393,6 +525,7 @@ public class Main {
             userList[0].addTerritory(Ural);
             userList[0].addTerritory(MiddleEast);
 
+            // Add player 2's countries to HashMap
             userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
             userList[1].addTerritory(Quebec);
             userList[1].addTerritory(WesternUnitedStates);
@@ -409,6 +542,7 @@ public class Main {
             userList[1].addTerritory(EasternAustralia);
             userList[1].addTerritory(Japan);
 
+            // Add player 3's countries to HashMap
             userList[2] = new User(playerNames[2], startingArmyPowerPerPlayer);
             userList[2].addTerritory(NorthAfrica);
             userList[2].addTerritory(Egypt);
@@ -423,11 +557,12 @@ public class Main {
             userList[2].addTerritory(India);
             userList[2].addTerritory(China);
             userList[2].addTerritory(Mongolia);
-            userList[2].addTerritory(LotR);
+            userList[2].addTerritory(Peru);
 
         }
         else if(numPlayers == 4)
         {
+            // Add player 1's countries to HashMap
             userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
             userList[0].addTerritory(Alaska);
             userList[0].addTerritory(NorthwestTerritory);
@@ -441,7 +576,7 @@ public class Main {
             userList[0].addTerritory(Irkutsk);
             userList[0].addTerritory(EasternUnitedStates);
 
-
+            // Add player 2's countries to HashMap
             userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
             userList[1].addTerritory(NorthernEurope);
             userList[1].addTerritory(SouthernEurope);
@@ -455,7 +590,7 @@ public class Main {
             userList[1].addTerritory(Ural);
             userList[1].addTerritory(MiddleEast);
 
-
+            // Add player 3's countries to HashMap
             userList[2] = new User(playerNames[2], startingArmyPowerPerPlayer);
             userList[2].addTerritory(Ontario);
             userList[2].addTerritory(Venezuela);
@@ -468,7 +603,7 @@ public class Main {
             userList[2].addTerritory(Kamchatka);
             userList[2].addTerritory(Siberia);
 
-
+            // Add player 4's countries to HashMap
             userList[3] = new User(playerNames[3], startingArmyPowerPerPlayer);
             userList[3].addTerritory(NewGuinea);
             userList[3].addTerritory(WesternAustralia);
@@ -476,7 +611,7 @@ public class Main {
             userList[3].addTerritory(India);
             userList[3].addTerritory(China);
             userList[3].addTerritory(Mongolia);
-            userList[3].addTerritory(LotR);
+            userList[3].addTerritory(Peru);
             userList[3].addTerritory(Quebec);
             userList[3].addTerritory(WesternUnitedStates);
             userList[3].addTerritory(CentralAmerica);
@@ -484,6 +619,7 @@ public class Main {
         }
         else if(numPlayers == 5)
         {
+            // Add player 1's countries to HashMap
             userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
             userList[0].addTerritory(Alaska);
             userList[0].addTerritory(NorthwestTerritory);
@@ -495,6 +631,7 @@ public class Main {
             userList[0].addTerritory(Ukraine);
             userList[0].addTerritory(Japan);
 
+            // Add player 2's countries to HashMap
             userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
             userList[1].addTerritory(Irkutsk);
             userList[1].addTerritory(EasternUnitedStates);
@@ -506,7 +643,7 @@ public class Main {
             userList[1].addTerritory(GreatBritian);
             userList[1].addTerritory(EasternAustralia);
 
-
+            // Add player 3's countries to HashMap
             userList[2] = new User(playerNames[2], startingArmyPowerPerPlayer);
             userList[2].addTerritory(Yakutsk);
             userList[2].addTerritory(Afghanistan);
@@ -517,7 +654,7 @@ public class Main {
             userList[2].addTerritory(Brazil);
             userList[2].addTerritory(NorthAfrica);
 
-
+            // Add player 4's countries to HashMap
             userList[3] = new User(playerNames[3], startingArmyPowerPerPlayer);
             userList[3].addTerritory(Egypt);
             userList[3].addTerritory(EastAfrica);
@@ -529,19 +666,20 @@ public class Main {
             userList[3].addTerritory(WesternAustralia);
 
 
-
+            // Add player 5's countries to HashMap
             userList[4] = new User(playerNames[4], startingArmyPowerPerPlayer);
             userList[4].addTerritory(Siam);
             userList[4].addTerritory(India);
             userList[4].addTerritory(China);
             userList[4].addTerritory(Mongolia);
-            userList[4].addTerritory(LotR);
+            userList[4].addTerritory(Peru);
             userList[4].addTerritory(Quebec);
             userList[4].addTerritory(WesternUnitedStates);
             userList[4].addTerritory(CentralAmerica);
         }
         else // Number of Players is 6
         {
+            // Add player 1's countries to HashMap
             userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
             userList[0].addTerritory(Alaska);
             userList[0].addTerritory(NorthwestTerritory);
@@ -551,6 +689,7 @@ public class Main {
             userList[0].addTerritory(Venezuela);
             userList[0].addTerritory(Brazil);
 
+            // Add player 2's countries to HashMap
             userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
             userList[1].addTerritory(NorthAfrica);
             userList[1].addTerritory(Egypt);
@@ -560,6 +699,7 @@ public class Main {
             userList[1].addTerritory(WesternEurope);
             userList[1].addTerritory(Indonesia);
 
+            // Add player 3's countries to HashMap
             userList[2] = new User(playerNames[2], startingArmyPowerPerPlayer);
             userList[2].addTerritory(NewGuinea);
             userList[2].addTerritory(WesternAustralia);
@@ -567,9 +707,17 @@ public class Main {
             userList[2].addTerritory(India);
             userList[2].addTerritory(China);
             userList[2].addTerritory(Mongolia);
-            userList[2].addTerritory(LotR);
+            userList[2].addTerritory(Peru);
 
+            // Add player 4's countries to HashMap
             userList[3] = new User(playerNames[3], startingArmyPowerPerPlayer);
+            Quebec.setOccupyingUser(userList[3]);
+            WesternUnitedStates.setOccupyingUser(userList[3]);
+            EasternUnitedStates.setOccupyingUser(userList[3]);
+            CentralAmerica.setOccupyingUser(userList[3]);
+            Argentina.setOccupyingUser(userList[3]);
+            Congo.setOccupyingUser(userList[3]);
+            SouthAfrica.setOccupyingUser(userList[3]);
             userList[3].addTerritory(Quebec);
             userList[3].addTerritory(WesternUnitedStates);
             userList[3].addTerritory(EasternUnitedStates);
@@ -578,6 +726,7 @@ public class Main {
             userList[3].addTerritory(Congo);
             userList[3].addTerritory(SouthAfrica);
 
+            // Add player 5's countries to HashMap
             userList[4] = new User(playerNames[4], startingArmyPowerPerPlayer);
             userList[4].addTerritory(Madagascar);
             userList[4].addTerritory(Iceland);
@@ -587,6 +736,7 @@ public class Main {
             userList[4].addTerritory(EasternAustralia);
             userList[4].addTerritory(Japan);
 
+            // Add player 6's countries to HashMap
             userList[5] = new User(playerNames[5], startingArmyPowerPerPlayer);
             userList[5].addTerritory(Irkutsk);
             userList[5].addTerritory(Yakutsk);
@@ -597,6 +747,10 @@ public class Main {
             userList[5].addTerritory(MiddleEast);
         }
 
+        // More Testing
+        System.out.println(userList[0].getUsername());
+
+
         // Game flag. Remove players from array who do not have territories. When one is left, he wins and game ends
 
         // WHEN TESTING ON INTELLIJ YOU MUST STOP THE PROGRAM MANUALLY AS THIS IS AN INFINITE LOOP RIGHT NOW
@@ -606,7 +760,7 @@ public class Main {
             for(int i = 0; i < (userList.length); i++)
             {
                 // Add card from deck to hand (ignoring for now)
-                // Check if User has to turn in cards
+                // Check if User has to turn in cards (ignoring for now)
                 // Increment total armies (ignoring Continent Bonus for now)
                 // Prompt to see where they want to place them
                 // Increment that territory's army count
@@ -616,13 +770,10 @@ public class Main {
                 // Based on result, increment/decrement that country's armies
                 // If country army total has 0 leftover, remove from defeated player's HashMap
                 // Add that country to victor's HashMap
+                // Decrement original country by 1 and add it to victor's new country
                 // Check if current player's HashMap size is equal to 0
                 // If it is equal to 0, remove them from userList
-
-                /* We will use a prompt to check if a user would like to undo an action, and not execute actions
-                until user has selected 'No'. If they select 'Yes', we will proceed to ask again if they would
-                like to do whatever action they are doing (perhaps sticking each action in a while loop.
-                This will simulate an undo feature */
+                // Shuffle main card deck
             }
         }
 
