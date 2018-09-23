@@ -1,10 +1,13 @@
 import java.util.*;
 
+
+/* This class is not needed right now */
 class World {
 	
 	private ArrayList<Continent> continents;
 	
 	World() {
+		/*
 		// maybe read continents from a file instead
 		continents.add(new Continent("North America", 5));
 		continents.add(new Continent("South America", 2));
@@ -12,6 +15,7 @@ class World {
 		continents.add(new Continent("Asia", 7));
 		continents.add(new Continent("Africa", 3));
 		continents.add(new Continent("Austrailia", 2));
+		*/
 	}
 	
 	public Continent getContinentByIndex(int i) {
