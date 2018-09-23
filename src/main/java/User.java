@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 class User {
 	private String username;
@@ -89,8 +90,8 @@ class User {
 		}
 	} // Move, Battle, Place Army
 	*/
-	public User(String n, int startingArmy) {
-		this.username = n;
+	public User(String name, int startingArmy) {
+		this.username = name;
 		this.armyPower = startingArmy;
 		turnPosition = 0;
 		score = 0;
@@ -99,8 +100,8 @@ class User {
 		continentsHeld = new HashMap<String,Continent>();
 	}
 	
-	public void setTurnPosition(int pos) {
-		turnPosition = pos;
+	public void setTurnPosition(int position) {
+		turnPosition = position;
 	}
 	public int getTurnPosition() {
 		return turnPosition;
@@ -135,5 +136,33 @@ class User {
 
 		System.out.println(username + " now occupies " + territory.getName() + "!");
 		territoriesHeld.put(territory.getName(), territory);
+	}
+
+	public void deleteTerritory(String territoryName)
+	{
+		System.out.println(username + " has lost control of " + territoryName);
+		territoriesHeld.remove(territoryName);
+	}
+
+	/*
+	May need to adjust HashMap for this function
+
+	public ArrayList<String> getUserCountries()
+	{
+		return ArrayList<String>(territoriesHeld) // Trying to get keys, may need to change to objects
+	}
+
+	*/
+
+	public void addContinent(Continent continent)
+	{
+		System.out.println(username + " is dominating the continent of " + continent);
+		continentsHeld.put(continent.getName(), continent);
+	}
+
+	public void deleteContinent(String continentName)
+	{
+		System.out.println(username + " is no longer dominating the continent of " + continentName);
+		continentsHeld.remove(continentName);
 	}
 }
