@@ -1,20 +1,20 @@
 import java.util.*;
+import java.util.ArrayList;
 
 class Continent {
 	
 	private String name;
-	// private int ID;
-	private ArrayList<Territory> territories;
+	private ArrayList<String> territories;
 	private int bonusArmy;
 	
 	
-	Continent(String n, int b) {
-		name = n;
-		bonusArmy = b;
-		// need to add territories, probably from a file
-		// group territories by continent in the file
+	Continent(String name, int bonusAmount, ArrayList<String> territoriesOfContinent) {
+		this.name = name;
+		this.bonusArmy = bonusAmount;
+		territories = territoriesOfContinent;
 
-		// territories.add(new Territory(this, "Texas", 25)); // sample
+		// Printing for testing purposes right now
+        System.out.println("Continent " + name + " has been created");
 	}
 	
 	public String getName() {
@@ -33,5 +33,11 @@ class Continent {
 		// add armies to that user (we should be able to do so directly,
 		// as the user info is stored in territories of this continent)
 	}
+
+	// Returns a list of the continents countries. May not need this
+    public ArrayList<String> getTerritoriesOfContinent()
+    {
+        return territories;
+    }
 	
 }
