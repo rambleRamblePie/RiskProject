@@ -12,7 +12,9 @@ Both require you to be in the root directory.
 Updates - 
 -----------------
 Todo: Correct the TravisCI badge and figure out why Maven builds successfully, but TravisCI is not showing
+
 Todo: Add more Maven test cases
+
 Todo: The Deck and Hand classes need to be worked on
 
 09-23-2018: New Maven Dependencies have been added the the pom.xml file. Be sure to add them in IntelliJ --Aaron
