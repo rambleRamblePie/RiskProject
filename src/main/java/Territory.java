@@ -33,9 +33,13 @@ class Territory {
 		hasUser = true;
 	}
 
+	// Need removeOccupyingUser?
+    // No. We can just recall setOccupyingUser() to set a new user without deleting original user
+
 	public void setNumArmies(int armies){
 		armyPower = armies;
 	}
+
 	public User getUser() {
 		return occupant;
 	}
