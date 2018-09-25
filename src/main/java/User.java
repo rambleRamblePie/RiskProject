@@ -19,14 +19,14 @@ class User {
 		Scanner sc = new Scanner(System.in);
 		switch (a){
 			case MOVE:
-				Territory From;
-				Territory To;
+				Territory From = new Territory();
+				Territory To = new Territory();
 				System.out.println("Which territory would you like to move from?");
 				//This should actually point to the territory object that matches the input string
 				String moveFrom = sc.nextLine();
 				for(int i = 0; i<6; i++) {
 					for(int j=0; j < continentList.get(i).territories.size(); j++){
-						if(continentList.get(i).territories.get(j) == moveFrom) {
+						if(continentList.get(i).territories.get(j).name == moveFrom) {
 							if(continentList.get(i).territories.get(j).occupant == this){
 								From= continentList.get(i).territories.get(j);
 							}
