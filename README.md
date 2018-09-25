@@ -20,4 +20,4 @@ Todo: The Deck and Hand classes need to be worked on
 09-23-2018: New Maven Dependencies have been added the the pom.xml file. Be sure to add them in IntelliJ --Aaron
 09-23-2018: Territories and Continents are now spawning correctly. The overall driver of the program is working --Aaron
 09-22-2018: Chaning the structure of the program slightly. Players are being spawned and accounted for correctly --Aaron
-08-06-2018: Territoires and Continents will be stored in a Map<k,v>
+08-06-2018: Territories and Continents will be stored in a Map<k,v>
