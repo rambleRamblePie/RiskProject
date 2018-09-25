@@ -321,12 +321,10 @@ public class Main {
                 break;
             default: // throw invalid input error (because nPlayers should already be checked in the calling function)
         }
-<<<<<<< HEAD
         
         GameSetup game = new GameSetup(numPlayers, playerNames);
 		World world = game.getWorld();
 		// game.playGame(); or create another class to actually handle the game
-=======
 
         /*
         for(int i = 0; i < numPlayers; i++) {
@@ -786,6 +784,6 @@ public class Main {
 
         //GameSetup game = new GameSetup(numPlayers, playerNames);
         // game.playGame(); or create another class to actually handle the game
->>>>>>> master
+        
     }
 }
