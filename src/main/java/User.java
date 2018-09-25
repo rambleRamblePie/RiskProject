@@ -10,7 +10,7 @@ class User {
 	private int armyPower;
 	private HashMap<String,Territory> territoriesHeld;
 	private HashMap<String,Continent> continentsHeld;
-	/*
+
 	public enum Actions {
 		MOVE, ATTACK, PLACE_ARMY
 	}
@@ -19,22 +19,50 @@ class User {
 		Scanner sc = new Scanner(System.in);
 		switch (a){
 			case MOVE:
+				Territory From;
+				Territory To;
 				System.out.println("Which territory would you like to move from?");
 				//This should actually point to the territory object that matches the input string
 				String moveFrom = sc.nextLine();
-				//Check if territory belongs to user. else...
+				for(int i = 0; i<6; i++) {
+					for(int j=0; j < continentList.get(i).territories.size(); j++){
+						if(continentList.get(i).territories.get(j) == moveFrom) {
+							if(continentList.get(i).territories.get(j).occupant == this){
+								From= continentList.get(i).territories.get(j);
+							}
+							else{
+								System.out.println("That territory does not belong to you, try again.");
+								Action(a);
+								break;
+							}
+						}
+					}
+				}
 				System.out.println("Which territory would you like to move to?");
-				//Check if territory belongs to user, else...
 				String moveTo = sc.nextLine();
+				for(int i = 0; i<6; i++) {
+					for(int j=0; j < continentList.get(i).territories.size(); j++){
+						if(continentList.get(i).territories.get(j).name == moveTo) {
+							if(continentList.get(i).territories.get(j).occupant == this){
+								To = continentList.get(i).territories.get(j);
+							}
+							else{
+								System.out.println("That territory does not belong to you, try again.");
+								Action(a);
+								break;
+							}
+						}
+					}
+				}
 				System.out.println("How many armies?");
-				//Check actual amount of armies on both territories before changing.
-				int amt = sc.nextInt();
+				int movingArmy = sc.nextInt();
 				sc.nextLine();
+				if(From.getArmyPower() > 1){
+					From.setArmyPower(From.getArmyPower() - movingArmy);
+					To.setArmyPower(To.getArmyPower() + movingArmy);
+				}
 
-				System.out.println(username + " is Moving __ units from __ to __");
-
-				//from.armyPower - amt
-				//to.armyPower
+				System.out.println(username + " is Moving " + movingArmy + " units from " + From.getName() + "to " + To.getName());
 				break;
 			case ATTACK:
 				System.out.println("Which territory are you attacking from?");
@@ -69,7 +97,7 @@ class User {
 				Arrays.sort(p1DiceRolls);
 				Arrays.sort(p2DiceRolls);
 				if(attackingArmy>defendingArmy || attackingArmy == defendingArmy){
-					for(int i=defendingArmy; i>=0; i--){
+					for(int i=defendingArmy-1; i>=0; i--){
 						if(p1DiceRolls[i] > p2DiceRolls[i])
 							defendingArmy--;
 						else
@@ -89,7 +117,7 @@ class User {
 
 		}
 	} // Move, Battle, Place Army
-	*/
+
 	public User(String name, int startingArmy) {
 		this.username = name;
 		this.armyPower = startingArmy;
