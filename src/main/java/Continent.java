@@ -4,11 +4,11 @@ import java.util.ArrayList;
 class Continent {
 	
 	private String name;
-	private ArrayList<String> territories;
+	private ArrayList<Territory> territories;
 	private int bonusArmy;
 	
 	
-	Continent(String name, int bonusAmount, ArrayList<String> territoriesOfContinent) {
+	Continent(String name, int bonusAmount, ArrayList<Territory> territoriesOfContinent) {
 		this.name = name;
 		this.bonusArmy = bonusAmount;
 		territories = territoriesOfContinent;
@@ -35,7 +35,7 @@ class Continent {
 	}
 
 	// Returns a list of the continents countries. May not need this
-    public ArrayList<String> getTerritoriesOfContinent()
+    public ArrayList<Territory> getTerritoriesOfContinent()
     {
         return territories;
     }
