@@ -104,6 +104,9 @@ class GameSetup {
 		}
 	}
 	
+	public World getWorld() {
+		return world;
+	}
 	
 	// need a function to add cards to a deck
 	// and store deck in this class
