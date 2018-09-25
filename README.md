@@ -9,6 +9,8 @@ How to compile and run test cases: `mvn test`
 How to run the program: `java -cp target/risk-game-0.1.jar Main`
 Both require you to be in the root directory.
 
+http://gameprogrammingpatterns.com/command.html
+
 Updates - 
 -----------------
 Todo: Correct the TravisCI badge and figure out why Maven builds successfully, but TravisCI is not showing
