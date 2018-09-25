@@ -1,12 +1,16 @@
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 class User {
 	private String username;
 	private int turnPosition;
 	private int score;
 	private int armyPower;
-	
+	private HashMap<String,Territory> territoriesHeld;
+	private HashMap<String,Continent> continentsHeld;
+	/*
 	public enum Actions {
 		MOVE, ATTACK, PLACE_ARMY
 	}
@@ -85,16 +89,19 @@ class User {
 
 		}
 	} // Move, Battle, Place Army
-	
-	public User(String n, int startingArmy) {
-		username = n;
-		armyPower = startingArmy;
+	*/
+	public User(String name, int startingArmy) {
+		this.username = name;
+		this.armyPower = startingArmy;
 		turnPosition = 0;
 		score = 0;
+
+		territoriesHeld = new HashMap<String,Territory>();
+		continentsHeld = new HashMap<String,Continent>();
 	}
 	
-	public void setTurnPosition(int pos) {
-		turnPosition = pos;
+	public void setTurnPosition(int position) {
+		turnPosition = position;
 	}
 	public int getTurnPosition() {
 		return turnPosition;
@@ -104,20 +111,58 @@ class User {
 		if (p < 0)
 			throw new java.lang.IllegalArgumentException();
 		
-		armyPower += p;
+		armyPower = armyPower + p;
 		return armyPower;
 	}
+
 	public int removeArmyPower(int p) {
 		if (p < 0)
 			throw new java.lang.IllegalArgumentException();
 		
 		if (p > armyPower)
 			armyPower = 0;
+
 		else
-			armyPower -= p;
+			armyPower = armyPower - p;
+
 		return armyPower;
 	}
+
 	public String getUsername() {
 		return username;
+	}
+
+	public void addTerritory(Territory territory) {
+
+		System.out.println(username + " now occupies " + territory.getName() + "!");
+		territoriesHeld.put(territory.getName(), territory);
+	}
+
+	public void deleteTerritory(String territoryName)
+	{
+		System.out.println(username + " has lost control of " + territoryName);
+		territoriesHeld.remove(territoryName);
+	}
+
+	/*
+	May need to adjust HashMap for this function
+
+	public ArrayList<String> getUserCountries()
+	{
+		return ArrayList<String>(territoriesHeld) // Trying to get keys, may need to change to objects
+	}
+
+	*/
+
+	public void addContinent(Continent continent)
+	{
+		System.out.println(username + " is dominating the continent of " + continent);
+		continentsHeld.put(continent.getName(), continent);
+	}
+
+	public void deleteContinent(String continentName)
+	{
+		System.out.println(username + " is no longer dominating the continent of " + continentName);
+		continentsHeld.remove(continentName);
 	}
 }

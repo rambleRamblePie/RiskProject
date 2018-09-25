@@ -4,7 +4,6 @@ class Territory {
 	
 	private String name;
 	private ArrayList<Territory> adjacentTerritories;
-	// private int ID;
 	private Continent continent;
 	
 	private User occupyingUser;
@@ -28,9 +27,10 @@ class Territory {
 		throw new java.lang.UnsupportedOperationException();
 	}
 	
-	public void setOccupyingUser(User user, int power) {
-		occupyingUser = user;
-		armyPower = power;
+	public void setOccupyingUser(User user) {
+		this.occupant = user;
+	public void setNumArmies(int armies){
+		armyPower = armies;
 	}
 	public User getOccupyingUser() {
 		return occupyingUser;

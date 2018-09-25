@@ -86,7 +86,6 @@ class GameSetup {
 			// world has empty territories
 			/*if () {
 				
-			} else */if (selectedTerritory.getOccupyingUser() != currentPlayer) {
 				// display territory occupied
 				successfulArmyPlacement = false;
 			}/* else if () // ??? */
