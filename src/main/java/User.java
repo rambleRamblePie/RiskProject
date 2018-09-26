@@ -14,61 +14,92 @@ class User {
 	public enum Actions {
 		MOVE, ATTACK, PLACE_ARMY
 	}
+
+	private boolean checkInput(String territoryName, Board board) {
+		if(board.getCountryByName(territoryName) == null){
+			System.out.println("That territory doesn't exist, try again.");
+			return false;
+		}
+		else if(board.getOccupant(territoryName).username != username){
+			System.out.println("That territory doesn't belong to you, try again.");
+			return false;
+		}
+		else
+			return true;
+
+	}
 	
-	public void Action(Actions a) {
+	public void Action(Actions a, Board board) {
 		Scanner sc = new Scanner(System.in);
 		switch (a){
 			case MOVE:
-				Territory From = new Territory();
-				Territory To = new Territory();
-				System.out.println("Which territory would you like to move from?");
-				//This should actually point to the territory object that matches the input string
+				Territory From;
+				Territory To;
+				System.out.println( username + " which territory would you like to move from?");
 				String moveFrom = sc.nextLine();
-				for(int i = 0; i<6; i++) {
-					for(int j=0; j < continentList.get(i).territories.size(); j++){
-						if(continentList.get(i).territories.get(j).name == moveFrom) {
-							if(continentList.get(i).territories.get(j).occupant == this){
-								From= continentList.get(i).territories.get(j);
-							}
-							else{
-								System.out.println("That territory does not belong to you, try again.");
-								Action(a);
-								break;
-							}
-						}
-					}
+				if(checkInput(moveFrom, board)){
+					From = board.getCountryByName(moveFrom);
 				}
+				else{Action(a, board); break;}
+
 				System.out.println("Which territory would you like to move to?");
 				String moveTo = sc.nextLine();
-				for(int i = 0; i<6; i++) {
-					for(int j=0; j < continentList.get(i).territories.size(); j++){
-						if(continentList.get(i).territories.get(j).name == moveTo) {
-							if(continentList.get(i).territories.get(j).occupant == this){
-								To = continentList.get(i).territories.get(j);
-							}
-							else{
-								System.out.println("That territory does not belong to you, try again.");
-								Action(a);
-								break;
-							}
-						}
+				if(checkInput(moveTo, board)){
+					if(!board.checkAdjacency(moveFrom, moveTo)) {
+						System.out.println("These territories are not adjacent, please try again");
+						Action(a, board);
+						break;
 					}
+					else
+						To = board.getCountryByName(moveTo);
 				}
+				else {Action(a, board); break;}
+
 				System.out.println("How many armies?");
 				int movingArmy = sc.nextInt();
 				sc.nextLine();
-				if(From.getArmyPower() > 1){
+				if(From.getArmyPower() > 1 && (From.getArmyPower()-movingArmy>=1)){
 					From.setArmyPower(From.getArmyPower() - movingArmy);
 					To.setArmyPower(To.getArmyPower() + movingArmy);
+					System.out.println(username + " is Moving " + movingArmy + " units from " + From.getName() + " to " + To.getName());
 				}
-
-				System.out.println(username + " is Moving " + movingArmy + " units from " + From.getName() + "to " + To.getName());
+				else{
+					System.out.println(moveFrom + " doesn't have enough units to move " + movingArmy + " units to another territory. You must leave at least one behind.");
+					Action(a, board);
+					break;
+				}
 				break;
+
 			case ATTACK:
 				System.out.println("Which territory are you attacking from?");
 				String attackFrom = sc.nextLine();
+				if(checkInput(attackFrom, board)){
+				    From = board.getCountryByName(attackFrom);
+                }
+                else {Action(a, board); break;}
+
+
 				System.out.println("Which territory are you attacking?");
-				String attackTo = sc.nextLine();
+                String attackTo = sc.nextLine();
+                if(board.getCountryByName(attackTo) == null){
+                    System.out.println("That territory doesn't exist, try again.");
+                    Action(a, board); break;
+                }
+                else if(!board.checkAdjacency(attackFrom, attackTo)) {
+                    System.out.println("These territories are not adjacent, please try again");
+                    Action(a, board);
+                    break;
+                }
+                else if(board.getOccupant(attackTo).username == username){
+                    System.out.println("That territory belongs to you, you can't attack it, try again.");
+                    Action(a, board);
+                    break;
+                }
+                else{
+                    To = board.getCountryByName(attackTo);
+                }
+
+
 				System.out.println("How many units are you attacking with?");
 				int attackingArmy = sc.nextInt();
 				sc.nextLine();

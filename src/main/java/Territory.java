@@ -3,7 +3,7 @@ import java.util.*;
 class Territory {
 	
 	private String name;
-	private ArrayList<String> adjacentTerritories;
+	private ArrayList<Territory> adjacentTerritories;
 	private Continent continent;
 	private boolean occupied;
 	private User occupant;
@@ -18,13 +18,13 @@ class Territory {
 	}
 
 	// Used when spawning territories
-	public void addAdjacencies(ArrayList<String> adjacencies) {
+	public void addAdjacencies(ArrayList<Territory> adjacencies) {
 
 		this.adjacentTerritories = adjacencies;
 	}
 
 	// Checking if we can attack
-	public ArrayList<String> getAdjacentTerritories() {
+	public ArrayList<Territory> getAdjacentTerritories() {
 		return adjacentTerritories;
 	}
 	
