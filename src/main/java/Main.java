@@ -752,6 +752,9 @@ public class Main {
 
         // More Testing
         System.out.println(userList[0].getUsername());
+        board.getCountryByName("Venezuela").setArmyPower(6);
+        userList[0].Action(User.Actions.ATTACK, board);
+
 
 
         // Game flag. Remove players from array who do not have territories. When one is left, he wins and game ends
