@@ -104,14 +104,15 @@ class User {
 				int attackingArmy = sc.nextInt();
 				sc.nextLine();
 				//remove attackingArmy from the total territory armies at the start of the battle, then add it back if there are any left afterwards.
+                From.setArmyPower(From.getArmyPower()-attackingArmy);
 
-				String attackedUsername="";
-				int attackedTerritoryArmyAmount=0;
+				String attackedUsername=To.getUser().username;
+				int attackedTerritoryArmyAmount=To.getArmyPower();
 
 				System.out.println(attackedUsername + " how many units would you like to defend with? You have " + attackedTerritoryArmyAmount);
 				int defendingArmy = sc.nextInt();
 
-				System.out.println(username + " is Attacking __ from __ with __ units\n" + attackedUsername + " is defending with " + defendingArmy);
+				System.out.println(username + " is Attacking " + To.getName() + " from " + From.getName() + " with " + attackingArmy + " units\n" + attackedUsername + " is defending with " + defendingArmy);
 				int[] p1DiceRolls = new int[attackingArmy];
 				int[] p2DiceRolls = new int[defendingArmy];
 				// two sets of dice rolls depending on previous vars
