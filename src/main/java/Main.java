@@ -84,8 +84,8 @@ public class Main {
             board.setOccupant("Ontario", userList[0]);
             userList[0].addTerritory(board.getCountryByName("Venezuela"));
             board.setOccupant("Venezuela", userList[0]);
-            userList[0].addTerritory(board.getCountryByName("Brazil"));
-            board.setOccupant("Brazil", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("MiddleEast"));
+            board.setOccupant("MiddleEast", userList[0]);
             userList[0].addTerritory(board.getCountryByName("NorthAfrica"));
             board.setOccupant("NorthAfrica", userList[0]);
             userList[0].addTerritory(board.getCountryByName("Egypt"));
@@ -157,8 +157,8 @@ public class Main {
             board.setOccupant("Afghanistan", userList[1]);
             userList[1].addTerritory(board.getCountryByName("Ural"));
             board.setOccupant("Ural", userList[1]);
-            userList[1].addTerritory(board.getCountryByName("MiddleEast"));
-            board.setOccupant("MiddleEast", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Brazil"));
+            board.setOccupant("Brazil", userList[1]);
 
             // Test
             System.out.println(board.getCountryByName("Alaska").getUser());

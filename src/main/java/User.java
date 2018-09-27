@@ -15,7 +15,7 @@ class User {
 		MOVE, ATTACK, PLACE_ARMY
 	}
 
-	private boolean checkInput(String territoryName, Board board) {
+	private boolean checkOwnership(String territoryName, Board board) {
 		if(board.getCountryByName(territoryName) == null){
 			System.out.println("That territory doesn't exist, try again.");
 			return false;
@@ -37,14 +37,14 @@ class User {
 				Territory To;
 				System.out.println( username + " which territory would you like to move from?");
 				String moveFrom = sc.nextLine();
-				if(checkInput(moveFrom, board)){
+				if(checkOwnership(moveFrom, board)){
 					From = board.getCountryByName(moveFrom);
 				}
 				else{Action(a, board); break;}
 
 				System.out.println("Which territory would you like to move to?");
 				String moveTo = sc.nextLine();
-				if(checkInput(moveTo, board)){
+				if(checkOwnership(moveTo, board)){
 					if(!board.checkAdjacency(moveFrom, moveTo)) {
 						System.out.println("These territories are not adjacent, please try again");
 						Action(a, board);
@@ -71,9 +71,9 @@ class User {
 				break;
 
 			case ATTACK:
-				System.out.println("Which territory are you attacking from?");
+				System.out.println(username + " which territory are you attacking from?");
 				String attackFrom = sc.nextLine();
-				if(checkInput(attackFrom, board)){
+				if(checkOwnership(attackFrom, board)){
 				    From = board.getCountryByName(attackFrom);
                 }
                 else {Action(a, board); break;}
@@ -100,17 +100,31 @@ class User {
                 }
 
 
-				System.out.println("How many units are you attacking with?");
+				System.out.println("How many units are you attacking with? You can attack with up to 3.");
 				int attackingArmy = sc.nextInt();
 				sc.nextLine();
-				//remove attackingArmy from the total territory armies at the start of the battle, then add it back if there are any left afterwards.
-                From.setArmyPower(From.getArmyPower()-attackingArmy);
+				if(attackingArmy >3){
+				    System.out.println("You can only attack with 3 or less units.");
+				    Action(a,board);
+				    break;
+                }
+                else {
+                    //remove attackingArmy from the total territory armies at the start of the battle, then add it back if there are any left afterwards.
+                    From.setArmyPower(From.getArmyPower() - attackingArmy);
+                }
 
 				String attackedUsername=To.getUser().username;
 				int attackedTerritoryArmyAmount=To.getArmyPower();
 
-				System.out.println(attackedUsername + " how many units would you like to defend with? You have " + attackedTerritoryArmyAmount);
+				System.out.println(attackedUsername + " how many units would you like to defend with? You have " + attackedTerritoryArmyAmount + ", and you can defend with up to 2 units.");
 				int defendingArmy = sc.nextInt();
+                if(defendingArmy >2){
+                    System.out.println("You can only attack with 3 or less units.");
+                    Action(a,board);
+                    break;
+                }
+                To.setArmyPower(To.getArmyPower() - defendingArmy);
+
 
 				System.out.println(username + " is Attacking " + To.getName() + " from " + From.getName() + " with " + attackingArmy + " units\n" + attackedUsername + " is defending with " + defendingArmy);
 				int[] p1DiceRolls = new int[attackingArmy];
@@ -130,15 +144,23 @@ class User {
 				Arrays.sort(p2DiceRolls);
 				if(attackingArmy>defendingArmy || attackingArmy == defendingArmy){
 					for(int i=defendingArmy-1; i>=0; i--){
-						if(p1DiceRolls[i] > p2DiceRolls[i])
+						if(p1DiceRolls[i] > p2DiceRolls[i]) {
 							defendingArmy--;
-						else
+							System.out.println("Dice roll p1: " + p1DiceRolls[i] + "\nDice roll p2: " + p2DiceRolls[i]);
+							System.out.println(attackedUsername + " loses a battle, and one unit is destroyed.");
+						}
+						else {
 							attackingArmy--;
+							System.out.println("Dice roll p1: " + p1DiceRolls[i] + "\nDice roll p2: " + p2DiceRolls[i]);
+							System.out.println(username + " loses a battle, and one unit is destroyed.");
+						}
 					}
 				}
 				else{
 
 				}
+				System.out.println(username + " has " + attackingArmy + " attacking unit(s) left, and " + (attackingArmy + From.getArmyPower()) + " total units left in " + From.getName() +".");
+				System.out.println(attackedUsername +  " has " + (To.getArmyPower() + defendingArmy) + " total units left in " + To.getName() + ".");
 				//add back attackingArmy and defendingArmy to the territories, then change territory ownership accordingly
 				break;
 			case PLACE_ARMY:
