@@ -148,6 +148,8 @@ class User {
 							defendingArmy--;
 							System.out.println("Dice roll p1: " + p1DiceRolls[i] + "\nDice roll p2: " + p2DiceRolls[i]);
 							System.out.println(attackedUsername + " loses a battle, and one unit is destroyed.");
+							if(defendingArmy==0)
+								break;
 						}
 						else {
 							attackingArmy--;
@@ -161,7 +163,11 @@ class User {
 				}
 				System.out.println(username + " has " + attackingArmy + " attacking unit(s) left, and " + (attackingArmy + From.getArmyPower()) + " total units left in " + From.getName() +".");
 				System.out.println(attackedUsername +  " has " + (To.getArmyPower() + defendingArmy) + " total units left in " + To.getName() + ".");
-				//add back attackingArmy and defendingArmy to the territories, then change territory ownership accordingly
+				if(defendingArmy==0){
+					To.setOccupyingUser(this);
+					System.out.println(To.getUser().username + " now has control of " + To.getName());
+
+				}
 				break;
 			case PLACE_ARMY:
 				System.out.println(username + " is placing an army at__");
