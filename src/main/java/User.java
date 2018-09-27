@@ -128,16 +128,11 @@ class User {
 
 				Arrays.sort(p1DiceRolls);
 				Arrays.sort(p2DiceRolls);
-				if(attackingArmy>defendingArmy || attackingArmy == defendingArmy){
-					for(int i=defendingArmy-1; i>=0; i--){
-						if(p1DiceRolls[i] > p2DiceRolls[i])
-							defendingArmy--;
-						else
-							attackingArmy--;
-					}
-				}
-				else{
-
+				for(int i = min(defendingArmy-1, attackingArmy); i >= 0; i--){
+					if(p1DiceRolls[attackingArmy - i] > p2DiceRolls[defendingArmy - i])
+						defendingArmy--;
+					else
+						attackingArmy--;
 				}
 				//add back attackingArmy and defendingArmy to the territories, then change territory ownership accordingly
 				break;
