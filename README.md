@@ -19,7 +19,7 @@ Todo: Add more Maven test cases
 
 Todo: The Deck and Hand classes need to be worked on
 
-9-28-2018: Have Maven working and the TravisCI badge showing successful build. Added some functions to different classes for Maven Tests and program ease of use --Aaron
+9-28-2018: Have Maven working and the TravisCI badge showing successful build on a seperate cloned repository. Added some functions to different classes for Maven Tests and program ease of use --Aaron
 
 09-23-2018: New Maven Dependencies have been added the the pom.xml file. Be sure to add them in IntelliJ --Aaron
 09-23-2018: Territories and Continents are now spawning correctly. The overall driver of the program is working --Aaron
