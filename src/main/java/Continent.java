@@ -1,31 +1,31 @@
 import java.util.*;
 import java.util.ArrayList;
 
-class Continent {
-	
+public class Continent {
+
 	private String name;
-	private ArrayList<String> territories;
+	private ArrayList<Territory> territories;
 	private int bonusArmy;
-	
-	
-	Continent(String name, int bonusAmount, ArrayList<String> territoriesOfContinent) {
+
+
+	Continent(String name, int bonusAmount, ArrayList<Territory> territoriesOfContinent) {
 		this.name = name;
 		this.bonusArmy = bonusAmount;
 		territories = territoriesOfContinent;
 
 		// Printing for testing purposes right now
-        System.out.println("Continent " + name + " has been created");
+		System.out.println("Continent " + name + " has been created");
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	// this function might only be useful for the UI
 	public int getBonusArmyAmount() {
 		return bonusArmy;
 	}
-	
+
 	// returns true if a user received bonus armies, otherwise false
 	private boolean calculateBonusArmy() {
 		throw new java.lang.UnsupportedOperationException();
@@ -35,9 +35,9 @@ class Continent {
 	}
 
 	// Returns a list of the continents countries. May not need this
-    public ArrayList<String> getTerritoriesOfContinent()
-    {
-        return territories;
-    }
-	
+	public ArrayList<Territory> getTerritoriesOfContinent()
+	{
+		return territories;
+	}
+
 }
