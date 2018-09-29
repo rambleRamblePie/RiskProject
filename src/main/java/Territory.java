@@ -56,6 +56,7 @@ public class Territory {
 		return armyPower;
 	}
 
+	// Adding explicity increment and decrement for undo function
 	public void incrementArmies(int addedArmies) {
 		armyPower = armyPower + addedArmies;
 	}
