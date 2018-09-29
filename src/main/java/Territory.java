@@ -6,14 +6,12 @@ public class Territory {
 	private ArrayList<Territory> adjacentTerritories;
 	private Continent continent;
 	private boolean occupied;
-	private User occupant;
+	private User userControlling;
 	private int armyPower;
-	private boolean hasUser;
 
 
 	Territory(String name) {
 		this.name = name;
-		hasUser = false;
 		armyPower = 0;
 	}
 
@@ -29,14 +27,9 @@ public class Territory {
 	}
 
 	public void setOccupyingUser(User user) {
-		this.occupant = user;
-		hasUser = true;
+		this.userControlling = user;
 	}
-
-	public boolean getHasUser(){
-		return hasUser;
-	}
-
+	
 	// Need removeOccupyingUser?
 	// No. We can just recall setOccupyingUser() to set a new user without deleting original user
 
@@ -45,7 +38,7 @@ public class Territory {
 	}
 
 	public User getUser() {
-		return occupant;
+		return userControlling;
 	}
 
 	public void setArmyPower(int n) {
