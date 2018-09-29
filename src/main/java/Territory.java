@@ -1,7 +1,7 @@
 import java.util.*;
 
-class Territory {
-	
+public class Territory {
+
 	private String name;
 	private ArrayList<Territory> adjacentTerritories;
 	private Continent continent;
@@ -9,8 +9,8 @@ class Territory {
 	private User occupant;
 	private int armyPower;
 	private boolean hasUser;
-	
-	
+
+
 	Territory(String name) {
 		this.name = name;
 		hasUser = false;
@@ -27,14 +27,18 @@ class Territory {
 	public ArrayList<Territory> getAdjacentTerritories() {
 		return adjacentTerritories;
 	}
-	
+
 	public void setOccupyingUser(User user) {
 		this.occupant = user;
 		hasUser = true;
 	}
 
+	public boolean getHasUser(){
+		return hasUser;
+	}
+
 	// Need removeOccupyingUser?
-    // No. We can just recall setOccupyingUser() to set a new user without deleting original user
+	// No. We can just recall setOccupyingUser() to set a new user without deleting original user
 
 	public void setNumArmies(int armies){
 		armyPower = armies;
@@ -43,24 +47,41 @@ class Territory {
 	public User getUser() {
 		return occupant;
 	}
-	
+
 	public void setArmyPower(int n) {
 		armyPower = n;
 	}
+
 	public int getArmyPower() {
 		return armyPower;
 	}
-	
-	
+
+	public void incrementArmies(int addedArmies) {
+		armyPower = armyPower + addedArmies;
+	}
+
+	public void decrementArmies(int lostArmies) {
+
+		if(lostArmies > armyPower){
+			armyPower = 0;
+		}
+
+		else {
+			armyPower = armyPower - lostArmies;
+		}
+	}
+
+
+
 	//added for Card class
 	public String getTerritory(){
 		return name;
 	}
-	
+
 	public Continent getContinent() {
 		return continent;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
