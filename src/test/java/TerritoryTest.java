@@ -15,7 +15,7 @@ public class TerritoryTest {
     Continent Europe;
     ArrayList<Territory> territories = new ArrayList<Territory>();
     User Aaron;
-    
+
     @Before
     public void setup() throws Exception {
         Alaska = new Territory("Alaska");
@@ -29,8 +29,6 @@ public class TerritoryTest {
     @Test
     public void testHasOccupant(){
         Assert.assertEquals(Alaska.getUser().getUsername(), "Aaron"); // Is name assigning correctly?
-        Assert.assertEquals(Alaska.getUser().getTurnPosition(), 0); // Is turn position accessible and correct?
-        Assert.assertEquals(Alaska.getUser().getScore(), 0); // Is score accessible and correct?
     }
 
     @Test
