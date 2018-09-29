@@ -15,8 +15,7 @@ public class TerritoryTest {
     Continent Europe;
     ArrayList<Territory> territories = new ArrayList<Territory>();
     User Aaron;
-    boolean hasUser;
-
+    
     @Before
     public void setup() throws Exception {
         Alaska = new Territory("Alaska");
@@ -25,13 +24,6 @@ public class TerritoryTest {
         Aaron = new User("Aaron", 25);
         Alaska.setOccupyingUser(Aaron);
         Alaska.setArmyPower(50);
-    }
-
-    @Test
-    public void testHasUser(){
-        Alaska.setOccupyingUser(Aaron);
-        Assert.assertTrue( Alaska.getHasUser() == true); // Did hasUser update upon assignment?
-        Assert.assertTrue(Quebec.getHasUser() == false); // Is it working correctly upon initialization?
     }
 
     @Test
