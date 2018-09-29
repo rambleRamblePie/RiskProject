@@ -1,4 +1,4 @@
-# RiskProject ![](https://travis-ci.com/AlexMilligan/RiskProject.svg?token=w9mHzsjxCWQjxg31ooki&branch=master)<br>
+# RiskProject [![Build Status](https://travis-ci.com/rambleRamblePie/RiskProject.svg?branch=master)](https://travis-ci.com/rambleRamblePie/RiskProject)<br>
 This repository holds project 1 of **TeamHAL** from COSC 4353 Software Design
 
 https://docs.google.com/document/d/1d5d2bB72MDlnfXZmAud7WaaHd31uRfvRchUe9y6lsEA/edit?usp=sharing
@@ -11,13 +11,10 @@ Both require you to be in the root directory.
 
 Updates - 
 -----------------
-Todo: Correct the TravisCI badge and figure out why Maven builds successfully, but TravisCI is not showing
 
 Todo: Add more Maven test cases
 
 Todo: The Deck and Hand classes need to be worked on
-
-9-28-2018: Have Maven working and the TravisCI badge showing successful build on a seperate cloned repository. Added some functions to different classes for Maven Tests and program ease of use --Aaron
 
 09-23-2018: New Maven Dependencies have been added the the pom.xml file. Be sure to add them in IntelliJ --Aaron
 09-23-2018: Territories and Continents are now spawning correctly. The overall driver of the program is working --Aaron
