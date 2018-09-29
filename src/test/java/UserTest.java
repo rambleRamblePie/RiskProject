@@ -25,7 +25,6 @@ public class UserTest {
         Quebec = new Territory("Quebec");
         user1.addTerritory(Alaska);
         user2.addTerritory(Quebec);
-        user2.setTurnPosition(2);
         user1.setScore(5);
     }
 
@@ -51,11 +50,5 @@ public class UserTest {
     public void testGetScore(){
         Assert.assertEquals(user1.getScore(), 5); // Updated score
         Assert.assertEquals(user2.getScore(), 0); // Default score
-    }
-
-    @Test
-    public void testGetTurnPosition(){
-        Assert.assertEquals(user1.getTurnPosition(), 0); // Is default working correctly?
-        Assert.assertEquals(user2.getTurnPosition(), 2); // Is updated turn position working?
     }
 }
