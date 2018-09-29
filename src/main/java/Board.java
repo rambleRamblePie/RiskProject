@@ -431,7 +431,7 @@ public class Board {
     }
 
     // Returns territory requested
-    public Territory getCountryName(String territoryName) {
+    public Territory getTerritoryName(String territoryName) {
         return territoryContainer.get(territoryName);
     }
 
