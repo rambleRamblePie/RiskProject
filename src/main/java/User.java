@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-class User {
+public class User {
 	private String username;
 	private int turnPosition;
 	private int score;
@@ -14,7 +14,7 @@ class User {
 	public enum Actions {
 		MOVE, ATTACK, PLACE_ARMY
 	}
-	
+
 	public void Action(Actions a) {
 		Scanner sc = new Scanner(System.in);
 		switch (a){
@@ -99,18 +99,18 @@ class User {
 		territoriesHeld = new HashMap<String,Territory>();
 		continentsHeld = new HashMap<String,Continent>();
 	}
-	
+
 	public void setTurnPosition(int position) {
 		turnPosition = position;
 	}
 	public int getTurnPosition() {
 		return turnPosition;
 	}
-	
+
 	public int addArmyPower(int p) {
 		if (p < 0)
 			throw new java.lang.IllegalArgumentException();
-		
+
 		armyPower = armyPower + p;
 		return armyPower;
 	}
@@ -118,7 +118,7 @@ class User {
 	public int removeArmyPower(int p) {
 		if (p < 0)
 			throw new java.lang.IllegalArgumentException();
-		
+
 		if (p > armyPower)
 			armyPower = 0;
 
@@ -126,6 +126,14 @@ class User {
 			armyPower = armyPower - p;
 
 		return armyPower;
+	}
+
+	public void setScore(int newScore){
+		score = newScore;
+	}
+
+	public int getScore(){
+		return score;
 	}
 
 	public String getUsername() {
