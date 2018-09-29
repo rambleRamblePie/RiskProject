@@ -3,116 +3,56 @@ import java.util.Scanner;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-class User {
+public class User {
 	private String username;
 	private int turnPosition;
 	private int score;
 	private int armyPower;
 	private HashMap<String,Territory> territoriesHeld;
 	private HashMap<String,Continent> continentsHeld;
-
+	/*
 	public enum Actions {
 		MOVE, ATTACK, PLACE_ARMY
 	}
 
-	private boolean checkInput(String territoryName, Board board) {
-		if(board.getCountryByName(territoryName) == null){
-			System.out.println("That territory doesn't exist, try again.");
-			return false;
-		}
-		else if(board.getOccupant(territoryName).username != username){
-			System.out.println("That territory doesn't belong to you, try again.");
-			return false;
-		}
-		else
-			return true;
-
-	}
-	
-	public void Action(Actions a, Board board) {
+	public void Action(Actions a) {
 		Scanner sc = new Scanner(System.in);
 		switch (a){
 			case MOVE:
-				Territory From;
-				Territory To;
-				System.out.println( username + " which territory would you like to move from?");
+				System.out.println("Which territory would you like to move from?");
+				//This should actually point to the territory object that matches the input string
 				String moveFrom = sc.nextLine();
-				if(checkInput(moveFrom, board)){
-					From = board.getCountryByName(moveFrom);
-				}
-				else{Action(a, board); break;}
-
+				//Check if territory belongs to user. else...
 				System.out.println("Which territory would you like to move to?");
+				//Check if territory belongs to user, else...
 				String moveTo = sc.nextLine();
-				if(checkInput(moveTo, board)){
-					if(!board.checkAdjacency(moveFrom, moveTo)) {
-						System.out.println("These territories are not adjacent, please try again");
-						Action(a, board);
-						break;
-					}
-					else
-						To = board.getCountryByName(moveTo);
-				}
-				else {Action(a, board); break;}
-
 				System.out.println("How many armies?");
-				int movingArmy = sc.nextInt();
+				//Check actual amount of armies on both territories before changing.
+				int amt = sc.nextInt();
 				sc.nextLine();
-				if(From.getArmyPower() > 1 && (From.getArmyPower()-movingArmy>=1)){
-					From.setArmyPower(From.getArmyPower() - movingArmy);
-					To.setArmyPower(To.getArmyPower() + movingArmy);
-					System.out.println(username + " is Moving " + movingArmy + " units from " + From.getName() + " to " + To.getName());
-				}
-				else{
-					System.out.println(moveFrom + " doesn't have enough units to move " + movingArmy + " units to another territory. You must leave at least one behind.");
-					Action(a, board);
-					break;
-				}
-				break;
 
+				System.out.println(username + " is Moving __ units from __ to __");
+
+				//from.armyPower - amt
+				//to.armyPower
+				break;
 			case ATTACK:
 				System.out.println("Which territory are you attacking from?");
 				String attackFrom = sc.nextLine();
-				if(checkInput(attackFrom, board)){
-				    From = board.getCountryByName(attackFrom);
-                }
-                else {Action(a, board); break;}
-
-
 				System.out.println("Which territory are you attacking?");
-                String attackTo = sc.nextLine();
-                if(board.getCountryByName(attackTo) == null){
-                    System.out.println("That territory doesn't exist, try again.");
-                    Action(a, board); break;
-                }
-                else if(!board.checkAdjacency(attackFrom, attackTo)) {
-                    System.out.println("These territories are not adjacent, please try again");
-                    Action(a, board);
-                    break;
-                }
-                else if(board.getOccupant(attackTo).username == username){
-                    System.out.println("That territory belongs to you, you can't attack it, try again.");
-                    Action(a, board);
-                    break;
-                }
-                else{
-                    To = board.getCountryByName(attackTo);
-                }
-
-
+				String attackTo = sc.nextLine();
 				System.out.println("How many units are you attacking with?");
 				int attackingArmy = sc.nextInt();
 				sc.nextLine();
 				//remove attackingArmy from the total territory armies at the start of the battle, then add it back if there are any left afterwards.
-                From.setArmyPower(From.getArmyPower()-attackingArmy);
 
-				String attackedUsername=To.getUser().username;
-				int attackedTerritoryArmyAmount=To.getArmyPower();
+				String attackedUsername="";
+				int attackedTerritoryArmyAmount=0;
 
 				System.out.println(attackedUsername + " how many units would you like to defend with? You have " + attackedTerritoryArmyAmount);
 				int defendingArmy = sc.nextInt();
 
-				System.out.println(username + " is Attacking " + To.getName() + " from " + From.getName() + " with " + attackingArmy + " units\n" + attackedUsername + " is defending with " + defendingArmy);
+				System.out.println(username + " is Attacking __ from __ with __ units\n" + attackedUsername + " is defending with " + defendingArmy);
 				int[] p1DiceRolls = new int[attackingArmy];
 				int[] p2DiceRolls = new int[defendingArmy];
 				// two sets of dice rolls depending on previous vars
@@ -128,11 +68,16 @@ class User {
 
 				Arrays.sort(p1DiceRolls);
 				Arrays.sort(p2DiceRolls);
-				for(int i = min(defendingArmy-1, attackingArmy); i >= 0; i--){
-					if(p1DiceRolls[attackingArmy - i] > p2DiceRolls[defendingArmy - i])
-						defendingArmy--;
-					else
-						attackingArmy--;
+				if(attackingArmy>defendingArmy || attackingArmy == defendingArmy){
+					for(int i=defendingArmy; i>=0; i--){
+						if(p1DiceRolls[i] > p2DiceRolls[i])
+							defendingArmy--;
+						else
+							attackingArmy--;
+					}
+				}
+				else{
+
 				}
 				//add back attackingArmy and defendingArmy to the territories, then change territory ownership accordingly
 				break;
@@ -144,7 +89,7 @@ class User {
 
 		}
 	} // Move, Battle, Place Army
-
+	*/
 	public User(String name, int startingArmy) {
 		this.username = name;
 		this.armyPower = startingArmy;
@@ -154,18 +99,18 @@ class User {
 		territoriesHeld = new HashMap<String,Territory>();
 		continentsHeld = new HashMap<String,Continent>();
 	}
-	
+
 	public void setTurnPosition(int position) {
 		turnPosition = position;
 	}
 	public int getTurnPosition() {
 		return turnPosition;
 	}
-	
+
 	public int addArmyPower(int p) {
 		if (p < 0)
 			throw new java.lang.IllegalArgumentException();
-		
+
 		armyPower = armyPower + p;
 		return armyPower;
 	}
@@ -173,7 +118,7 @@ class User {
 	public int removeArmyPower(int p) {
 		if (p < 0)
 			throw new java.lang.IllegalArgumentException();
-		
+
 		if (p > armyPower)
 			armyPower = 0;
 
@@ -181,6 +126,14 @@ class User {
 			armyPower = armyPower - p;
 
 		return armyPower;
+	}
+
+	public void setScore(int newScore){
+		score = newScore;
+	}
+
+	public int getScore(){
+		return score;
 	}
 
 	public String getUsername() {
