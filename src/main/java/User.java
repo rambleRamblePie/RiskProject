@@ -93,7 +93,6 @@ public class User {
 	public User(String name, int startingArmy) {
 		this.username = name;
 		this.armyPower = startingArmy;
-		turnPosition = 0;
 		score = 0;
 
 		territoriesHeld = new HashMap<String,Territory>();
