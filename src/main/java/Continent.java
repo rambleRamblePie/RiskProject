@@ -3,11 +3,7 @@ import java.util.*;
 public class Continent {
 
 	private String name;
-<<<<<<< HEAD
-	// private int ID;
-=======
 	private ArrayList<Territory> territories;
->>>>>>> master
 	private int bonusArmy;
 
 

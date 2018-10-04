@@ -608,12 +608,5 @@ public class Main {
         }
 
         System.out.println("Congratulations " + userList[0].getUsername() + " on winning the game of Risk!");
-<<<<<<< HEAD
-
-        //GameSetup game = new GameSetup(numPlayers, playerNames);
-        // game.playGame(); or create another class to actually handle the game
-        
-=======
->>>>>>> master
     }
 }
