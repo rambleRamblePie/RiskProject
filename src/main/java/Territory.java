@@ -5,28 +5,6 @@ public class Territory {
 	private String name;
 	private ArrayList<Territory> adjacentTerritories;
 	private Continent continent;
-<<<<<<< HEAD
-	
-	private User occupyingUser;
-	private int armyPower;
-	
-	
-	Territory(Continent c, String n, int line) {
-		continent = c;
-		name = n;
-		
-		// read in adjacentTerritories from the specified line in the adjacentTerritories data file
-		
-		occupyingUser = null;
-		armyPower = 0;
-	}
-	
-	
-	// public int getID () { return ID; }
-	
-	public ArrayList<Territory> getAdjacentTerritories() {
-		throw new java.lang.UnsupportedOperationException();
-=======
 	private boolean occupied;
 	private User userControlling;
 	private int armyPower;
@@ -46,18 +24,9 @@ public class Territory {
 	// Checking if we can attack
 	public ArrayList<Territory> getAdjacentTerritories() {
 		return adjacentTerritories;
->>>>>>> master
 	}
 
 	public void setOccupyingUser(User user) {
-<<<<<<< HEAD
-		this.occupant = user;
-	public void setNumArmies(int armies){
-		armyPower = armies;
-	}
-	public User getOccupyingUser() {
-		return occupyingUser;
-=======
 		this.userControlling = user;
 	}
 	
@@ -70,7 +39,6 @@ public class Territory {
 
 	public User getUser() {
 		return userControlling;
->>>>>>> master
 	}
 
 	public void setArmyPower(int n) {
