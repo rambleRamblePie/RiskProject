@@ -14,6 +14,7 @@ How to compile and run test cases: `mvn test`
 How to run the program: `java -cp target/risk-game-0.1.jar Main`
 Both require you to be in the root directory.
 
+for undo:
 http://gameprogrammingpatterns.com/command.html
 https://matt.berther.io/2004/09/16/using-the-command-pattern-for-undo-functionality/
 
