@@ -7,7 +7,7 @@ class GameSetup {
 	private int startingArmyPowerPerPlayer;
 	private ArrayList<User> players;
 	
-	GameSetup(int nPlayers, ArrayList<String> names) {
+	GameSetup(int nPlayers, String[] names) {
 		world = new World();
 		numPlayers = nPlayers;
 		int armyLeftToPlaceTotal;
@@ -35,7 +35,7 @@ class GameSetup {
 		// create players
 		players = new ArrayList<User>();
 		for (int i = 0; i < numPlayers; i++) {
-			players.add(new User(names.get(i), startingArmyPowerPerPlayer));
+			players.add(new User(names[i], startingArmyPowerPerPlayer));
 		}
 		
 		determineTurns();
