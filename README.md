@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 # RiskProject ![](https://travis-ci.com/AlexMilligan/RiskProject.svg?token=w9mHzsjxCWQjxg31ooki&branch=master)<br>
 Todo: change url of the image above
+=======
+# RiskProject [![Build Status](https://travis-ci.com/rambleRamblePie/RiskProject.svg?branch=master)](https://travis-ci.com/rambleRamblePie/RiskProject)<br>
+>>>>>>> master
 This repository holds project 1 of **TeamHAL** from COSC 4353 Software Design
 
 https://docs.google.com/document/d/1d5d2bB72MDlnfXZmAud7WaaHd31uRfvRchUe9y6lsEA/edit?usp=sharing
@@ -16,7 +20,6 @@ https://matt.berther.io/2004/09/16/using-the-command-pattern-for-undo-functional
 
 Updates - 
 -----------------
-Todo: Correct the TravisCI badge and figure out why Maven builds successfully, but TravisCI is not showing
 
 Todo: Add more Maven test cases
 
