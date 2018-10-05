@@ -12,10 +12,10 @@ class User {
 	private HashMap<String,Continent> continentsHeld;
 
 	public enum Actions {
-		MOVE, ATTACK, PLACE_ARMY, END_TURN
+		MOVE, ATTACK, PLACE_ARMY
 	}
 
-	private boolean checkOwnership(String territoryName, Board board) {
+	private boolean checkInput(String territoryName, Board board) {
 		if(board.getCountryByName(territoryName) == null){
 			System.out.println("That territory doesn't exist, try again.");
 			return false;
@@ -37,14 +37,14 @@ class User {
 				Territory To;
 				System.out.println( username + " which territory would you like to move from?");
 				String moveFrom = sc.nextLine();
-				if(checkOwnership(moveFrom, board)){
+				if(checkInput(moveFrom, board)){
 					From = board.getCountryByName(moveFrom);
 				}
 				else{Action(a, board); break;}
 
 				System.out.println("Which territory would you like to move to?");
 				String moveTo = sc.nextLine();
-				if(checkOwnership(moveTo, board)){
+				if(checkInput(moveTo, board)){
 					if(!board.checkAdjacency(moveFrom, moveTo)) {
 						System.out.println("These territories are not adjacent, please try again");
 						Action(a, board);
@@ -71,9 +71,9 @@ class User {
 				break;
 
 			case ATTACK:
-				System.out.println(username + " which territory are you attacking from?");
+				System.out.println("Which territory are you attacking from?");
 				String attackFrom = sc.nextLine();
-				if(checkOwnership(attackFrom, board)){
+				if(checkInput(attackFrom, board)){
 				    From = board.getCountryByName(attackFrom);
                 }
                 else {Action(a, board); break;}
@@ -100,33 +100,19 @@ class User {
                 }
 
 
-				System.out.println("How many units are you attacking with? You can attack with up to 3.");
+				System.out.println("How many units are you attacking with?");
 				int attackingArmy = sc.nextInt();
 				sc.nextLine();
-				if(attackingArmy >3){
-				    System.out.println("You can only attack with 3 or less units.");
-				    Action(a,board);
-				    break;
-                }
-                else {
-                    //remove attackingArmy from the total territory armies at the start of the battle, then add it back if there are any left afterwards.
-                    From.setArmyPower(From.getArmyPower() - attackingArmy);
-                }
+				//remove attackingArmy from the total territory armies at the start of the battle, then add it back if there are any left afterwards.
+                From.setArmyPower(From.getArmyPower()-attackingArmy);
 
 				String attackedUsername=To.getUser().username;
 				int attackedTerritoryArmyAmount=To.getArmyPower();
 
-				System.out.println(attackedUsername + " how many units would you like to defend with? You have " + attackedTerritoryArmyAmount + ", and you can defend with up to 2 units.");
+				System.out.println(attackedUsername + " how many units would you like to defend with? You have " + attackedTerritoryArmyAmount);
 				int defendingArmy = sc.nextInt();
-                if(defendingArmy >2){
-                    System.out.println("You can only attack with 3 or less units.");
-                    Action(a,board);
-                    break;
-                }
-                To.setArmyPower(To.getArmyPower() - defendingArmy);
 
-
-				System.out.println(username + " is Attacking " + To.getName() + " from " + From.getName() + " with " + attackingArmy + " units\n" + attackedUsername + " is defending with " + defendingArmy + ".");
+				System.out.println(username + " is Attacking " + To.getName() + " from " + From.getName() + " with " + attackingArmy + " units\n" + attackedUsername + " is defending with " + defendingArmy);
 				int[] p1DiceRolls = new int[attackingArmy];
 				int[] p2DiceRolls = new int[defendingArmy];
 				// two sets of dice rolls depending on previous vars
@@ -142,50 +128,16 @@ class User {
 
 				Arrays.sort(p1DiceRolls);
 				Arrays.sort(p2DiceRolls);
-				if(attackingArmy>defendingArmy || attackingArmy == defendingArmy){
-					for(int i=defendingArmy-1; i>=0; i--){
-						if(p1DiceRolls[i] > p2DiceRolls[i]) {
-							defendingArmy--;
-							System.out.println("Dice roll p1: " + p1DiceRolls[i] + "\nDice roll p2: " + p2DiceRolls[i]);
-							System.out.println(attackedUsername + " loses a battle, and one unit is destroyed.");
-							if(defendingArmy==0)
-								break;
-						}
-						else {
-							attackingArmy--;
-							System.out.println("Dice roll p1: " + p1DiceRolls[i] + "\nDice roll p2: " + p2DiceRolls[i]);
-							System.out.println(username + " loses a battle, and one unit is destroyed.");
-						}
-					}
+				for(int i = min(defendingArmy-1, attackingArmy); i >= 0; i--){
+					if(p1DiceRolls[attackingArmy - i] > p2DiceRolls[defendingArmy - i])
+						defendingArmy--;
+					else
+						attackingArmy--;
 				}
-				else{
-
-				}
-				System.out.println("\n" + username + " has " + attackingArmy + " attacking units left, and " + (attackingArmy + From.getArmyPower()) + " total units left in " + From.getName() +".");
-
-				if(defendingArmy==0){
-					To.setOccupyingUser(this);
-					To.setArmyPower(attackingArmy);
-					System.out.println(To.getUser().username + " now has control of " + To.getName() + " and moved " + attackingArmy + " units to the new territory.");
-
-				}
-				else{
-					From.setArmyPower(From.getArmyPower() + attackingArmy);
-					System.out.println(username +  " has " + (From.getArmyPower()) + " total units left in " + From.getName() + ".");
-					To.setArmyPower(To.getArmyPower() + defendingArmy);
-					System.out.println(attackedUsername +  " has " + (To.getArmyPower()) + " total units left in " + To.getName() + ".");
-				}
+				//add back attackingArmy and defendingArmy to the territories, then change territory ownership accordingly
 				break;
 			case PLACE_ARMY:
-				System.out.println("Which territory would you like to place an army at?");
-				String placeAtName = sc.nextLine();
-				Territory placeAt = board.getCountryByName(placeAtName);
-				if(!checkOwnership(placeAtName, board)){ Action(a, board); break; }
-				else{
-				System.out.println(username + " is placing an army at " + placeAt.getName());
-				placeAt.setArmyPower(placeAt.getArmyPower()+1);
-				System.out.println(placeAt.getName() + " has " + placeAt.getArmyPower() + " total units.");
-			}
+				System.out.println(username + " is placing an army at__");
 				//this is a comment
 				break;
 
