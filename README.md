@@ -19,6 +19,7 @@ Updates -
 Todo: I am working on the Twitter API --Aaron
 
 Todo: Add more Maven test cases
+
 Todo: The Deck and Hand classes need to be worked on
 
 10-04-2018: v0.3 Tagged. Everything working --Aaron
