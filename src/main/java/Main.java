@@ -82,10 +82,10 @@ public class Main {
                 break;
             default: // throw invalid input error (because nPlayers should already be checked in the calling function)
         }
-        
-        // GameSetup game = new GameSetup(numPlayers, playerNames);
-        // World world = game.getWorld();
-        // game.playGame(); or create another class to actually handle the game
+        // Will do later
+        //GameSetup game = new GameSetup(numPlayers, playerNames);
+		//World world = game.getWorld();
+		// game.playGame(); or create another class to actually handle the game
 
         Board board = new Board();
         board.setupBoard();
