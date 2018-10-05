@@ -30,3 +30,5 @@ target/
 .project
 .classpath
 *.prefs
+.vscode/tasks.json
+.vscode/launch.json
