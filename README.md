@@ -16,11 +16,11 @@ https://matt.berther.io/2004/09/16/using-the-command-pattern-for-undo-functional
 
 Updates - 
 -----------------
-
+Todo: I am working on the Twitter API --Aaron
 Todo: Add more Maven test cases
-
 Todo: The Deck and Hand classes need to be worked on
 
+10-04-2018: v0.3 Tagged. Everything working --Aaron
 09-23-2018: New Maven Dependencies have been added the the pom.xml file. Be sure to add them in IntelliJ --Aaron
 09-23-2018: Territories and Continents are now spawning correctly. The overall driver of the program is working --Aaron
 09-22-2018: Chaning the structure of the program slightly. Players are being spawned and accounted for correctly --Aaron
