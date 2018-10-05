@@ -12,7 +12,7 @@ class User {
 	private HashMap<String,Continent> continentsHeld;
 
 	public enum Actions {
-		MOVE, ATTACK, PLACE_ARMY
+		MOVE, ATTACK, PLACE_ARMY, END_TURN
 	}
 
 	private boolean checkOwnership(String territoryName, Board board) {
@@ -162,11 +162,18 @@ class User {
 
 				}
 				System.out.println("\n" + username + " has " + attackingArmy + " attacking units left, and " + (attackingArmy + From.getArmyPower()) + " total units left in " + From.getName() +".");
-				System.out.println(attackedUsername +  " has " + (To.getArmyPower() + defendingArmy) + " total units left in " + To.getName() + ".");
+
 				if(defendingArmy==0){
 					To.setOccupyingUser(this);
-					System.out.println(To.getUser().username + " now has control of " + To.getName());
+					To.setArmyPower(attackingArmy);
+					System.out.println(To.getUser().username + " now has control of " + To.getName() + " and moved " + attackingArmy + " units to the new territory.");
 
+				}
+				else{
+					From.setArmyPower(From.getArmyPower() + attackingArmy);
+					System.out.println(username +  " has " + (From.getArmyPower()) + " total units left in " + From.getName() + ".");
+					To.setArmyPower(To.getArmyPower() + defendingArmy);
+					System.out.println(attackedUsername +  " has " + (To.getArmyPower()) + " total units left in " + To.getName() + ".");
 				}
 				break;
 			case PLACE_ARMY:
