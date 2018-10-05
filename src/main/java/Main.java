@@ -573,6 +573,8 @@ public class Main {
         // WHEN TESTING ON INTELLIJ YOU MUST STOP THE PROGRAM MANUALLY AS THIS IS AN INFINITE LOOP RIGHT NOW
         while((userList.length) != 1)
         {
+            if (userList.length != 1) break; // remove this line when the loop is implemented
+
             // Loop through each players turn. They must attack for right now
             for(int i = 0; i < (userList.length); i++)
             {
