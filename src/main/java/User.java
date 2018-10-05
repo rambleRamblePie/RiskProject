@@ -173,11 +173,12 @@ class User {
 				Territory placeAt = board.getCountryByName(placeAtName);
 				if(!checkOwnership(placeAtName, board)){ Action(a, board); break; }
 				else{
-				System.out.println(username + " is placing an army at " + placeAt.getName());
-				placeAt.setArmyPower(placeAt.getArmyPower()+1);
-				System.out.println(placeAt.getName() + " has " + placeAt.getArmyPower() + " total units.");
-			}
-				//this is a comment
+					System.out.println(username + " is placing an army at " + placeAt.getName());
+					placeAt.setArmyPower(placeAt.getArmyPower()+1);
+					System.out.println(placeAt.getName() + " has " + placeAt.getArmyPower() + " total units.");
+				}
+				break;
+			case END_TURN:
 				break;
 
 
