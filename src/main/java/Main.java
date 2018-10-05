@@ -9,18 +9,22 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
-import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException{
+
+        // Amazon credentials and setup
         AWSCredentials credentials = new BasicAWSCredentials("AKIAJQYY2YE4M74K6QKA", "JwPOCJChu73jsJehEUfoiA5lmsH0rQky7o4uvhGw");
         AmazonS3 s3client = new AmazonS3Client(credentials);
+
+        // Grabbing correct file
         File currentDir = new File(".");
         File parentDir = currentDir.getAbsoluteFile();
-        File newFile = new File(parentDir + "/src/resources/replay.txt");
-        PrintWriter writer = new PrintWriter(newFile);
+        File myFile = new File(parentDir + "/src/resources/replay.txt");
+
+        // Used to write to file for upload
+        PrintWriter writer = new PrintWriter(myFile);
 
         boolean attackFlag;
         int controlledNum = 0;
@@ -661,6 +665,7 @@ public class Main {
                         attackFlag = false;
                         break;
                     }
+                    // Pushing to Amazon
                     s3client.putObject(new PutObjectRequest("risk-game4353", "Replay", new File(parentDir + "/src/resources/replay.txt")));
                 }
 
