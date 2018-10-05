@@ -1,3 +1,5 @@
+// we probably should rename the file to Card.java
+
 class Card {
 	
     //we may have to manually make each card and put it in an arraylist. no big deal
