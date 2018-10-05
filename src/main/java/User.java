@@ -113,10 +113,10 @@ class User {
                     From.setArmyPower(From.getArmyPower() - attackingArmy);
                 }
 
-				String attackedUsername=To.getUser().username;
+				String defenderUsername=To.getUser().username;
 				int attackedTerritoryArmyAmount=To.getArmyPower();
 
-				System.out.println(attackedUsername + " how many units would you like to defend with? You have " + attackedTerritoryArmyAmount + ", and you can defend with up to 2 units.");
+				System.out.println(defenderUsername + " how many units would you like to defend with? You have " + attackedTerritoryArmyAmount + ", and you can defend with up to 2 units.");
 				int defendingArmy = sc.nextInt();
                 if(defendingArmy >2){
                     System.out.println("You can only attack with 3 or less units.");
@@ -126,42 +126,33 @@ class User {
                 To.setArmyPower(To.getArmyPower() - defendingArmy);
 
 
-				System.out.println(username + " is Attacking " + To.getName() + " from " + From.getName() + " with " + attackingArmy + " units\n" + attackedUsername + " is defending with " + defendingArmy + ".");
-				int[] p1DiceRolls = new int[attackingArmy];
-				int[] p2DiceRolls = new int[defendingArmy];
+				System.out.println(username + " is Attacking " + To.getName() + " from " + From.getName() + " with " + attackingArmy + " units,\n" + defenderUsername + " is defending with " + defendingArmy + ".\n");
+				int[] attackerDiceRolls = new int[attackingArmy];
+				int[] DefenderDiceRolls = new int[defendingArmy];
 				// two sets of dice rolls depending on previous vars
 				Dice d = new Dice();
 				for(int i=0; i<attackingArmy; i++){
 					d.roll();
-					p1DiceRolls[i] = d.getFaceValue();
+					attackerDiceRolls[i] = d.getFaceValue();
 				}
 				for(int i = 0; i< defendingArmy; i++){
 					d.roll();
-					p2DiceRolls[i] = d.getFaceValue();
+					DefenderDiceRolls[i] = d.getFaceValue();
 				}
 
-				Arrays.sort(p1DiceRolls);
-				Arrays.sort(p2DiceRolls);
-				if(attackingArmy>defendingArmy || attackingArmy == defendingArmy){
-					for(int i=defendingArmy-1; i>=0; i--){
-						if(p1DiceRolls[i] > p2DiceRolls[i]) {
-							defendingArmy--;
-							System.out.println("Dice roll p1: " + p1DiceRolls[i] + "\nDice roll p2: " + p2DiceRolls[i]);
-							System.out.println(attackedUsername + " loses a battle, and one unit is destroyed.");
-							if(defendingArmy==0)
-								break;
-						}
-						else {
-							attackingArmy--;
-							System.out.println("Dice roll p1: " + p1DiceRolls[i] + "\nDice roll p2: " + p2DiceRolls[i]);
-							System.out.println(username + " loses a battle, and one unit is destroyed.");
-						}
+				Arrays.sort(attackerDiceRolls);
+				Arrays.sort(DefenderDiceRolls);
+				for(int i = Math.min(defendingArmy, attackingArmy); i > 0; i--){
+					if(attackerDiceRolls[attackingArmy - i] > DefenderDiceRolls[defendingArmy - i]) {
+						defendingArmy--;
+						System.out.println(defenderUsername + " loses a battle, and one unit is destroyed.");
+					}
+					else {
+						attackingArmy--;
+						System.out.println(username + " loses a battle, and one unit is destroyed.");
 					}
 				}
-				else{
-
-				}
-				System.out.println("\n" + username + " has " + attackingArmy + " attacking units left, and " + (attackingArmy + From.getArmyPower()) + " total units left in " + From.getName() +".");
+				//System.out.println("\n" + username + " has " + attackingArmy + " attacking units left, and " + (attackingArmy + From.getArmyPower()) + " total units left in " + From.getName() +".");
 
 				if(defendingArmy==0){
 					To.setOccupyingUser(this);
@@ -173,7 +164,7 @@ class User {
 					From.setArmyPower(From.getArmyPower() + attackingArmy);
 					System.out.println(username +  " has " + (From.getArmyPower()) + " total units left in " + From.getName() + ".");
 					To.setArmyPower(To.getArmyPower() + defendingArmy);
-					System.out.println(attackedUsername +  " has " + (To.getArmyPower()) + " total units left in " + To.getName() + ".");
+					System.out.println(defenderUsername +  " has " + (To.getArmyPower()) + " total units left in " + To.getName() + ".");
 				}
 				break;
 			case PLACE_ARMY:
