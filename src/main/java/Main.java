@@ -3,9 +3,26 @@ import java.util.*;
 import java.util.List;
 import java.io.PrintWriter;
 import java.io.File;
+import java.io.*;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException{
+        AWSCredentials credentials = new BasicAWSCredentials("AKIAJQYY2YE4M74K6QKA", "JwPOCJChu73jsJehEUfoiA5lmsH0rQky7o4uvhGw");
+        AmazonS3 s3client = new AmazonS3Client(credentials);
+        File currentDir = new File(".");
+        File parentDir = currentDir.getAbsoluteFile();
+        File newFile = new File(parentDir + "/src/resources/replay.txt");
+        PrintWriter writer = new PrintWriter(newFile);
+
+        boolean attackFlag;
         int controlledNum = 0;
         User[] userList;
         Scanner sc = new Scanner(System.in);
@@ -568,12 +585,19 @@ public class Main {
         // More Testing
         System.out.println(userList[0].getUsername());
 
+        Scanner attack = new Scanner(System.in);
+        Scanner attackRedo = new Scanner(System.in);
+        Scanner attackAmt = new Scanner(System.in);
+
+        // Testing for now
+        board.getTerritoryName("Alaska").setArmyPower(20);
+        board.getTerritoryName("Quebec").setArmyPower(20);
+
         // Game flag. Remove players from array who do not have territories. When one is left, he wins and game ends
 
         // WHEN TESTING ON INTELLIJ YOU MUST STOP THE PROGRAM MANUALLY AS THIS IS AN INFINITE LOOP RIGHT NOW
         while((userList.length) != 1)
         {
-            if (userList.length != 1) break; // remove this line when the loop is implemented
 
             // Loop through each players turn. They must attack for right now
             for(int i = 0; i < (userList.length); i++)
@@ -595,6 +619,51 @@ public class Main {
                 // Check if current player's HashMap size is equal to 0
                 // If it is equal to 0, remove them from userList
                 // Shuffle main card deck
+                attackFlag = true;
+                while(attackFlag = true)
+                {
+                    //prompt user for country to attack
+                    System.out.println(userList[i].getUsername() + ", what territory would you like to attack?");
+                    String attackChoice = attack.nextLine();
+                    User user1 = userList[i];
+                    User user2 = board.getTerritoryName(attackChoice).getUser();
+
+                    System.out.println("Enter the number of armies attacking: ");
+                    int amount = attackAmt.nextInt();
+
+                    // Write to file
+                    writer.println(user1 + " is attacking with " + amount + " of armies");
+
+                    user2.removeArmyPower(amount);
+                    board.getTerritoryName(attackChoice).decrementArmies(amount);
+                    System.out.println("Territory " + board.getTerritoryName(attackChoice).getTerritory() + " now has " +
+                                        board.getTerritoryName(attackChoice).getArmyPower() + " armies remaining");
+
+                    writer.println(user2 + " has lost " + amount + " of armies in " + board.getTerritoryName(attackChoice).getTerritory());
+
+                    // Check if they would like to undo
+                    System.out.println("Would you like to undo this action?");
+                    String attackUndoCheck = attackRedo.nextLine();
+
+                    if(attackUndoCheck.equals("Yes"))
+                    {
+                        writer.println(user1 + " is undoing there actions, resetting armies to previous");
+                        user2.addArmyPower(amount);
+                        System.out.println("User 2's army power: " + user2.getArmyPower());
+
+                        board.getTerritoryName(attackChoice).incrementArmies(amount);
+                        System.out.println(board.getTerritoryName(attackChoice).getTerritory() + "'s army power has increased to " +
+                                                                        board.getTerritoryName(attackChoice).getArmyPower());
+                    }
+
+                    else if(attackUndoCheck.equals("No"))
+                    {
+                        attackFlag = false;
+                        break;
+                    }
+                    s3client.putObject(new PutObjectRequest("risk-game4353", "Replay", new File(parentDir + "/src/resources/replay.txt")));
+                }
+
 
                 // During actions of the game, per each player, we will also write a line to a text file
                 // This text file will be uploaded to our Amazon S3 Bucket so we can see the replays of our game
