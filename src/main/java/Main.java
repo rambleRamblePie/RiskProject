@@ -3,26 +3,9 @@ import java.util.*;
 import java.util.List;
 import java.io.PrintWriter;
 import java.io.File;
-import java.io.*;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.AmazonS3Exception;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException{
-        AWSCredentials credentials = new BasicAWSCredentials("AKIAJQYY2YE4M74K6QKA", "JwPOCJChu73jsJehEUfoiA5lmsH0rQky7o4uvhGw");
-        AmazonS3 s3client = new AmazonS3Client(credentials);
-        File currentDir = new File(".");
-        File parentDir = currentDir.getAbsoluteFile();
-        File newFile = new File(parentDir + "/src/resources/replay.txt");
-        PrintWriter writer = new PrintWriter(newFile);
-
-        boolean attackFlag;
+    public static void main(String[] args) {
         int controlledNum = 0;
         User[] userList;
         Scanner sc = new Scanner(System.in);
@@ -89,516 +72,511 @@ public class Main {
         {
             // Add player 1's countries to HashMap
             userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
-            userList[0].addTerritory(board.getTerritoryName("Alaska"));
-            board.setUserOccupant("Alaska", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("NorthwestTerritory"));
-            board.setUserOccupant("NorthwestTerritory", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Greenland"));
-            board.setUserOccupant("Greenland", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Alberta"));
-            board.setUserOccupant("Alberta", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Ontario"));
-            board.setUserOccupant("Ontario", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Venezuela"));
-            board.setUserOccupant("Venezuela", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Brazil"));
-            board.setUserOccupant("Brazil", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("NorthAfrica"));
-            board.setUserOccupant("NorthAfrica", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Egypt"));
-            board.setUserOccupant("Egypt", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("EastAfrica"));
-            board.setUserOccupant("EastAfrica", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("NorthernEurope"));
-            board.setUserOccupant("NorthernEurope", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("SouthernEurope"));
-            board.setUserOccupant("SouthernEurope", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("WesternEurope"));
-            board.setUserOccupant("WesternEurope", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Indonesia"));
-            board.setUserOccupant("Indonesia", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("NewGuinea"));
-            board.setUserOccupant("NewGuinea", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("WesternAustralia"));
-            board.setUserOccupant("WesternAustralia", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Siam"));
-            board.setUserOccupant("Siam", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("India"));
-            board.setUserOccupant("India", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("China"));
-            board.setUserOccupant("China", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Mongolia"));
-            board.setUserOccupant("Mongolia", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Peru"));
-            board.setUserOccupant("Peru", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Alaska"));
+            board.setOccupant("Alaska", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("NorthwestTerritory"));
+            board.setOccupant("NorthwestTerritory", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Greenland"));
+            board.setOccupant("Greenland", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Alberta"));
+            board.setOccupant("Alberta", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Ontario"));
+            board.setOccupant("Ontario", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Venezuela"));
+            board.setOccupant("Venezuela", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("MiddleEast"));
+            board.setOccupant("MiddleEast", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("NorthAfrica"));
+            board.setOccupant("NorthAfrica", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Egypt"));
+            board.setOccupant("Egypt", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("EastAfrica"));
+            board.setOccupant("EastAfrica", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("NorthernEurope"));
+            board.setOccupant("NorthernEurope", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("SouthernEurope"));
+            board.setOccupant("SouthernEurope", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("WesternEurope"));
+            board.setOccupant("WesternEurope", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Indonesia"));
+            board.setOccupant("Indonesia", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("NewGuinea"));
+            board.setOccupant("NewGuinea", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("WesternAustralia"));
+            board.setOccupant("WesternAustralia", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Siam"));
+            board.setOccupant("Siam", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("India"));
+            board.setOccupant("India", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("China"));
+            board.setOccupant("China", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Mongolia"));
+            board.setOccupant("Mongolia", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Peru"));
+            board.setOccupant("Peru", userList[0]);
 
             // Add player 2's countries to HashMap
             userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
-            userList[1].addTerritory(board.getTerritoryName("Quebec"));
-            board.setUserOccupant("Quebec", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("WesternUnitedStates"));
-            board.setUserOccupant("WesternUnitedStates", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("EasternUnitedStates"));
-            board.setUserOccupant("EasternUnitedStates", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("CentralAmerica"));
-            board.setUserOccupant("CentralAmerica", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Argentina"));
-            board.setUserOccupant("Argentina", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Congo"));
-            board.setUserOccupant("Congo", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("SouthAfrica"));
-            board.setUserOccupant("SouthAfrica", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Madagascar"));
-            board.setUserOccupant("Madagascar", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Iceland"));
-            board.setUserOccupant("Iceland", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Scandinavia"));
-            board.setUserOccupant("Scandinavia", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Ukraine"));
-            board.setUserOccupant("Ukraine", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("GreatBritian"));
-            board.setUserOccupant("GreatBritian", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("EasternAustralia"));
-            board.setUserOccupant("EasternAustralia", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Japan"));
-            board.setUserOccupant("Japan", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Irkutsk"));
-            board.setUserOccupant("Irkutsk", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Yakutsk"));
-            board.setUserOccupant("Yakutsk", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Kamchatka"));
-            board.setUserOccupant("Kamchatka", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Siberia"));
-            board.setUserOccupant("Siberia", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Afghanistan"));
-            board.setUserOccupant("Afghanistan", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Ural"));
-            board.setUserOccupant("Ural", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("MiddleEast"));
-            board.setUserOccupant("MiddleEast", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Quebec"));
+            board.setOccupant("Quebec", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("WesternUnitedStates"));
+            board.setOccupant("WesternUnitedStates", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("EasternUnitedStates"));
+            board.setOccupant("EasternUnitedStates", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("CentralAmerica"));
+            board.setOccupant("CentralAmerica", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Argentina"));
+            board.setOccupant("Argentina", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Congo"));
+            board.setOccupant("Congo", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("SouthAfrica"));
+            board.setOccupant("SouthAfrica", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Madagascar"));
+            board.setOccupant("Madagascar", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Iceland"));
+            board.setOccupant("Iceland", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Scandinavia"));
+            board.setOccupant("Scandinavia", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Ukraine"));
+            board.setOccupant("Ukraine", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("GreatBritian"));
+            board.setOccupant("GreatBritian", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("EasternAustralia"));
+            board.setOccupant("EasternAustralia", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Japan"));
+            board.setOccupant("Japan", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Irkutsk"));
+            board.setOccupant("Irkutsk", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Yakutsk"));
+            board.setOccupant("Yakutsk", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Kamchatka"));
+            board.setOccupant("Kamchatka", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Siberia"));
+            board.setOccupant("Siberia", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Afghanistan"));
+            board.setOccupant("Afghanistan", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Ural"));
+            board.setOccupant("Ural", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Brazil"));
+            board.setOccupant("Brazil", userList[1]);
 
             // Test
-            System.out.println(board.getTerritoryName("Alaska").getUser());
-            System.out.println(board.getTerritoryName("Siberia").getUser());
+            System.out.println(board.getCountryByName("Alaska").getUser());
+            System.out.println(board.getCountryByName("Siberia").getUser());
         }
         else if(numPlayers == 3)
         {
             // Add player 1's countries to HashMap
             userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
 
-            userList[0].addTerritory(board.getTerritoryName("Alaska"));
-            board.setUserOccupant("Alaska", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("NorthwestTerritory"));
-            board.setUserOccupant("NorthwestTerritory", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Greenland"));
-            board.setUserOccupant("Greenland", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Alberta"));
-            board.setUserOccupant("Alberta", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Ontario"));
-            board.setUserOccupant("Ontario", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Venezuela"));
-            board.setUserOccupant("Venezuela", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Brazil"));
-            board.setUserOccupant("Brazil", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Irkutsk"));
-            board.setUserOccupant("Irkutsk", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Yakutsk"));
-            board.setUserOccupant("Yakutsk", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Kamchatka"));
-            board.setUserOccupant("Kamchatka", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Siberia"));
-            board.setUserOccupant("Siberia", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Afghanistan"));
-            board.setUserOccupant("Afghanistan", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Ural"));
-            board.setUserOccupant("Ural", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("MiddleEast"));
-            board.setUserOccupant("MiddleEast", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Alaska"));
+            board.setOccupant("Alaska", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("NorthwestTerritory"));
+            board.setOccupant("NorthwestTerritory", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Greenland"));
+            board.setOccupant("Greenland", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Alberta"));
+            board.setOccupant("Alberta", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Ontario"));
+            board.setOccupant("Ontario", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Venezuela"));
+            board.setOccupant("Venezuela", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Brazil"));
+            board.setOccupant("Brazil", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Irkutsk"));
+            board.setOccupant("Irkutsk", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Yakutsk"));
+            board.setOccupant("Yakutsk", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Kamchatka"));
+            board.setOccupant("Kamchatka", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Siberia"));
+            board.setOccupant("Siberia", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Afghanistan"));
+            board.setOccupant("Afghanistan", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Ural"));
+            board.setOccupant("Ural", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("MiddleEast"));
+            board.setOccupant("MiddleEast", userList[0]);
 
             // Add player 2's countries to HashMap
             userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
-            userList[1].addTerritory(board.getTerritoryName("Quebec"));
-            board.setUserOccupant("Quebec", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("WesternUnitedStates"));
-            board.setUserOccupant("WesternUnitedStates", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("EasternUnitedStates"));
-            board.setUserOccupant("EasternUnitedStates", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("CentralAmerica"));
-            board.setUserOccupant("CentralAmerica", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Argentina"));
-            board.setUserOccupant("Argentina", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Congo"));
-            board.setUserOccupant("Congo", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("SouthAfrica"));
-            board.setUserOccupant("SouthAfrica", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Madagascar"));
-            board.setUserOccupant("Madagascar", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Iceland "));
-            board.setUserOccupant("Iceland ", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Scandinavia"));
-            board.setUserOccupant("Scandinavia", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Ukraine"));
-            board.setUserOccupant("Ukraine", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("GreatBritian"));
-            board.setUserOccupant("GreatBritian", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("EasternAustralia"));
-            board.setUserOccupant("EasternAustralia", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Japan"));
-            board.setUserOccupant("Japan", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Quebec"));
+            board.setOccupant("Quebec", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("WesternUnitedStates"));
+            board.setOccupant("WesternUnitedStates", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("EasternUnitedStates"));
+            board.setOccupant("EasternUnitedStates", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("CentralAmerica"));
+            board.setOccupant("CentralAmerica", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Argentina"));
+            board.setOccupant("Argentina", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Congo"));
+            board.setOccupant("Congo", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("SouthAfrica"));
+            board.setOccupant("SouthAfrica", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Madagascar"));
+            board.setOccupant("Madagascar", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Iceland "));
+            board.setOccupant("Iceland ", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Scandinavia"));
+            board.setOccupant("Scandinavia", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Ukraine"));
+            board.setOccupant("Ukraine", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("GreatBritian"));
+            board.setOccupant("GreatBritian", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("EasternAustralia"));
+            board.setOccupant("EasternAustralia", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Japan"));
+            board.setOccupant("Japan", userList[1]);
 
             // Add player 3's countries to HashMap
             userList[2] = new User(playerNames[2], startingArmyPowerPerPlayer);
-            userList[2].addTerritory(board.getTerritoryName("NorthAfrica"));
-            board.setUserOccupant("NorthAfrica", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Egypt"));
-            board.setUserOccupant("Egypt", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("EastAfrica"));
-            board.setUserOccupant("EastAfrica", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("NorthernEurope"));
-            board.setUserOccupant("NorthernEurope", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("SouthernEurope"));
-            board.setUserOccupant("SouthernEurope", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Western0Europe"));
-            board.setUserOccupant("WesternEurope", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Indonesia"));
-            board.setUserOccupant("Indonesia", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("NewGuinea"));
-            board.setUserOccupant("NewGuinea", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("WesternAustralia"));
-            board.setUserOccupant("WesternAustralia", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Siam"));
-            board.setUserOccupant("Siam", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("India"));
-            board.setUserOccupant("India", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("China"));
-            board.setUserOccupant("China", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Mongolia "));
-            board.setUserOccupant("Mongolia ", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Peru"));
-            board.setUserOccupant("Peru", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("NorthAfrica"));
+            board.setOccupant("NorthAfrica", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Egypt"));
+            board.setOccupant("Egypt", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("EastAfrica"));
+            board.setOccupant("EastAfrica", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("NorthernEurope"));
+            board.setOccupant("NorthernEurope", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("SouthernEurope"));
+            board.setOccupant("SouthernEurope", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Western0Europe"));
+            board.setOccupant("WesternEurope", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Indonesia"));
+            board.setOccupant("Indonesia", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("NewGuinea"));
+            board.setOccupant("NewGuinea", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("WesternAustralia"));
+            board.setOccupant("WesternAustralia", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Siam"));
+            board.setOccupant("Siam", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("India"));
+            board.setOccupant("India", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("China"));
+            board.setOccupant("China", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Mongolia "));
+            board.setOccupant("Mongolia ", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Peru"));
+            board.setOccupant("Peru", userList[2]);
 
         }
         else if(numPlayers == 4)
         {
             // Add player 1's countries to HashMap
             userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
-            userList[0].addTerritory(board.getTerritoryName("Alaska"));
-            board.setUserOccupant("Alaska", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("NorthwestTerritory"));
-            board.setUserOccupant("NorthwestTerritory", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Greenland"));
-            board.setUserOccupant("Greenland", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Alberta"));
-            board.setUserOccupant("Alberta", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Madagascar"));
-            board.setUserOccupant("Madagascar", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Iceland"));
-            board.setUserOccupant("Iceland", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Scandinavia"));
-            board.setUserOccupant("Scandinavia", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Ukraine"));
-            board.setUserOccupant("Ukraine", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Japan"));
-            board.setUserOccupant("Japan", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Irkutsk"));
-            board.setUserOccupant("Irkutsk", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("EasternUnitedStates"));
-            board.setUserOccupant("EasternUnitedStates", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Alaska"));
+            board.setOccupant("Alaska", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("NorthwestTerritory"));
+            board.setOccupant("NorthwestTerritory", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Greenland"));
+            board.setOccupant("Greenland", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Alberta"));
+            board.setOccupant("Alberta", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Madagascar"));
+            board.setOccupant("Madagascar", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Iceland"));
+            board.setOccupant("Iceland", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Scandinavia"));
+            board.setOccupant("Scandinavia", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Ukraine"));
+            board.setOccupant("Ukraine", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Japan"));
+            board.setOccupant("Japan", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Irkutsk"));
+            board.setOccupant("Irkutsk", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("EasternUnitedStates"));
+            board.setOccupant("EasternUnitedStates", userList[0]);
 
             // Add player 2's countries to HashMap
             userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
-            userList[1].addTerritory(board.getTerritoryName("NorthernEurope"));
-            board.setUserOccupant("NorthernEurope", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("SouthernEurope"));
-            board.setUserOccupant("SouthernEurope", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("WesternEurope"));
-            board.setUserOccupant("WesternEurope", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Indonesia"));
-            board.setUserOccupant("Indonesia", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("SouthAfrica"));
-            board.setUserOccupant("SouthAfrica", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("GreatBritian"));
-            board.setUserOccupant("GreatBritian", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("EasternAustralia"));
-            board.setUserOccupant("EasternAustralia", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Yakutsk"));
-            board.setUserOccupant("Yakutsk", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Afghanistan"));
-            board.setUserOccupant("Afghanistan", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Ural"));
-            board.setUserOccupant("Ural", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("MiddleEast"));
-            board.setUserOccupant("MiddleEast", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("NorthernEurope"));
+            board.setOccupant("NorthernEurope", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("SouthernEurope"));
+            board.setOccupant("SouthernEurope", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("WesternEurope"));
+            board.setOccupant("WesternEurope", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Indonesia"));
+            board.setOccupant("Indonesia", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("SouthAfrica"));
+            board.setOccupant("SouthAfrica", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("GreatBritian"));
+            board.setOccupant("GreatBritian", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("EasternAustralia"));
+            board.setOccupant("EasternAustralia", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Yakutsk"));
+            board.setOccupant("Yakutsk", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Afghanistan"));
+            board.setOccupant("Afghanistan", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Ural"));
+            board.setOccupant("Ural", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("MiddleEast"));
+            board.setOccupant("MiddleEast", userList[1]);
 
             // Add player 3's countries to HashMap
             userList[2] = new User(playerNames[2], startingArmyPowerPerPlayer);
-            userList[2].addTerritory(board.getTerritoryName("Ontario"));
-            board.setUserOccupant("Ontario", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Venezuela"));
-            board.setUserOccupant("Venezuela", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Brazil"));
-            board.setUserOccupant("Brazil", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("NorthAfrica"));
-            board.setUserOccupant("NorthAfrica", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Egypt"));
-            board.setUserOccupant("Egypt", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("EastAfrica"));
-            board.setUserOccupant("EastAfrica", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Argentina"));
-            board.setUserOccupant("Argentina", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Congo"));
-            board.setUserOccupant("Congo", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Kamchatka"));
-            board.setUserOccupant("Kamchatka", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Siberia"));
-            board.setUserOccupant("Siberia", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Ontario"));
+            board.setOccupant("Ontario", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Venezuela"));
+            board.setOccupant("Venezuela", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Brazil"));
+            board.setOccupant("Brazil", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("NorthAfrica"));
+            board.setOccupant("NorthAfrica", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Egypt"));
+            board.setOccupant("Egypt", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("EastAfrica"));
+            board.setOccupant("EastAfrica", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Argentina"));
+            board.setOccupant("Argentina", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Congo"));
+            board.setOccupant("Congo", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Kamchatka"));
+            board.setOccupant("Kamchatka", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Siberia"));
+            board.setOccupant("Siberia", userList[2]);
 
             // Add player 4's countries to HashMap
             userList[3] = new User(playerNames[3], startingArmyPowerPerPlayer);
-            userList[3].addTerritory(board.getTerritoryName("NewGuinea"));
-            board.setUserOccupant("NewGuinea", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("WesternAustralia"));
-            board.setUserOccupant("WesternAustralia", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("Siam"));
-            board.setUserOccupant("Siam", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("India"));
-            board.setUserOccupant("India", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("China"));
-            board.setUserOccupant("China", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("Mongolia"));
-            board.setUserOccupant("Mongolia", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("Peru"));
-            board.setUserOccupant("Peru", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("Quebec"));
-            board.setUserOccupant("Quebec", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("WesternUnitedStates"));
-            board.setUserOccupant("WesternUnitedStates", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("CentralAmerica"));
-            board.setUserOccupant("CentralAmerica", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("NewGuinea"));
+            board.setOccupant("NewGuinea", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("WesternAustralia"));
+            board.setOccupant("WesternAustralia", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("Siam"));
+            board.setOccupant("Siam", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("India"));
+            board.setOccupant("India", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("China"));
+            board.setOccupant("China", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("Mongolia"));
+            board.setOccupant("Mongolia", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("Peru"));
+            board.setOccupant("Peru", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("Quebec"));
+            board.setOccupant("Quebec", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("WesternUnitedStates"));
+            board.setOccupant("WesternUnitedStates", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("CentralAmerica"));
+            board.setOccupant("CentralAmerica", userList[3]);
         }
         else if(numPlayers == 5)
         {
             // Add player 1's countries to HashMap
             userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
-            userList[0].addTerritory(board.getTerritoryName("Alaska"));
-            board.setUserOccupant("Alaska", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("NorthwestTerritory"));
-            board.setUserOccupant("NorthwestTerritory", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Greenland"));
-            board.setUserOccupant("Greenland", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Alberta"));
-            board.setUserOccupant("Alberta", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Madagascar"));
-            board.setUserOccupant("Madagascar", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Scandinavia"));
-            board.setUserOccupant("Scandinavia", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Iceland"));
-            board.setUserOccupant("Iceland", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Ukraine"));
-            board.setUserOccupant("Ukraine", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Japan"));
-            board.setUserOccupant("Japan", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Alaska"));
+            board.setOccupant("Alaska", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("NorthwestTerritory"));
+            board.setOccupant("NorthwestTerritory", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Greenland"));
+            board.setOccupant("Greenland", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Alberta"));
+            board.setOccupant("Alberta", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Madagascar"));
+            board.setOccupant("Madagascar", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Scandinavia"));
+            board.setOccupant("Scandinavia", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Iceland"));
+            board.setOccupant("Iceland", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Ukraine"));
+            board.setOccupant("Ukraine", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Japan"));
+            board.setOccupant("Japan", userList[0]);
 
             // Add player 2's countries to HashMap
             userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
-            userList[1].addTerritory(board.getTerritoryName("Irkutsk"));
-            board.setUserOccupant("Irkutsk", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("EasternUnitedStates"));
-            board.setUserOccupant("EasternUnitedStates", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("NorthernEurope"));
-            board.setUserOccupant("NorthernEurope", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("SouthernEurope"));
-            board.setUserOccupant("SouthernEurope", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("WesternEurope"));
-            board.setUserOccupant("WesternEurope", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Indonesia"));
-            board.setUserOccupant("Indonesia", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("SouthAfrica"));
-            board.setUserOccupant("SouthAfrica", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("GreatBritian"));
-            board.setUserOccupant("GreatBritian", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("EasternAustralia"));
-            board.setUserOccupant("EasternAustralia", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Irkutsk"));
+            board.setOccupant("Irkutsk", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("EasternUnitedStates"));
+            board.setOccupant("EasternUnitedStates", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("NorthernEurope"));
+            board.setOccupant("NorthernEurope", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("SouthernEurope"));
+            board.setOccupant("SouthernEurope", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("WesternEurope"));
+            board.setOccupant("WesternEurope", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Indonesia"));
+            board.setOccupant("Indonesia", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("SouthAfrica"));
+            board.setOccupant("SouthAfrica", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("GreatBritian"));
+            board.setOccupant("GreatBritian", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("EasternAustralia"));
+            board.setOccupant("EasternAustralia", userList[1]);
 
             // Add player 3's countries to HashMap
             userList[2] = new User(playerNames[2], startingArmyPowerPerPlayer);
-            userList[2].addTerritory(board.getTerritoryName("Yakutsk"));
-            board.setUserOccupant("Yakutsk", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Afghanistan"));
-            board.setUserOccupant("Afghanistan", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Ural"));
-            board.setUserOccupant("Ural", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("MiddleEast"));
-            board.setUserOccupant("MiddleEast", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Ontario"));
-            board.setUserOccupant("Ontario", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Venezuela"));
-            board.setUserOccupant("Venezuela", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Brazil"));
-            board.setUserOccupant("Brazil", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("NorthAfrica"));
-            board.setUserOccupant("NorthAfrica", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Yakutsk"));
+            board.setOccupant("Yakutsk", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Afghanistan"));
+            board.setOccupant("Afghanistan", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Ural"));
+            board.setOccupant("Ural", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("MiddleEast"));
+            board.setOccupant("MiddleEast", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Ontario"));
+            board.setOccupant("Ontario", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Venezuela"));
+            board.setOccupant("Venezuela", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Brazil"));
+            board.setOccupant("Brazil", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("NorthAfrica"));
+            board.setOccupant("NorthAfrica", userList[2]);
 
             // Add player 4's countries to HashMap
             userList[3] = new User(playerNames[3], startingArmyPowerPerPlayer);
-            userList[3].addTerritory(board.getTerritoryName("Egypt"));
-            board.setUserOccupant("Egypt", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("EastAfrica"));
-            board.setUserOccupant("EastAfrica", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("Argentina"));
-            board.setUserOccupant("Argentina", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("Congo"));
-            board.setUserOccupant("Congo", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("Kamchatka"));
-            board.setUserOccupant("Kamchatka", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("Siberia"));
-            board.setUserOccupant("Siberia", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("NewGuinea"));
-            board.setUserOccupant("NewGuinea", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("WesternAustralia"));
-            board.setUserOccupant("WesternAustralia", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("Egypt"));
+            board.setOccupant("Egypt", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("EastAfrica"));
+            board.setOccupant("EastAfrica", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("Argentina"));
+            board.setOccupant("Argentina", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("Congo"));
+            board.setOccupant("Congo", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("Kamchatka"));
+            board.setOccupant("Kamchatka", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("Siberia"));
+            board.setOccupant("Siberia", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("NewGuinea"));
+            board.setOccupant("NewGuinea", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("WesternAustralia"));
+            board.setOccupant("WesternAustralia", userList[3]);
 
             // Add player 5's countries to HashMap
             userList[4] = new User(playerNames[4], startingArmyPowerPerPlayer);
-            userList[4].addTerritory(board.getTerritoryName("Siam"));
-            board.setUserOccupant("Siam", userList[4]);
-            userList[4].addTerritory(board.getTerritoryName("India"));
-            board.setUserOccupant("India", userList[4]);
-            userList[4].addTerritory(board.getTerritoryName("China"));
-            board.setUserOccupant("China", userList[4]);
-            userList[4].addTerritory(board.getTerritoryName("Mongolia"));
-            board.setUserOccupant("Mongolia", userList[4]);
-            userList[4].addTerritory(board.getTerritoryName("Peru"));
-            board.setUserOccupant("Peru", userList[4]);
-            userList[4].addTerritory(board.getTerritoryName("Quebec"));
-            board.setUserOccupant("Quebec", userList[4]);
-            userList[4].addTerritory(board.getTerritoryName("WesternUnitedStates"));
-            board.setUserOccupant("WesternUnitedStates", userList[4]);
-            userList[4].addTerritory(board.getTerritoryName("CentralAmerica"));
-            board.setUserOccupant("CentralAmerica", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("Siam"));
+            board.setOccupant("Siam", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("India"));
+            board.setOccupant("India", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("China"));
+            board.setOccupant("China", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("Mongolia"));
+            board.setOccupant("Mongolia", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("Peru"));
+            board.setOccupant("Peru", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("Quebec"));
+            board.setOccupant("Quebec", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("WesternUnitedStates"));
+            board.setOccupant("WesternUnitedStates", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("CentralAmerica"));
+            board.setOccupant("CentralAmerica", userList[4]);
         }
         else // Number of Players is 6
         {
             // Add player 1's countries to HashMap
             userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
-            userList[0].addTerritory(board.getTerritoryName("Alaska"));
-            board.setUserOccupant("Alaska", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("NorthwestTerritory"));
-            board.setUserOccupant("NorthwestTerritory", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Greenland"));
-            board.setUserOccupant("Greenland", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Alberta"));
-            board.setUserOccupant("Alberta", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Ontario"));
-            board.setUserOccupant("Ontario", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Venezuela"));
-            board.setUserOccupant("Venezuela", userList[0]);
-            userList[0].addTerritory(board.getTerritoryName("Brazil"));
-            board.setUserOccupant("Brazil", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Alaska"));
+            board.setOccupant("Alaska", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("NorthwestTerritory"));
+            board.setOccupant("NorthwestTerritory", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Greenland"));
+            board.setOccupant("Greenland", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Alberta"));
+            board.setOccupant("Alberta", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Ontario"));
+            board.setOccupant("Ontario", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Venezuela"));
+            board.setOccupant("Venezuela", userList[0]);
+            userList[0].addTerritory(board.getCountryByName("Brazil"));
+            board.setOccupant("Brazil", userList[0]);
 
             // Add player 2's countries to HashMap
             userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
-            userList[1].addTerritory(board.getTerritoryName("NorthAfrica"));
-            board.setUserOccupant("NorthAfrica", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Egypt"));
-            board.setUserOccupant("Egypt", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("EastAfrica"));
-            board.setUserOccupant("EastAfrica", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("NorthernEurope"));
-            board.setUserOccupant("NorthernEurope", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("SouthernEurope"));
-            board.setUserOccupant("SouthernEurope", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("WesternEurope"));
-            board.setUserOccupant("WesternEurope", userList[1]);
-            userList[1].addTerritory(board.getTerritoryName("Indonesia"));
-            board.setUserOccupant("Indonesia", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("NorthAfrica"));
+            board.setOccupant("NorthAfrica", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Egypt"));
+            board.setOccupant("Egypt", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("EastAfrica"));
+            board.setOccupant("EastAfrica", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("NorthernEurope"));
+            board.setOccupant("NorthernEurope", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("SouthernEurope"));
+            board.setOccupant("SouthernEurope", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("WesternEurope"));
+            board.setOccupant("WesternEurope", userList[1]);
+            userList[1].addTerritory(board.getCountryByName("Indonesia"));
+            board.setOccupant("Indonesia", userList[1]);
 
             // Add player 3's countries to HashMap
             userList[2] = new User(playerNames[2], startingArmyPowerPerPlayer);
-            userList[2].addTerritory(board.getTerritoryName("NewGuinea"));
-            board.setUserOccupant("NewGuinea", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("WesternAustralia"));
-            board.setUserOccupant("WesternAustralia", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Siam"));
-            board.setUserOccupant("Siam", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("India"));
-            board.setUserOccupant("India", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("China"));
-            board.setUserOccupant("China", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Mongolia"));
-            board.setUserOccupant("Mongolia", userList[2]);
-            userList[2].addTerritory(board.getTerritoryName("Peru"));
-            board.setUserOccupant("Peru", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("NewGuinea"));
+            board.setOccupant("NewGuinea", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("WesternAustralia"));
+            board.setOccupant("WesternAustralia", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Siam"));
+            board.setOccupant("Siam", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("India"));
+            board.setOccupant("India", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("China"));
+            board.setOccupant("China", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Mongolia"));
+            board.setOccupant("Mongolia", userList[2]);
+            userList[2].addTerritory(board.getCountryByName("Peru"));
+            board.setOccupant("Peru", userList[2]);
 
             // Add player 4's countries to HashMap
             userList[3] = new User(playerNames[3], startingArmyPowerPerPlayer);
-            userList[3].addTerritory(board.getTerritoryName("Quebec"));
-            board.setUserOccupant("Quebec", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("WesternUnitedStates"));
-            board.setUserOccupant("WesternUnitedStates", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("EasternUnitedStates"));
-            board.setUserOccupant("EasternUnitedStates", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("CentralAmerica"));
-            board.setUserOccupant("CentralAmerica", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("Argentina"));
-            board.setUserOccupant("Argentina", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("Congo"));
-            board.setUserOccupant("Congo", userList[3]);
-            userList[3].addTerritory(board.getTerritoryName("SouthAfrica"));
-            board.setUserOccupant("SouthAfrica", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("Quebec"));
+            board.setOccupant("Quebec", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("WesternUnitedStates"));
+            board.setOccupant("WesternUnitedStates", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("EasternUnitedStates"));
+            board.setOccupant("EasternUnitedStates", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("CentralAmerica"));
+            board.setOccupant("CentralAmerica", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("Argentina"));
+            board.setOccupant("Argentina", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("Congo"));
+            board.setOccupant("Congo", userList[3]);
+            userList[3].addTerritory(board.getCountryByName("SouthAfrica"));
+            board.setOccupant("SouthAfrica", userList[3]);
 
             // Add player 5's countries to HashMap
             userList[4] = new User(playerNames[4], startingArmyPowerPerPlayer);
-            userList[4].addTerritory(board.getTerritoryName("Madagascar"));
-            board.setUserOccupant("Madagascar", userList[4]);
-            userList[4].addTerritory(board.getTerritoryName("Iceland"));
-            board.setUserOccupant("Iceland", userList[4]);
-            userList[4].addTerritory(board.getTerritoryName("Scandinavia"));
-            board.setUserOccupant("Scandinavia", userList[4]);
-            userList[4].addTerritory(board.getTerritoryName("Ukraine"));
-            board.setUserOccupant("Ukraine", userList[4]);
-            userList[4].addTerritory(board.getTerritoryName("GreatBritian"));
-            board.setUserOccupant("GreatBritian", userList[4]);
-            userList[4].addTerritory(board.getTerritoryName("EasternAustralia"));
-            board.setUserOccupant("EasternAustralia", userList[4]);
-            userList[4].addTerritory(board.getTerritoryName("Japan"));
-            board.setUserOccupant("Japan", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("Madagascar"));
+            board.setOccupant("Madagascar", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("Iceland"));
+            board.setOccupant("Iceland", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("Scandinavia"));
+            board.setOccupant("Scandinavia", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("Ukraine"));
+            board.setOccupant("Ukraine", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("GreatBritian"));
+            board.setOccupant("GreatBritian", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("EasternAustralia"));
+            board.setOccupant("EasternAustralia", userList[4]);
+            userList[4].addTerritory(board.getCountryByName("Japan"));
+            board.setOccupant("Japan", userList[4]);
 
             // Add player 6's countries to HashMap
             userList[5] = new User(playerNames[5], startingArmyPowerPerPlayer);
-            userList[5].addTerritory(board.getTerritoryName("Irkutsk"));
-            board.setUserOccupant("Irkutsk", userList[5]);
-            userList[5].addTerritory(board.getTerritoryName("Yakutsk"));
-            board.setUserOccupant("Yakutsk", userList[5]);
-            userList[5].addTerritory(board.getTerritoryName("Kamchatka"));
-            board.setUserOccupant("Kamchatka", userList[5]);
-            userList[5].addTerritory(board.getTerritoryName("Siberia"));
-            board.setUserOccupant("Siberia", userList[5]);
-            userList[5].addTerritory(board.getTerritoryName("Afghanistan"));
-            board.setUserOccupant("Afghanistan", userList[5]);
-            userList[5].addTerritory(board.getTerritoryName("Ural"));
-            board.setUserOccupant("Ural", userList[5]);
-            userList[5].addTerritory(board.getTerritoryName("MiddleEast"));
-            board.setUserOccupant("MiddleEast", userList[5]);
+            userList[5].addTerritory(board.getCountryByName("Irkutsk"));
+            board.setOccupant("Irkutsk", userList[5]);
+            userList[5].addTerritory(board.getCountryByName("Yakutsk"));
+            board.setOccupant("Yakutsk", userList[5]);
+            userList[5].addTerritory(board.getCountryByName("Kamchatka"));
+            board.setOccupant("Kamchatka", userList[5]);
+            userList[5].addTerritory(board.getCountryByName("Siberia"));
+            board.setOccupant("Siberia", userList[5]);
+            userList[5].addTerritory(board.getCountryByName("Afghanistan"));
+            board.setOccupant("Afghanistan", userList[5]);
+            userList[5].addTerritory(board.getCountryByName("Ural"));
+            board.setOccupant("Ural", userList[5]);
+            userList[5].addTerritory(board.getCountryByName("MiddleEast"));
+            board.setOccupant("MiddleEast", userList[5]);
         }
 
         // More Testing
         System.out.println(userList[0].getUsername());
+        board.getCountryByName("Venezuela").setArmyPower(6);
+        board.getCountryByName("Brazil").setArmyPower(1);
+        userList[0].Action(User.Actions.ATTACK, board);
 
-        Scanner attack = new Scanner(System.in);
-        Scanner attackRedo = new Scanner(System.in);
-        Scanner attackAmt = new Scanner(System.in);
-
-        // Testing for now
-        board.getTerritoryName("Alaska").setArmyPower(20);
-        board.getTerritoryName("Quebec").setArmyPower(20);
 
         // Game flag. Remove players from array who do not have territories. When one is left, he wins and game ends
 
         // WHEN TESTING ON INTELLIJ YOU MUST STOP THE PROGRAM MANUALLY AS THIS IS AN INFINITE LOOP RIGHT NOW
         while((userList.length) != 1)
         {
-
             // Loop through each players turn. They must attack for right now
             for(int i = 0; i < (userList.length); i++)
             {
@@ -619,51 +597,6 @@ public class Main {
                 // Check if current player's HashMap size is equal to 0
                 // If it is equal to 0, remove them from userList
                 // Shuffle main card deck
-                attackFlag = true;
-                while(attackFlag = true)
-                {
-                    //prompt user for country to attack
-                    System.out.println(userList[i].getUsername() + ", what territory would you like to attack?");
-                    String attackChoice = attack.nextLine();
-                    User user1 = userList[i];
-                    User user2 = board.getTerritoryName(attackChoice).getUser();
-
-                    System.out.println("Enter the number of armies attacking: ");
-                    int amount = attackAmt.nextInt();
-
-                    // Write to file
-                    writer.println(user1 + " is attacking with " + amount + " of armies");
-
-                    user2.removeArmyPower(amount);
-                    board.getTerritoryName(attackChoice).decrementArmies(amount);
-                    System.out.println("Territory " + board.getTerritoryName(attackChoice).getTerritory() + " now has " +
-                                        board.getTerritoryName(attackChoice).getArmyPower() + " armies remaining");
-
-                    writer.println(user2 + " has lost " + amount + " of armies in " + board.getTerritoryName(attackChoice).getTerritory());
-
-                    // Check if they would like to undo
-                    System.out.println("Would you like to undo this action?");
-                    String attackUndoCheck = attackRedo.nextLine();
-
-                    if(attackUndoCheck.equals("Yes"))
-                    {
-                        writer.println(user1 + " is undoing there actions, resetting armies to previous");
-                        user2.addArmyPower(amount);
-                        System.out.println("User 2's army power: " + user2.getArmyPower());
-
-                        board.getTerritoryName(attackChoice).incrementArmies(amount);
-                        System.out.println(board.getTerritoryName(attackChoice).getTerritory() + "'s army power has increased to " +
-                                                                        board.getTerritoryName(attackChoice).getArmyPower());
-                    }
-
-                    else if(attackUndoCheck.equals("No"))
-                    {
-                        attackFlag = false;
-                        break;
-                    }
-                    s3client.putObject(new PutObjectRequest("risk-game4353", "Replay", new File(parentDir + "/src/resources/replay.txt")));
-                }
-
 
                 // During actions of the game, per each player, we will also write a line to a text file
                 // This text file will be uploaded to our Amazon S3 Bucket so we can see the replays of our game
