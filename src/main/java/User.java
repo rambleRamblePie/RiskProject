@@ -161,6 +161,10 @@ public class User {
 
 	*/
 
+	public int getArmyPower(){
+		return armyPower;
+	}
+
 	public void addContinent(Continent continent)
 	{
 		System.out.println(username + " is dominating the continent of " + continent);
