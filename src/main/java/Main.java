@@ -18,6 +18,7 @@ public class Main {
         AWSCredentials credentials = new BasicAWSCredentials("AKIAJQYY2YE4M74K6QKA", "JwPOCJChu73jsJehEUfoiA5lmsH0rQky7o4uvhGw");
         AmazonS3 s3client = new AmazonS3Client(credentials);
 
+
         // Grabbing correct file
         File currentDir = new File(".");
         File parentDir = currentDir.getAbsoluteFile();
@@ -666,17 +667,8 @@ public class Main {
                         break;
                     }
                     // Pushing to Amazon
-                    s3client.putObject(new PutObjectRequest("risk-game4353", "Replay", new File(parentDir + "/src/resources/replay.txt")));
+                    //s3client.putObject(new PutObjectRequest("risk-game4353", "Replay", new File(parentDir + "/src/resources/replay.txt")));
                 }
-
-
-                // During actions of the game, per each player, we will also write a line to a text file
-                // This text file will be uploaded to our Amazon S3 Bucket so we can see the replays of our game
-
-                /* We will use a prompt to check if a user would like to undo an action, and we will not execute actions
-                until user has selected 'No'. If they select 'Yes', we will proceed to ask again if they would
-                like to do whatever action they are doing (perhaps sticking each action above in a while loop)
-                This will simulate an undo feature */
             }
         }
 
