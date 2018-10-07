@@ -1,0 +1,6 @@
+https://www.tutorialspoint.com/junit/junit_overview.htm
+
+notes:
+A formal written unit test case is characterized by a known input and an expected output, which is worked out before the test is executed. The known input should test a precondition and the expected output should test a post-condition.
+
+There must be at least two unit test cases for each requirement - one positive test and one negative test. If a requirement has sub-requirements, each sub-requirement must have at least two test cases as positive and negative.

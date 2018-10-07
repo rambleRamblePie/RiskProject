@@ -15,5 +15,20 @@ public class Deck {
     need an add function when cards are returned
 
     need a shuffle function
-     */
+    */
+
+    // create an arrayList<Card> for the deck
+
+    // constructor populates the list with cards, preferably reading cards from a file
+    // constructor makes the list of cards unmodifiable
+    // constructor shuffles cards into a stack that cards can be drawn from (aka the drawing pile)
+    
+    // drawing a card removes it from the stack
+    // we shouldn't run out of cards as long as players are forced to turn in a set when they have 6 cards
+
+    // turning in a set places all of those cards in a discard pile
+    // when there are no more cards to draw from, the discard pile should be reshuffled back into the drawing pile
+    // DO NOT RESHUFFLE CARDS THAT PLAYERS STILL HAVE
+
+    // keep count of how many sets were turned in
 }

@@ -6,24 +6,12 @@ import java.util.Arrays;
 
 public class Board {
 
-    private boolean isLoaded;
-    private boolean isAdjacent;
-
-    private int i;
-
-    private String name;
-
-    private ArrayList<Territory> countriesList;
-    private ArrayList<Territory> adjacenciesList;
-    private ArrayList<Territory> memberCountries;
-    private ArrayList<Territory> unoccupied;
-    private ArrayList<Continent> continentsList;
-
+    private boolean checkAdjacent;
     private HashMap<String, Territory> territoryContainer;
     private HashMap<String, Continent> continentsContainer;
 
     public Board() {
-
+        // May add things here later
     }
 
     public void setupBoard() {
@@ -333,7 +321,7 @@ public class Board {
         territoryContainer.put(Indonesia.getName(), Indonesia);
         territoryContainer.put(NewGuinea.getName(), NewGuinea);
         territoryContainer.put(WesternAustralia.getName(), WesternAustralia);
-        
+
 
         // Creating ArrayLists for Continent Parameters
         ArrayList<Territory> northAmericaList = new ArrayList<Territory>();
@@ -403,7 +391,7 @@ public class Board {
         Continent Africa = new Continent("Africa", 3, africaList);
         Continent Asia = new Continent("Asia", 7, asiaList);
         Continent Australia = new Continent("Australia", 2, australiaList);
-        
+
         // Adding continents to container for main game
         continentsContainer.put("North America", NorthAmerica);
         continentsContainer.put("South America", NorthAmerica);
@@ -419,110 +407,69 @@ public class Board {
     }
 
 
-    /**
-     * Returns the continent object whose name is the string continentName
-     **/
+    // Returns the continent specified
     public Continent getContinentByName(String continentName) {
         return continentsContainer.get(continentName);
     }
 
 
-    /**
-     * Returns the number of bonus armies awarded to a player for controlling all the countries in
-     * the continent whose name is the string continentName
-     **/
-    public int getBonusAmrines(String continentName) {
+    // Returns bonus army amount of continent
+    public int getBonusArmies(String continentName) {
         return continentsContainer.get(continentName).getBonusArmyAmount();
     }
 
 
-    /**
-     * Returns a list of the country objects that are in the continent specified
-     * by the string continentName
-     **/
-    public ArrayList<Territory> getMemberCountries(String continentName) {
+
+    // Returns a list of territories in continent
+    public ArrayList<Territory> getContainedCountries(String continentName) {
         return continentsContainer.get(continentName).getTerritoriesOfContinent();
     }
 
-
-    /**
-     * Returns a list of all of the country objects in the board
-     **/
-    public ArrayList<Territory> getCountries() {
-        return countriesList;
+    // Sets number of armies to specified territory to the integer provided
+    public void setNumArmies(String territoryName, int numberArmies) {
+        territoryContainer.get(territoryName).setNumArmies(numberArmies);
     }
 
-    /**
-     * Returns the country object for the country specified by the string
-     * countryName
-     **/
-    public Territory getCountryByName(String countryName) {
-        return territoryContainer.get(countryName);
+    // Returns territory requested
+    public Territory getTerritoryName(String territoryName) {
+        return territoryContainer.get(territoryName);
     }
 
 
-    /**
-     * Sets the occupant of the country object specified by the string countryName
-     * to be the player object supplied as an argument.
-     **/
-    public void setOccupant(String countryName, User occupant) {
-        territoryContainer.get(countryName).setOccupyingUser(occupant);
+    // Sets the territory provided's occupant to the user provided
+    public void setUserOccupant(String territoryName, User occupant) {
+        territoryContainer.get(territoryName).setOccupyingUser(occupant);
     }
 
 
-    /**
-     * Returns the player object that currently occupies the country specufied by
-     * string countryName
-     **/
-    public User getOccupant(String countryName) {
-        return territoryContainer.get(countryName).getUser();
+    // Returns controller of current territory
+    public User getOccupant(String territoryName) {
+        return territoryContainer.get(territoryName).getUser();
     }
 
 
-    /**
-     * Sets the number of armies currently in the country specified by the string
-     * countryName to the integer supplied as an argument
-     **/
-    public void setNumberArmies(String countryName, int numberArmies) {
-        territoryContainer.get(countryName).setNumArmies(numberArmies);
+    // Returns the number of armies in the requested territory
+    public int getNumArmies(String territoryName) {
+        return territoryContainer.get(territoryName).getArmyPower();
+    }
+
+    // Returns a list of adjacent territories
+    public ArrayList<Territory> getAdjacencies(String territoryName) {
+        return territoryContainer.get(territoryName).getAdjacentTerritories();
     }
 
 
-    /**
-     * Returns the number of armies currently in the country specified by the string
-     * countryName
-     **/
-    public int getNumberArmies(String countryName) {
-        return territoryContainer.get(countryName).getArmyPower();
-    }
+     // Returns a list of adjacencies and checks it with the attacking country
+    public boolean checkAdjacencies(String territory1, String territory2) {
 
-
-
-    public ArrayList<Territory> getAdjacencies(String countryName) {
-        return territoryContainer.get(countryName).getAdjacentTerritories();
-    }
-    /*
-    public ArrayList<Territory> getUnoccupied() {
-
-        unoccupied = new ArrayList<Territory>();
-
-        for (i = 0; i < countriesList.size(); i++) {
-
-            if (countriesList.get(i).hasPlayer() == false) {
-                unoccupied.add(countriesList.get(i));
-            }
-        }
-        return unoccupied;
-    }
-    */
-
-    public boolean checkAdjacency(String country1, String country2) {
-        if (territoryContainer.get(country1).getAdjacentTerritories().contains(territoryContainer.get(country2))) {
-            isAdjacent = true;
-        } else {
-            isAdjacent = false;
+        if (territoryContainer.get(territory1).getAdjacentTerritories().contains(territoryContainer.get(territory2))) {
+            checkAdjacent = true;
         }
 
-        return isAdjacent;
+        else {
+            checkAdjacent = false;
+        }
+
+        return checkAdjacent;
     }
 }
