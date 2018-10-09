@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-class User {
+public class User {
 	private String username;
 	private int turnPosition;
 	private int score;
@@ -16,7 +16,7 @@ class User {
 	}
 
 	private boolean checkOwnership(String territoryName, Board board) {
-		if(board.getCountryByName(territoryName) == null){
+		if(board.getTerritoryName(territoryName) == null){
 			System.out.println("That territory doesn't exist, try again.");
 			return false;
 		}
@@ -38,20 +38,20 @@ class User {
 				System.out.println( username + " which territory would you like to move from?");
 				String moveFrom = sc.nextLine();
 				if(checkOwnership(moveFrom, board)){
-					From = board.getCountryByName(moveFrom);
+					From = board.getTerritoryName(moveFrom);
 				}
 				else{Action(a, board); break;}
 
 				System.out.println("Which territory would you like to move to?");
 				String moveTo = sc.nextLine();
 				if(checkOwnership(moveTo, board)){
-					if(!board.checkAdjacency(moveFrom, moveTo)) {
+					if(!board.checkAdjacencies(moveFrom, moveTo)) {
 						System.out.println("These territories are not adjacent, please try again");
 						Action(a, board);
 						break;
 					}
 					else
-						To = board.getCountryByName(moveTo);
+						To = board.getTerritoryName(moveTo);
 				}
 				else {Action(a, board); break;}
 
@@ -74,18 +74,18 @@ class User {
 				System.out.println(username + " which territory are you attacking from?");
 				String attackFrom = sc.nextLine();
 				if(checkOwnership(attackFrom, board)){
-				    From = board.getCountryByName(attackFrom);
+				    From = board.getTerritoryName(attackFrom);
                 }
                 else {Action(a, board); break;}
 
 
 				System.out.println("Which territory are you attacking?");
                 String attackTo = sc.nextLine();
-                if(board.getCountryByName(attackTo) == null){
+                if(board.getTerritoryName(attackTo) == null){
                     System.out.println("That territory doesn't exist, try again.");
                     Action(a, board); break;
                 }
-                else if(!board.checkAdjacency(attackFrom, attackTo)) {
+                else if(!board.checkAdjacencies(attackFrom, attackTo)) {
                     System.out.println("These territories are not adjacent, please try again");
                     Action(a, board);
                     break;
@@ -96,7 +96,7 @@ class User {
                     break;
                 }
                 else{
-                    To = board.getCountryByName(attackTo);
+                    To = board.getTerritoryName(attackTo);
                 }
 
 
@@ -170,7 +170,7 @@ class User {
 			case PLACE_ARMY:
 				System.out.println("Which territory would you like to place an army at?");
 				String placeAtName = sc.nextLine();
-				Territory placeAt = board.getCountryByName(placeAtName);
+				Territory placeAt = board.getTerritoryName(placeAtName);
 				if(!checkOwnership(placeAtName, board)){ Action(a, board); break; }
 				else{
 					System.out.println(username + " is placing an army at " + placeAt.getName());
@@ -188,24 +188,23 @@ class User {
 	public User(String name, int startingArmy) {
 		this.username = name;
 		this.armyPower = startingArmy;
-		turnPosition = 0;
 		score = 0;
 
 		territoriesHeld = new HashMap<String,Territory>();
 		continentsHeld = new HashMap<String,Continent>();
 	}
-	
+
 	public void setTurnPosition(int position) {
 		turnPosition = position;
 	}
 	public int getTurnPosition() {
 		return turnPosition;
 	}
-	
+
 	public int addArmyPower(int p) {
 		if (p < 0)
 			throw new java.lang.IllegalArgumentException();
-		
+
 		armyPower = armyPower + p;
 		return armyPower;
 	}
@@ -213,7 +212,7 @@ class User {
 	public int removeArmyPower(int p) {
 		if (p < 0)
 			throw new java.lang.IllegalArgumentException();
-		
+
 		if (p > armyPower)
 			armyPower = 0;
 
@@ -221,6 +220,14 @@ class User {
 			armyPower = armyPower - p;
 
 		return armyPower;
+	}
+
+	public void setScore(int newScore){
+		score = newScore;
+	}
+
+	public int getScore(){
+		return score;
 	}
 
 	public String getUsername() {
@@ -248,6 +255,10 @@ class User {
 	}
 
 	*/
+
+	public int getArmyPower(){
+		return armyPower;
+	}
 
 	public void addContinent(Continent continent)
 	{
