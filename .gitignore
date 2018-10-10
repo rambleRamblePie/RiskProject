@@ -32,3 +32,4 @@ target/
 *.prefs
 .vscode/tasks.json
 .vscode/launch.json
+.vscode/settings.json
