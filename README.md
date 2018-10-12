@@ -9,12 +9,17 @@ How to compile and run test cases: `mvn test`
 How to run the program: `java -cp target/risk-game-0.1.jar Main`
 Both require you to be in the root directory.
 
+Twitter -
+----------------
+We have added Twitter functionality to our game. Follow us on Twitter, `Team HAL @hal_team` for status updates
+
 Updates - 
 -----------------
+Todo: I am working on the Twitter API --Aaron
 
 Todo: Add more Maven test cases
 
-Todo: The Deck and Hand classes need to be worked on
+Todo: The Hand class need to be worked on
 
 09-23-2018: New Maven Dependencies have been added the the pom.xml file. Be sure to add them in IntelliJ --Aaron
 09-23-2018: Territories and Continents are now spawning correctly. The overall driver of the program is working --Aaron
