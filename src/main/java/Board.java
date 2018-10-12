@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Arrays;
 
 /**
- * The Board class setups the virtual board used to query actions and Territories from.
+ * The Board class setups the virtual board used to query actions and Territories
  * @author Aaron Mitchell
  * @version 0.4
  */
