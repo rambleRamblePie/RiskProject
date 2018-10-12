@@ -15,7 +15,14 @@ public class Deck {
     private ArrayList<Card> card_deck;
 
     // Types will be Cannon, Horse, and Tank
-
+    
+    /**
+     * Spawns the deck. The territoriesList variable from the Board class will be passed in as the
+     * parameter for the deck, so we can create one card for each Territory. Types are assigned
+     * automatically
+     * @param territories The territoriesList variable from the Board class
+     * @see Deck
+     */
     public Deck(ArrayList<Territory> territories){
 
         // Initialize card_deck
