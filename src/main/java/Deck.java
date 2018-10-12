@@ -1,5 +1,14 @@
 import java.util.*;
 
+/**
+ * The Deck class creates and stores the cards that User's will be drawing from
+ * at the beginning of each turn. The card types will be "Tank", "Horse", and
+ * "Cannon". The deck will be shuffled at the end of each turn, and each User
+ * will draw a card from the deck at the beginning of their turn
+ * @author Aaron Mitchell
+ * @version 0.4
+ */
+
 public class Deck {
 
     private Card draw;
@@ -60,10 +69,21 @@ public class Deck {
         Collections.shuffle(card_deck);
     }
 
+    /**
+     * Shuffles the deck of cards since User's will turn cards in periodically, the deck should be
+     * shuffled at the end of each turn in the main loop
+     * @see Deck
+     */
     public void shuffle(){
         Collections.shuffle(card_deck);
     }
 
+    /**
+     * Allows the deck to have cards taken from it. Takes the top card to place into a User's hand,
+     * then removes that card from the deck
+     * @return Returns the card drawn from the deck
+     * @see Deck
+     */
     public Card card_draw(){
         draw = card_deck.get(0);
         card_deck.remove(0);
@@ -71,6 +91,12 @@ public class Deck {
         return draw;
     }
 
+    /**
+     * Adds a card to the deck (from a User's hand when they turn in cards)
+     * @param card The card to be added to the deck. Should be an index such as: hand[0] for the first card in the User's hand
+     * @return Returns the card drawn from the deck
+     * @see Deck
+     */
     public void addCard(Card card){
         card_deck.add(card);
     }
