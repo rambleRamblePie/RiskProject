@@ -1,7 +1,7 @@
 import java.lang.Math;
 
 /**
- * A simple Dice class that spawns a die and rolls it
+ * A simple Dice class that spawns a die and rolls it. The face value will then be accessed
  * @author Alex Miilligan
  * @version 0.4
  */
