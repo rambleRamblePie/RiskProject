@@ -1,6 +1,19 @@
 import java.util.*;
 import java.util.ArrayList;
 
+/**
+ * The Continent class is used to spawn the continents with parameters such as
+ * their bonus army amount, their name, and a list of territories that each continent
+ * holds. These continent objects can then be queried and modified and used to
+ * calculate bonus army amounts at the beginning of the turn, and added to User's
+ * HashMaps when that User has control of all the territories that make up the
+ * continent
+ * @author Aaron Mitchell
+ * @author Alex Milligan
+ * @author Luis Florez
+ * @version 0.4
+ */
+
 public class Continent {
 
 	private String name;
@@ -17,24 +30,29 @@ public class Continent {
 		System.out.println("Continent " + name + " has been created");
 	}
 
+	/**
+	 * Returns the continent name
+	 * @return Continent specified by continentName
+	 * @see Continent
+	 */
 	public String getName() {
 		return name;
 	}
 
-	// this function might only be useful for the UI
+	/**
+	 * Returns the bonus army amount of the continent
+	 * @return Bonus army amount
+	 * @see Continent
+	 */
 	public int getBonusArmyAmount() {
 		return bonusArmy;
 	}
 
-	// returns true if a user received bonus armies, otherwise false
-	private boolean calculateBonusArmy() {
-		throw new java.lang.UnsupportedOperationException();
-		// if a user owns all territories of this continent,
-		// add armies to that user (we should be able to do so directly,
-		// as the user info is stored in territories of this continent)
-	}
-
-	// Returns a list of the continents countries. May not need this
+	/**
+	 * Returns a list of the territories that the continent
+	 * @return ArrayList of Territories that the continent contains
+	 * @see Continent
+	 */
 	public ArrayList<Territory> getTerritoriesOfContinent()
 	{
 		return territories;
