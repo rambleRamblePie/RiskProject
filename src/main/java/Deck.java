@@ -15,7 +15,7 @@ public class Deck {
     private ArrayList<Card> card_deck;
 
     // Types will be Cannon, Horse, and Tank
-    
+
     /**
      * Spawns the deck. The territoriesList variable from the Board class will be passed in as the
      * parameter for the deck, so we can create one card for each Territory. Types are assigned
@@ -88,7 +88,7 @@ public class Deck {
     /**
      * Allows the deck to have cards taken from it. Takes the top card to place into a User's hand,
      * then removes that card from the deck
-     * @return Returns the card drawn from the deck
+     * @return Card drawn from the deck
      * @see Deck
      */
     public Card card_draw(){
@@ -101,7 +101,6 @@ public class Deck {
     /**
      * Adds a card to the deck (from a User's hand when they turn in cards)
      * @param card The card to be added to the deck. Should be an index such as: hand[0] for the first card in the User's hand
-     * @return Returns the card drawn from the deck
      * @see Deck
      */
     public void addCard(Card card){
