@@ -477,6 +477,7 @@ public class Board {
     /**
      * Returns amount of bonus armies from continent specified
      * @return Continent's bonus armies to add
+     * @param continentName String name of continent to query for bonus armies
      * @see Board
      */
     public int getBonusArmies(String continentName) {
