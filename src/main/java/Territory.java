@@ -28,6 +28,7 @@ public class Territory {
 
 	/**
 	 * Adds adjacencies to the spawned territory
+	 * @param adjacencies An ArrayList of adjacencies
 	 * @see Territory
 	 */
 	public void addAdjacencies(ArrayList<Territory> adjacencies) {
@@ -38,6 +39,7 @@ public class Territory {
 	/**
 	 * Grabs the adjacent territories
 	 * @see Territory
+	 * @return Adjacent Territories of the Territory specified
 	 */
 	public ArrayList<Territory> getAdjacentTerritories() {
 		return adjacentTerritories;
@@ -66,6 +68,7 @@ public class Territory {
 
 	/**
 	 * Returns the User object who is controlling the territory
+	 * @return User who controls the territory
 	 * @see Territory
 	 */
 	public User getUser() {
