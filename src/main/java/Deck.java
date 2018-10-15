@@ -71,6 +71,12 @@ public class Deck {
         card_deck.add(new Card("Cannon", territories.get(39)));
         card_deck.add(new Card("Horse", territories.get(40)));
         card_deck.add(new Card("Tank", territories.get(41)));
+
+
+        /* Testing
+        System.out.println(card_deck.get(0).getType());
+        System.out.println(card_deck.get(0).getName());
+        */
         
         // Shuffle the card_deck
         Collections.shuffle(card_deck);
