@@ -472,7 +472,7 @@ public class Board {
      * @return Continent specified by continentName
      * @see Board
      */
-    public Continent getContinentByName(String continentName) {
+    public Continent getContinentName(String continentName) {
         return continentsContainer.get(continentName);
     }
 
