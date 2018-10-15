@@ -1,34 +1,12 @@
-//package com.TeamHAL.Risk;
-
-
-/**
- * Unit test for simple App.
- */
-//public class AppTest
-//extends TestCase
-//{
-/**
- * Create the test case
- *
- * @param testName name of the test case
- */
-//public AppTest( String testName ) {super( testName ); }
-
-/**
- * @return the suite of tests being tested
- */
-//public static Test suite(){return new TestSuite( AppTest.class ); }
-
-/**
- * Rigourous Test :-)
- */
-//public void testApp(){assertTrue( true );}
-
-//}
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+
 
 public class AppTest
 {
@@ -40,6 +18,7 @@ public class AppTest
     Continent continent;
     Card card;
     ArrayList<Territory> territories = new ArrayList<Territory>();
+    int testCountForTwitter;
 
     @Before
     public void setup() throws Exception {
@@ -49,6 +28,8 @@ public class AppTest
         territory2 = new Territory("Alaska");
         card = new Card("Infantry", territory);
         continent = new Continent("South America", 2, territories);
+        testCountForTwitter = 1;
+
     }
 
     @Test
@@ -82,6 +63,17 @@ public class AppTest
     @Test
     public void testCard() {
         Assert.assertEquals(card.getType(), "Infantry");
+    }
+
+
+    @Test
+    // If an exception is thrown, change the number being passed to incrementTwitterCount
+    public void testPostingToTwitter() throws TwitterException {
+        user.incrementTwitterCount(1);
+        Twitter twitter = TwitterFactory.getSingleton();
+        String message = "Player " + user.getUsername() + " has conquered " + user.getTwitterCount() + " territories";
+        Status status = twitter.updateStatus(message);
+        // You can verify the post on Twitter, Team HAL @hal_team
     }
 
 }
