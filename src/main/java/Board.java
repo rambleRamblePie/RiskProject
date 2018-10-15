@@ -21,6 +21,9 @@ public class Board {
         // May add things here later
     }
 
+    /**
+     * Setups the board for the game
+     */
     public void setupBoard() {
         territoryContainer = new HashMap<String, Territory>();
         continentsContainer = new HashMap<String, Continent>();
@@ -503,7 +506,7 @@ public class Board {
      * @return Continent's bonus armies to add
      * @see Board
      */
-    public ArrayList<Territory> getContainedCountries(String continentName) {
+    public ArrayList<Territory> getContainedTerritories(String continentName) {
         return continentsContainer.get(continentName).getTerritoriesOfContinent();
     }
 
