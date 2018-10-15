@@ -23,6 +23,7 @@ public class User {
 	private boolean hasCredits;
 	private HashMap<String,Territory> territoriesHeld;
 	private HashMap<String,Continent> continentsHeld;
+	private Hand playingHand;
 	/*
 	public enum Actions {
 		MOVE, ATTACK, PLACE_ARMY
@@ -112,6 +113,22 @@ public class User {
 
 		territoriesHeld = new HashMap<String,Territory>();
 		continentsHeld = new HashMap<String,Continent>();
+		playingHand = new Hand();
+	}
+
+	public void addCard(Card drawnCard) {
+
+		playingHand.add(drawnCard);
+	}
+
+	public ArrayList<Card> getHand() {
+
+		return playingHand.getCardsInHand();
+	}
+
+	public Hand getHandClass() {
+
+		return playingHand;
 	}
 
 	/**
@@ -121,6 +138,16 @@ public class User {
 	 */
 	public void setTurnPosition(int position) {
 		turnPosition = position;
+	}
+
+	public void removeCards(int[] cardsTurnedInIndex) {
+
+		playingHand.deleteCardsFromHand(cardsTurnedInIndex[0], cardsTurnedInIndex[1], cardsTurnedInIndex[2]);
+	}
+
+	public boolean hasToTurnInCards() {
+
+		return playingHand.hasToTurnInCards();
 	}
 
 
@@ -321,10 +348,18 @@ public class User {
 	 * @see User
 	 */
 	public void transferCredits(User user1, User user2){
-		// will display names of all users in userList in loop
-		// grab input of name from player transferring credit (input being string of the name)
-		// add user1's credits to user2
-		// set user1's credits to 0
+		user2.credits += user1.credits;
+		user1.credits = 0;
+	}
+
+	/**
+	 * Returns the User's number of credits
+	 * @return User's credit amount
+	 * @see User
+	 */
+
+	public int getCredits(){
+		return credits;
 	}
 
 	/**
