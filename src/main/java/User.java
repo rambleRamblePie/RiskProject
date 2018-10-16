@@ -3,10 +3,11 @@ import java.util.Scanner;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-/** The User class contains the information used to setup User objects and
- *  call functions to ensure functionality of the game. These include adding
- *  territories, grabbing the username, setting army power, incrementing User
- *  credits etc.
+/**
+ * The User class contains the information used to setup User objects and
+ * call functions to ensure functionality of the game. These include adding
+ * territories, grabbing the username, setting army power, incrementing User
+ * credits etc.
  * @author Aaron Mitchell
  * @author Alex Milligan
  * @author Luis Florez
@@ -24,6 +25,7 @@ public class User {
 	private HashMap<String,Territory> territoriesHeld;
 	private HashMap<String,Continent> continentsHeld;
 	private Hand playingHand;
+	private boolean creditFlag;
 	/*
 	public enum Actions {
 		MOVE, ATTACK, PLACE_ARMY
@@ -104,6 +106,23 @@ public class User {
 		}
 	} // Move, Battle, Place Army
 	*/
+
+	/**
+	 * Spawns a user with the chosen name and army power (which is based off the total number
+	 * of players playing the game). The User will also have a count for the amount of territories
+	 * that they conquered over the course of the game which will be posted on Twitter (the variable
+	 * being twitterCount. The credits variable keeps track of the User's score (how many games they
+	 * have won), and each User will gain 1 credit every turn. Each User will have a HashMap of the
+	 * territories they control, and the continents they control as well and each User will have their
+	 * own hand, which holds the Risk cards drawn each turn
+	 * @param name The name the User selects at the beginning of the game
+	 * @param startingArmy The amount of army power a player starts with (based off number of total players)
+	 * @see User
+	 * @see TweetPoster
+	 * @see Territory
+	 * @see Continent
+	 * @see Hand
+	 */
 	public User(String name, int startingArmy) {
 		this.username = name;
 		this.armyPower = startingArmy;
@@ -116,19 +135,93 @@ public class User {
 		playingHand = new Hand();
 	}
 
+	/**
+	 * Adds the card drawn from the deck to the User's playing hand
+	 * @param drawnCard The card that was drawn from the deck
+	 * @see User
+	 * @see Deck
+	 * @see Card
+	 * @see Hand
+	 */
 	public void addCard(Card drawnCard) {
 
 		playingHand.add(drawnCard);
 	}
 
+	/**
+	 * Returns the ArrayList of Cards in the User's playing hand
+	 * @see User
+	 * @see Deck
+	 * @see Card
+	 * @see Hand
+	 */
 	public ArrayList<Card> getHand() {
 
 		return playingHand.getCardsInHand();
 	}
 
+	/**
+	 * Returns the actual Hand object in memory to reference or
+	 * call further functions on
+	 * @see User
+	 * @see Deck
+	 * @see Card
+	 * @see Hand
+	 */
 	public Hand getHandClass() {
 
 		return playingHand;
+	}
+
+	/**
+	 * Checks if the User is allowed to purchase an undo function
+	 * @return Returns True or False depending on whether User has enough credits
+	 * @see User
+	 */
+	public boolean checkPurchaseUndo(){
+		if(credits >= 5){
+			creditFlag = true;
+		}
+		else{
+			creditFlag = false;
+			System.out.println("You do not have enough credits to purchase an undo");
+		}
+		return creditFlag;
+	}
+
+	/**
+	 * Checks if the User is able to purchase an extra Risk card
+	 * @return True or false depending on if User has enough credits
+	 * @see User
+	 * @see Hand
+	 * @see Deck
+	 * @see Card
+	 */
+	public boolean checkPurchaseCard(){
+		if(credits >= 3){
+			creditFlag = true;
+		}
+		else{
+			creditFlag = false;
+			System.out.println("You do not have enough credits to purchase a card");
+		}
+		return creditFlag;
+	}
+
+	/**
+	 * Checks if the User is able to transfer credits to another User
+	 * @return True or false depending on if User has enough credits
+	 * @see User
+	 */
+	public boolean checkPurchaseTransfer(){
+		if(credits >= 10){
+			creditFlag = true;
+		}
+		else{
+			creditFlag = false;
+			System.out.println("You do not have enough credits to transfer to another player");
+		}
+		return creditFlag;
 	}
 
 	/**
@@ -140,16 +233,36 @@ public class User {
 		turnPosition = position;
 	}
 
+	/**
+	 * After grabbing the index of the 3 cards the player wants to turn in through our main function,
+	 * we store those indexes into an integer array and pass that to this function. This function will
+	 * call the "deleteCardsFromHand" function to remove those cards from the User's hand. We will also
+	 * need to remember to add those cards back to the main deck before continuing
+	 * @param cardsTurnedInIndex Integer array of cards to turn in
+	 * @see Hand
+	 * @see Deck
+	 * @see Card
+	 */
 	public void removeCards(int[] cardsTurnedInIndex) {
 
 		playingHand.deleteCardsFromHand(cardsTurnedInIndex[0], cardsTurnedInIndex[1], cardsTurnedInIndex[2]);
 	}
 
+	/**
+	 * Checks if the User has to turn in Risk cards. If a User has 5 or more cards
+	 * in hand, then they either have 3 of a different type, or 3 of the same type
+	 * and they must turn in cards according to the game rules. This function
+	 * will set a flag if they are required to turn in cards or not
+	 * @return True or false depending on the User's hand size
+	 * @see User
+	 * @see Hand
+	 * @see Deck
+	 * @see Card
+	 */
 	public boolean hasToTurnInCards() {
 
 		return playingHand.hasToTurnInCards();
 	}
-
 
 	/**
 	 * Returns the turn position
@@ -219,7 +332,6 @@ public class User {
 
 		return armyPower;
 	}
-
 
 	/**
 	 * Keeps track of User's total win amount
@@ -357,7 +469,6 @@ public class User {
 	 * @return User's credit amount
 	 * @see User
 	 */
-
 	public int getCredits(){
 		return credits;
 	}
