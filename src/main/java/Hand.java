@@ -103,6 +103,7 @@ public class Hand {
     /**
      * Checks to see if a User must turn in cards. If hand size is greater than or equal to 5,
      * the User either has 3 of a different type, or 3 of one type
+     * @return Returns true or false depending on User's hand size
      * @see Deck
      * @see Hand
      * @see Card
