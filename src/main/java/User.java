@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * The User class contains the information used to setup User objects and
  * call functions to ensure functionality of the game. These include adding
  * territories, grabbing the username, setting army power, incrementing User
- * credits etc.
+ * credits etc. It now also alerts a User that their territory is under attack
  * @author Aaron Mitchell
  * @author Alex Milligan
  * @author Luis Florez
@@ -518,5 +518,15 @@ public class User {
 	{
 		System.out.println(username + " is no longer dominating the continent of " + continentName);
 		continentsHeld.remove(continentName);
+	}
+
+	/**
+	 * Alerts a User to the fact that their territory is under attack
+	 * @param user The User that needs to be alerted to their territory being attacked
+	 * @see User
+	 * @see Territory
+	 */
+	public void alertUser(User user){
+		System.out.println(user.getUsername() + ", your territory is under attack");
 	}
 }
