@@ -7,7 +7,6 @@ import java.util.ArrayList;
  * The User class contains the information used to setup User objects and
  * call functions to ensure functionality of the game. These include adding
  * territories, grabbing the username, setting army power, incrementing User
- * credits etc.
  * @author Aaron Mitchell
  * @author Alex Milligan
  * @author Luis Florez
