@@ -4,9 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Arrays;
 
+/**
+ * The Board class setups the virtual board used to query actions and Territories
+ * @author Aaron Mitchell
+ * @version 0.4
+ */
+
 public class Board {
 
     private boolean checkAdjacent;
+    private ArrayList<Territory> territoryList;
     private HashMap<String, Territory> territoryContainer;
     private HashMap<String, Continent> continentsContainer;
 
@@ -14,9 +21,14 @@ public class Board {
         // May add things here later
     }
 
+    /**
+     * Setups the board for the game
+     */
     public void setupBoard() {
         territoryContainer = new HashMap<String, Territory>();
         continentsContainer = new HashMap<String, Continent>();
+
+        territoryList = new ArrayList<Territory>(); // will hold array to pass to Deck constructor
 
         // Spawn Territories
         Territory Alaska = new Territory("Alaska");
@@ -280,47 +292,89 @@ public class Board {
 
         // Adding territories to container for main game
         territoryContainer.put(Alaska.getName(), Alaska);
+        territoryList.add(Alaska);
         territoryContainer.put(Alberta.getName(), Alberta);
+        territoryList.add(Alberta);
         territoryContainer.put(CentralAmerica.getName(), CentralAmerica);
+        territoryList.add(CentralAmerica);
         territoryContainer.put(EasternUnitedStates.getName(), EasternUnitedStates);
+        territoryList.add(EasternUnitedStates);
         territoryContainer.put(Greenland.getName(), Greenland);
+        territoryList.add(Greenland);
         territoryContainer.put(NorthwestTerritory.getName(), NorthwestTerritory);
+        territoryList.add(NorthwestTerritory);
         territoryContainer.put(Ontario.getName(), Ontario);
+        territoryList.add(Ontario);
         territoryContainer.put(Quebec.getName(), Quebec);
+        territoryList.add(Quebec);
         territoryContainer.put(WesternUnitedStates.getName(), WesternUnitedStates);
+        territoryList.add(WesternUnitedStates);
         territoryContainer.put(Argentina.getName(), Argentina);
+        territoryList.add(Argentina);
         territoryContainer.put(Brazil.getName(), Brazil);
+        territoryList.add(Brazil);
         territoryContainer.put(Peru.getName(), Peru);
+        territoryList.add(Peru);
         territoryContainer.put(Venezuela.getName(), Venezuela);
+        territoryList.add(Venezuela);
         territoryContainer.put(GreatBritian.getName(), GreatBritian);
+        territoryList.add(GreatBritian);
         territoryContainer.put(Iceland.getName(), Iceland);
+        territoryList.add(Iceland);
         territoryContainer.put(NorthernEurope.getName(), NorthernEurope);
+        territoryList.add(NorthernEurope);
         territoryContainer.put(Scandinavia.getName(), Scandinavia);
+        territoryList.add(Scandinavia);
         territoryContainer.put(SouthernEurope.getName(), SouthernEurope);
+        territoryList.add(SouthernEurope);
         territoryContainer.put(Ukraine.getName(), Ukraine);
+        territoryList.add(Ukraine);
         territoryContainer.put(WesternEurope.getName(), WesternEurope);
+        territoryList.add(WesternEurope);
         territoryContainer.put(Congo.getName(), Congo);
+        territoryList.add(Congo);
         territoryContainer.put(EastAfrica.getName(), EastAfrica);
+        territoryList.add(EastAfrica);
         territoryContainer.put(Egypt.getName(), Egypt);
+        territoryList.add(Egypt);
         territoryContainer.put(Madagascar.getName(), Madagascar);
+        territoryList.add(Madagascar);
         territoryContainer.put(NorthAfrica.getName(), NorthAfrica);
+        territoryList.add(NorthAfrica);
         territoryContainer.put(SouthAfrica.getName(), SouthAfrica);
+        territoryList.add(SouthAfrica);
         territoryContainer.put(Afghanistan.getName(), Afghanistan);
+        territoryList.add(Afghanistan);
         territoryContainer.put(China.getName(), China);
+        territoryList.add(China);
         territoryContainer.put(India.getName(), India);
+        territoryList.add(India);
         territoryContainer.put(Irkutsk.getName(), Irkutsk);
+        territoryList.add(Irkutsk);
         territoryContainer.put(Japan.getName(), Japan);
+        territoryList.add(Japan);
         territoryContainer.put(Kamchatka.getName(), Kamchatka);
+        territoryList.add(Kamchatka);
         territoryContainer.put(MiddleEast.getName(), MiddleEast);
+        territoryList.add(MiddleEast);
         territoryContainer.put(Mongolia.getName(), Mongolia);
+        territoryList.add(Mongolia);
         territoryContainer.put(Siam.getName(), Siam);
+        territoryList.add(Siam);
         territoryContainer.put(Siberia.getName(), Siberia);
+        territoryList.add(Siberia);
         territoryContainer.put(Ural.getName(), Ural);
+        territoryList.add(Ural);
         territoryContainer.put(Yakutsk.getName(), Yakutsk);
+        territoryList.add(Yakutsk);
         territoryContainer.put(EasternAustralia.getName(), EasternAustralia);
+        territoryList.add(EasternAustralia);
         territoryContainer.put(Indonesia.getName(), Indonesia);
+        territoryList.add(Indonesia);
         territoryContainer.put(NewGuinea.getName(), NewGuinea);
+        territoryList.add(NewGuinea);
         territoryContainer.put(WesternAustralia.getName(), WesternAustralia);
+        territoryList.add(WesternAustralia);
 
 
         // Creating ArrayLists for Continent Parameters
@@ -402,64 +456,131 @@ public class Board {
 
     }
 
+    /**
+     * Returns all continents currently spawned on the board (should be every continent)
+     * @return Board's HashMap of continents
+     * @see Board
+     */
     public ArrayList<Continent> getContinents() {
         return new ArrayList<Continent>(continentsContainer.values());
     }
 
 
-    // Returns the continent specified
-    public Continent getContinentByName(String continentName) {
+    /**
+     * Returns the continent specified (queries HashMap by String)
+     * @param continentName String name of continent to query
+     * @return Continent specified by continentName
+     * @see Board
+     */
+    public Continent getContinentName(String continentName) {
         return continentsContainer.get(continentName);
     }
 
 
-    // Returns bonus army amount of continent
+    /**
+     * Returns amount of bonus armies from continent specified
+     * @return Continent's bonus armies to add
+     * @param continentName String name of continent to query for bonus armies
+     * @see Board
+     */
     public int getBonusArmies(String continentName) {
         return continentsContainer.get(continentName).getBonusArmyAmount();
     }
 
 
+    /**
+     * This will strictly be used to pass into the Deck constructor
+     * @return An ArrayList of Territories spawned
+     * @see Board
+     * @see Deck
+     */
+    public ArrayList<Territory> getBoardTerritories(){
+        return territoryList;
+    }
 
-    // Returns a list of territories in continent
-    public ArrayList<Territory> getContainedCountries(String continentName) {
+
+
+    /**
+     * Returns a list of territories in the specified continent
+     * @param continentName The String name of the continent you want a list of territories from
+     * @return Continent's bonus armies to add
+     * @see Board
+     */
+    public ArrayList<Territory> getContainedTerritories(String continentName) {
         return continentsContainer.get(continentName).getTerritoriesOfContinent();
     }
 
-    // Sets number of armies to specified territory to the integer provided
+    /**
+     * Sets the number of armies for the Territory object on the board
+     * @param territoryName The String name of the territory you want to modify the army power for
+     * @param numberArmies The number of armies you want to add to the territory's army power
+     * @see Board
+     */
     public void setNumArmies(String territoryName, int numberArmies) {
         territoryContainer.get(territoryName).setNumArmies(numberArmies);
     }
 
-    // Returns territory requested
+    /**
+     * Grabs the territory object by querying the HashMap with the String provided
+     * @param territoryName The String name of the Territory object you want passed back to you
+     * @return Returns the territory object queried by the String provided
+     * @see Board
+     */
     public Territory getTerritoryName(String territoryName) {
         return territoryContainer.get(territoryName);
     }
 
 
-    // Sets the territory provided's occupant to the user provided
+    /**
+     * Sets the User provided as the controller of that territory in the Board HashMap
+     * @param territoryName The String name of the Territory object you want passed back to you
+     * @param occupant The User who you wish to set as the controller of the territory
+     * @see Board
+     */
     public void setUserOccupant(String territoryName, User occupant) {
         territoryContainer.get(territoryName).setOccupyingUser(occupant);
     }
 
 
-    // Returns controller of current territory
+    /**
+     * Grabs the User by querying the HashMap with the String name provided
+     * @param territoryName String name of the territory to query
+     * @return Returns the controlling User of the territory object queried by the String provided
+     * @see Board
+     */
     public User getOccupant(String territoryName) {
         return territoryContainer.get(territoryName).getUser();
     }
 
 
-    // Returns the number of armies in the requested territory
+    /**
+     * Grabs the number of armies in the territory requested
+     * @param territoryName The String name of the Territory whose army power you want
+     * @return Returns the army power of the Territory requested
+     * @see Board
+     */
     public int getNumArmies(String territoryName) {
         return territoryContainer.get(territoryName).getArmyPower();
     }
 
-    // Returns a list of adjacent territories
+    /**
+     * Grabs the adjacencies of the Territory requested
+     * @param territoryName The String name of the Territory whose adjacencies you want
+     * @return Returns the Territory's adjacencies
+     * @see Board
+     */
     public ArrayList<Territory> getAdjacencies(String territoryName) {
         return territoryContainer.get(territoryName).getAdjacentTerritories();
     }
 
 
-     // Returns a list of adjacencies and checks it with the attacking country
+    /**
+     * Checks if the attacking territory is adjacent to the attacked territory
+     * @param territory1 The String name of the Territory who is attacking
+     * @param territory2 The String name of the Territory being attacked
+     * @return Returns True if the two Territories are adjacent, false if they are not
+     * @see Board
+     */
     public boolean checkAdjacencies(String territory1, String territory2) {
 
         if (territoryContainer.get(territory1).getAdjacentTerritories().contains(territoryContainer.get(territory2))) {
