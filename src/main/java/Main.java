@@ -1,1051 +1,532 @@
+import java.util.Arrays;
 import java.util.Scanner;
-import java.util.*;
-import java.util.List;
-import java.io.PrintWriter;
-import java.io.File;
-import java.io.*;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.AmazonS3Exception;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-
-public class Main {
-    public static void main(String[] args) throws FileNotFoundException, TwitterException{
-
-        /*
-        // Amazon credentials and setup
-        AWSCredentials credentials = new BasicAWSCredentials("accesskey", "secretkey");
-        AmazonS3 s3client = new AmazonS3Client(credentials);
-        */
-
-        // Grabbing correct file
-        File currentDir = new File(".");
-        File parentDir = currentDir.getAbsoluteFile();
-        File myFile = new File(parentDir + "/src/resources/replay.txt");
-
-        // Used to write to file for upload
-        PrintWriter writer = new PrintWriter(myFile);
-
-        boolean attackFlag;
-        int controlledNum = 0;
-        int twitterCounter = 0;
-        int addedArmies;
-        User[] userList;
-        User[] twitterList;
-        Scanner sc = new Scanner(System.in);
-
-        // Grab the number of players
-        int numPlayers = 7;
-        while(numPlayers > 6 || numPlayers < 2)
-        {
-            System.out.println("How many people are playing? 2-6 Players are required");
-            numPlayers = sc.nextInt();
-            sc.nextLine();
-        }
-
-        // Grab the players names
-        String[] playerNames = new String[numPlayers];
-        System.out.println("Players will go in the order in which they enter their name!");
-        System.out.println();
-        for(int i=0; i<numPlayers; i++) {
-            System.out.println("What is Player " + (i+1) + "'s name?");
-            playerNames[i] = sc.nextLine();
-        }
-
-        // Array that will hold users. Twitter array will be used for the end of the game
-        userList = new User[numPlayers];
-        twitterList = new User[numPlayers];
-
-        // Set Starting Army Power Here
-        int startingArmyPowerPerPlayer = 0;
-
-        // possible counter since I may automatically distribute 1 army to each territory at setup, per game rules
-        int armiesAlreadyDistributedOne = 0; // territories will be split unevenly in some cases, this is the first counter
-        int armiesAlreadyDistributedTwo = 0; // second counter
-        switch(numPlayers) {
-            case 2:
-                startingArmyPowerPerPlayer = 40;
-                armiesAlreadyDistributedOne = 21;
-                break;
-            case 3:
-                startingArmyPowerPerPlayer = 35;
-                armiesAlreadyDistributedOne = 14;
-                break;
-            case 4:
-                startingArmyPowerPerPlayer = 30;
-                armiesAlreadyDistributedOne = 11;
-                armiesAlreadyDistributedTwo = 10;
-                break;
-            case 5:
-                startingArmyPowerPerPlayer = 25;
-                armiesAlreadyDistributedOne = 9;
-                armiesAlreadyDistributedTwo = 8;
-                break;
-            case 6:
-                startingArmyPowerPerPlayer = 20;
-                armiesAlreadyDistributedOne = 6;
-                break;
-            default: // throw invalid input error (because nPlayers should already be checked in the calling function)
-        }
-
-        // Spawn board, twitter object for posting
-        Board board = new Board();
-        board.setupBoard();
-        TweetPoster tp = new TweetPoster();
-
-        // Going to manually setup starting armies for right now
-        // If loop to divide up territories based on number of players, will use HashMap for Users
-        // Will look into iterating through HashMap to setOccupyingUser for each when spawning
-        if(numPlayers == 2)
-        {
-            // Add player 1's countries to HashMap
-            userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
-            userList[0].addTerritory(board.getTerritoryName("Alaska"));
-            board.setUserOccupant("Alaska", userList[0]);
-            board.getTerritoryName("Alaska").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("NorthwestTerritory"));
-            board.setUserOccupant("NorthwestTerritory", userList[0]);
-            board.getTerritoryName("NorthwestTerritory").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Greenland"));
-            board.setUserOccupant("Greenland", userList[0]);
-            board.getTerritoryName("Greenland").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Alberta"));
-            board.setUserOccupant("Alberta", userList[0]);
-            board.getTerritoryName("Alberta").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Ontario"));
-            board.setUserOccupant("Ontario", userList[0]);
-            board.getTerritoryName("Ontario").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Venezuela"));
-            board.setUserOccupant("Venezuela", userList[0]);
-            board.getTerritoryName("Venezuela").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Brazil"));
-            board.setUserOccupant("Brazil", userList[0]);
-            board.getTerritoryName("Brazil").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("NorthAfrica"));
-            board.setUserOccupant("NorthAfrica", userList[0]);
-            board.getTerritoryName("NorthAfrica").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Egypt"));
-            board.setUserOccupant("Egypt", userList[0]);
-            board.getTerritoryName("Egypt").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("EastAfrica"));
-            board.setUserOccupant("EastAfrica", userList[0]);
-            board.getTerritoryName("EastAfrica").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("NorthernEurope"));
-            board.setUserOccupant("NorthernEurope", userList[0]);
-            board.getTerritoryName("NorthernEurope").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("SouthernEurope"));
-            board.setUserOccupant("SouthernEurope", userList[0]);
-            board.getTerritoryName("SouthernEurope").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("WesternEurope"));
-            board.setUserOccupant("WesternEurope", userList[0]);
-            board.getTerritoryName("WesternEurope").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Indonesia"));
-            board.setUserOccupant("Indonesia", userList[0]);
-            board.getTerritoryName("Indonesia").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("NewGuinea"));
-            board.setUserOccupant("NewGuinea", userList[0]);
-            board.getTerritoryName("NewGuinea").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("WesternAustralia"));
-            board.setUserOccupant("WesternAustralia", userList[0]);
-            board.getTerritoryName("WesternAustralia").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Siam"));
-            board.setUserOccupant("Siam", userList[0]);
-            board.getTerritoryName("Siam").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("India"));
-            board.setUserOccupant("India", userList[0]);
-            board.getTerritoryName("India").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("China"));
-            board.setUserOccupant("China", userList[0]);
-            board.getTerritoryName("China").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Mongolia"));
-            board.setUserOccupant("Mongolia", userList[0]);
-            board.getTerritoryName("Mongolia").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Peru"));
-            board.setUserOccupant("Peru", userList[0]);
-            board.getTerritoryName("Peru").setArmyPower(1);
-
-            // Add player 2's countries to HashMap
-            userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
-            userList[1].addTerritory(board.getTerritoryName("Quebec"));
-            board.setUserOccupant("Quebec", userList[1]);
-            board.getTerritoryName("Quebec").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("WesternUnitedStates"));
-            board.setUserOccupant("WesternUnitedStates", userList[1]);
-            board.getTerritoryName("WesternUnitedStates").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("EasternUnitedStates"));
-            board.setUserOccupant("EasternUnitedStates", userList[1]);
-            board.getTerritoryName("EasternUnitedStates").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("CentralAmerica"));
-            board.setUserOccupant("CentralAmerica", userList[1]);
-            board.getTerritoryName("CentralAmerica").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Argentina"));
-            board.setUserOccupant("Argentina", userList[1]);
-            board.getTerritoryName("Argentina").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Congo"));
-            board.setUserOccupant("Congo", userList[1]);
-            board.getTerritoryName("Congo").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("SouthAfrica"));
-            board.setUserOccupant("SouthAfrica", userList[1]);
-            board.getTerritoryName("SouthAfrica").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Madagascar"));
-            board.setUserOccupant("Madagascar", userList[1]);
-            board.getTerritoryName("Madagascar").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Iceland"));
-            board.setUserOccupant("Iceland", userList[1]);
-            board.getTerritoryName("Iceland").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Scandinavia"));
-            board.setUserOccupant("Scandinavia", userList[1]);
-            board.getTerritoryName("Scandinavia").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Ukraine"));
-            board.setUserOccupant("Ukraine", userList[1]);
-            board.getTerritoryName("Ukraine").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("GreatBritian"));
-            board.setUserOccupant("GreatBritian", userList[1]);
-            board.getTerritoryName("GreatBritian").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("EasternAustralia"));
-            board.setUserOccupant("EasternAustralia", userList[1]);
-            board.getTerritoryName("EasternAustralia").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Japan"));
-            board.setUserOccupant("Japan", userList[1]);
-            board.getTerritoryName("Japan").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Irkutsk"));
-            board.setUserOccupant("Irkutsk", userList[1]);
-            board.getTerritoryName("Irkutsk").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Yakutsk"));
-            board.setUserOccupant("Yakutsk", userList[1]);
-            board.getTerritoryName("Yakutsk").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Kamchatka"));
-            board.setUserOccupant("Kamchatka", userList[1]);
-            board.getTerritoryName("Kamchatka").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Siberia"));
-            board.setUserOccupant("Siberia", userList[1]);
-            board.getTerritoryName("Siberia").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Afghanistan"));
-            board.setUserOccupant("Afghanistan", userList[1]);
-            board.getTerritoryName("Afghanistan").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Ural"));
-            board.setUserOccupant("Ural", userList[1]);
-            board.getTerritoryName("Ural").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("MiddleEast"));
-            board.setUserOccupant("MiddleEast", userList[1]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-
-            // Test
-            System.out.println(board.getTerritoryName("Alaska").getUser());
-            System.out.println(board.getTerritoryName("Siberia").getUser());
-        }
-        else if(numPlayers == 3)
-        {
-            // Add player 1's countries to HashMap
-            userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
-
-            userList[0].addTerritory(board.getTerritoryName("Alaska"));
-            board.setUserOccupant("Alaska", userList[0]);
-            board.getTerritoryName("Alaska").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("NorthwestTerritory"));
-            board.setUserOccupant("NorthwestTerritory", userList[0]);
-            board.getTerritoryName("NorthwestTerritory").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Greenland"));
-            board.setUserOccupant("Greenland", userList[0]);
-            board.getTerritoryName("Greenland").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Alberta"));
-            board.setUserOccupant("Alberta", userList[0]);
-            board.getTerritoryName("Alberta").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Ontario"));
-            board.setUserOccupant("Ontario", userList[0]);
-            board.getTerritoryName("Ontario").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Venezuela"));
-            board.setUserOccupant("Venezuela", userList[0]);
-            board.getTerritoryName("Venezuela").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Brazil"));
-            board.setUserOccupant("Brazil", userList[0]);
-            board.getTerritoryName("Brazil").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Irkutsk"));
-            board.setUserOccupant("Irkutsk", userList[0]);
-            board.getTerritoryName("Irkutsk").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Yakutsk"));
-            board.setUserOccupant("Yakutsk", userList[0]);
-            board.getTerritoryName("Yakutsk").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Kamchatka"));
-            board.setUserOccupant("Kamchatka", userList[0]);
-            board.getTerritoryName("Kamchatka").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Siberia"));
-            board.setUserOccupant("Siberia", userList[0]);
-            board.getTerritoryName("Siberia").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Afghanistan"));
-            board.setUserOccupant("Afghanistan", userList[0]);
-            board.getTerritoryName("Afghanistan").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Ural"));
-            board.setUserOccupant("Ural", userList[0]);
-            board.getTerritoryName("Ural").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("MiddleEast"));
-            board.setUserOccupant("MiddleEast", userList[0]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-
-            // Add player 2's countries to HashMap
-            userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
-            userList[1].addTerritory(board.getTerritoryName("Quebec"));
-            board.setUserOccupant("Quebec", userList[1]);
-            board.getTerritoryName("Quebec").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("WesternUnitedStates"));
-            board.setUserOccupant("WesternUnitedStates", userList[1]);
-            board.getTerritoryName("WesternUnitedStates").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("EasternUnitedStates"));
-            board.setUserOccupant("EasternUnitedStates", userList[1]);
-            board.getTerritoryName("EasternUnitedStates").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("CentralAmerica"));
-            board.setUserOccupant("CentralAmerica", userList[1]);
-            board.getTerritoryName("CentralAmerica").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Argentina"));
-            board.setUserOccupant("Argentina", userList[1]);
-            board.getTerritoryName("Argentina").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Congo"));
-            board.setUserOccupant("Congo", userList[1]);
-            board.getTerritoryName("Congo").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("SouthAfrica"));
-            board.setUserOccupant("SouthAfrica", userList[1]);
-            board.getTerritoryName("SouthAfrica").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Madagascar"));
-            board.setUserOccupant("Madagascar", userList[1]);
-            board.getTerritoryName("Madagascar").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Iceland"));
-            board.setUserOccupant("Iceland", userList[1]);
-            board.getTerritoryName("Iceland").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Scandinavia"));
-            board.setUserOccupant("Scandinavia", userList[1]);
-            board.getTerritoryName("Scandinavia").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Ukraine"));
-            board.setUserOccupant("Ukraine", userList[1]);
-            board.getTerritoryName("Ukraine").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("GreatBritian"));
-            board.setUserOccupant("GreatBritian", userList[1]);
-            board.getTerritoryName("GreatBritian").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("EasternAustralia"));
-            board.setUserOccupant("EasternAustralia", userList[1]);
-            board.getTerritoryName("EasternAustralia").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Japan"));
-            board.setUserOccupant("Japan", userList[1]);
-            board.getTerritoryName("Japan").setArmyPower(1);
-
-            // Add player 3's countries to HashMap
-            userList[2] = new User(playerNames[2], startingArmyPowerPerPlayer);
-            userList[2].addTerritory(board.getTerritoryName("NorthAfrica"));
-            board.setUserOccupant("NorthAfrica", userList[2]);
-            board.getTerritoryName("NorthAfrica").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Egypt"));
-            board.setUserOccupant("Egypt", userList[2]);
-            board.getTerritoryName("Egypt").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("EastAfrica"));
-            board.setUserOccupant("EastAfrica", userList[2]);
-            board.getTerritoryName("EastAfrica").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("NorthernEurope"));
-            board.setUserOccupant("NorthernEurope", userList[2]);
-            board.getTerritoryName("NorthernEurope").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("SouthernEurope"));
-            board.setUserOccupant("SouthernEurope", userList[2]);
-            board.getTerritoryName("SouthernEurope").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Western0Europe"));
-            board.setUserOccupant("WesternEurope", userList[2]);
-            board.getTerritoryName("Western0Europe").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Indonesia"));
-            board.setUserOccupant("Indonesia", userList[2]);
-            board.getTerritoryName("Indonesia").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("NewGuinea"));
-            board.setUserOccupant("NewGuinea", userList[2]);
-            board.getTerritoryName("NewGuinea").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("WesternAustralia"));
-            board.setUserOccupant("WesternAustralia", userList[2]);
-            board.getTerritoryName("WesternAustralia").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Siam"));
-            board.setUserOccupant("Siam", userList[2]);
-            board.getTerritoryName("Siam").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("India"));
-            board.setUserOccupant("India", userList[2]);
-            board.getTerritoryName("India").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("China"));
-            board.setUserOccupant("China", userList[2]);
-            board.getTerritoryName("China").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Mongolia"));
-            board.setUserOccupant("Mongolia", userList[2]);
-            board.getTerritoryName("Mongolia").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Peru"));
-            board.setUserOccupant("Peru", userList[2]);
-            board.getTerritoryName("Peru").setArmyPower(1);
-
-        }
-        else if(numPlayers == 4)
-        {
-            // Add player 1's countries to HashMap
-            userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
-            userList[0].addTerritory(board.getTerritoryName("Alaska"));
-            board.setUserOccupant("Alaska", userList[0]);
-            board.getTerritoryName("Alaska").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("NorthwestTerritory"));
-            board.setUserOccupant("NorthwestTerritory", userList[0]);
-            board.getTerritoryName("NorthwestTerritory").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Greenland"));
-            board.setUserOccupant("Greenland", userList[0]);
-            board.getTerritoryName("Greenland").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Alberta"));
-            board.setUserOccupant("Alberta", userList[0]);
-            board.getTerritoryName("Alberta").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Madagascar"));
-            board.setUserOccupant("Madagascar", userList[0]);
-            board.getTerritoryName("Madagascar").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Iceland"));
-            board.setUserOccupant("Iceland", userList[0]);
-            board.getTerritoryName("Iceland").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Scandinavia"));
-            board.setUserOccupant("Scandinavia", userList[0]);
-            board.getTerritoryName("Scandinavia").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Ukraine"));
-            board.setUserOccupant("Ukraine", userList[0]);
-            board.getTerritoryName("Ukraine").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Japan"));
-            board.setUserOccupant("Japan", userList[0]);
-            board.getTerritoryName("Japan").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Irkutsk"));
-            board.setUserOccupant("Irkutsk", userList[0]);
-            board.getTerritoryName("Irkutsk").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("EasternUnitedStates"));
-            board.setUserOccupant("EasternUnitedStates", userList[0]);
-            board.getTerritoryName("EasternUnitedStates").setArmyPower(1);
-
-            // Add player 2's countries to HashMap
-            userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
-            userList[1].addTerritory(board.getTerritoryName("NorthernEurope"));
-            board.setUserOccupant("NorthernEurope", userList[1]);
-            board.getTerritoryName("NorthernEurope").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("SouthernEurope"));
-            board.setUserOccupant("SouthernEurope", userList[1]);
-            board.getTerritoryName("SouthernEurope").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("WesternEurope"));
-            board.setUserOccupant("WesternEurope", userList[1]);
-            board.getTerritoryName("WesternEurope").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Indonesia"));
-            board.setUserOccupant("Indonesia", userList[1]);
-            board.getTerritoryName("Indonesia").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("SouthAfrica"));
-            board.setUserOccupant("SouthAfrica", userList[1]);
-            board.getTerritoryName("SouthAfrica").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("GreatBritian"));
-            board.setUserOccupant("GreatBritian", userList[1]);
-            board.getTerritoryName("GreatBritian").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("EasternAustralia"));
-            board.setUserOccupant("EasternAustralia", userList[1]);
-            board.getTerritoryName("EasternAustralia").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Yakutsk"));
-            board.setUserOccupant("Yakutsk", userList[1]);
-            board.getTerritoryName("Yakutsk").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Afghanistan"));
-            board.setUserOccupant("Afghanistan", userList[1]);
-            board.getTerritoryName("Afghanistan").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Ural"));
-            board.setUserOccupant("Ural", userList[1]);
-            board.getTerritoryName("Ural").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("MiddleEast"));
-            board.setUserOccupant("MiddleEast", userList[1]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-
-            // Add player 3's countries to HashMap
-            userList[2] = new User(playerNames[2], startingArmyPowerPerPlayer);
-            userList[2].addTerritory(board.getTerritoryName("Ontario"));
-            board.setUserOccupant("Ontario", userList[2]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Venezuela"));
-            board.setUserOccupant("Venezuela", userList[2]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Brazil"));
-            board.setUserOccupant("Brazil", userList[2]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("NorthAfrica"));
-            board.setUserOccupant("NorthAfrica", userList[2]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Egypt"));
-            board.setUserOccupant("Egypt", userList[2]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("EastAfrica"));
-            board.setUserOccupant("EastAfrica", userList[2]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Argentina"));
-            board.setUserOccupant("Argentina", userList[2]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Congo"));
-            board.setUserOccupant("Congo", userList[2]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Kamchatka"));
-            board.setUserOccupant("Kamchatka", userList[2]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Siberia"));
-            board.setUserOccupant("Siberia", userList[2]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-
-            // Add player 4's countries to HashMap
-            userList[3] = new User(playerNames[3], startingArmyPowerPerPlayer);
-            userList[3].addTerritory(board.getTerritoryName("NewGuinea"));
-            board.setUserOccupant("NewGuinea", userList[3]);
-            board.getTerritoryName("NewGuinea").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("WesternAustralia"));
-            board.setUserOccupant("WesternAustralia", userList[3]);
-            board.getTerritoryName("WesternAustralia").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("Siam"));
-            board.setUserOccupant("Siam", userList[3]);
-            board.getTerritoryName("Siam").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("India"));
-            board.setUserOccupant("India", userList[3]);
-            board.getTerritoryName("India").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("China"));
-            board.setUserOccupant("China", userList[3]);
-            board.getTerritoryName("China").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("Mongolia"));
-            board.setUserOccupant("Mongolia", userList[3]);
-            board.getTerritoryName("Mongolia").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("Peru"));
-            board.setUserOccupant("Peru", userList[3]);
-            board.getTerritoryName("Peru").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("Quebec"));
-            board.setUserOccupant("Quebec", userList[3]);
-            board.getTerritoryName("Quebec").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("WesternUnitedStates"));
-            board.setUserOccupant("WesternUnitedStates", userList[3]);
-            board.getTerritoryName("WesternUnitedStates").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("CentralAmerica"));
-            board.setUserOccupant("CentralAmerica", userList[3]);
-            board.getTerritoryName("CentralAmerica").setArmyPower(1);
-        }
-        else if(numPlayers == 5)
-        {
-            // Add player 1's countries to HashMap
-            userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
-            userList[0].addTerritory(board.getTerritoryName("Alaska"));
-            board.setUserOccupant("Alaska", userList[0]);
-            board.getTerritoryName("Alaska").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("NorthwestTerritory"));
-            board.setUserOccupant("NorthwestTerritory", userList[0]);
-            board.getTerritoryName("NorthwestTerritory").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Greenland"));
-            board.setUserOccupant("Greenland", userList[0]);
-            board.getTerritoryName("Greenland").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Alberta"));
-            board.setUserOccupant("Alberta", userList[0]);
-            board.getTerritoryName("Alberta").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Madagascar"));
-            board.setUserOccupant("Madagascar", userList[0]);
-            board.getTerritoryName("Madagascar").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Scandinavia"));
-            board.setUserOccupant("Scandinavia", userList[0]);
-            board.getTerritoryName("Scandinavia").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Iceland"));
-            board.setUserOccupant("Iceland", userList[0]);
-            board.getTerritoryName("Iceland").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Ukraine"));
-            board.setUserOccupant("Ukraine", userList[0]);
-            board.getTerritoryName("Ukraine").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Japan"));
-            board.setUserOccupant("Japan", userList[0]);
-            board.getTerritoryName("Japan").setArmyPower(1);
-
-            // Add player 2's countries to HashMap
-            userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
-            userList[1].addTerritory(board.getTerritoryName("Irkutsk"));
-            board.setUserOccupant("Irkutsk", userList[1]);
-            board.getTerritoryName("Irkutsk").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("EasternUnitedStates"));
-            board.setUserOccupant("EasternUnitedStates", userList[1]);
-            board.getTerritoryName("EasternUnitedStates").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("NorthernEurope"));
-            board.setUserOccupant("NorthernEurope", userList[1]);
-            board.getTerritoryName("NorthernEurope").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("SouthernEurope"));
-            board.setUserOccupant("SouthernEurope", userList[1]);
-            board.getTerritoryName("SouthernEurope").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("WesternEurope"));
-            board.setUserOccupant("WesternEurope", userList[1]);
-            board.getTerritoryName("WesternEurope").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Indonesia"));
-            board.setUserOccupant("Indonesia", userList[1]);
-            board.getTerritoryName("Indonesia").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("SouthAfrica"));
-            board.setUserOccupant("SouthAfrica", userList[1]);
-            board.getTerritoryName("SouthAfrica").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("GreatBritian"));
-            board.setUserOccupant("GreatBritian", userList[1]);
-            board.getTerritoryName("GreatBritian").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("EasternAustralia"));
-            board.setUserOccupant("EasternAustralia", userList[1]);
-            board.getTerritoryName("EasternAustralia").setArmyPower(1);
-
-            // Add player 3's countries to HashMap
-            userList[2] = new User(playerNames[2], startingArmyPowerPerPlayer);
-            userList[2].addTerritory(board.getTerritoryName("Yakutsk"));
-            board.setUserOccupant("Yakutsk", userList[2]);
-            board.getTerritoryName("Yakutsk").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Afghanistan"));
-            board.setUserOccupant("Afghanistan", userList[2]);
-            board.getTerritoryName("Afghanistan").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Ural"));
-            board.setUserOccupant("Ural", userList[2]);
-            board.getTerritoryName("Ural").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("MiddleEast"));
-            board.setUserOccupant("MiddleEast", userList[2]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Ontario"));
-            board.setUserOccupant("Ontario", userList[2]);
-            board.getTerritoryName("Ontario").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Venezuela"));
-            board.setUserOccupant("Venezuela", userList[2]);
-            board.getTerritoryName("Venezuela").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Brazil"));
-            board.setUserOccupant("Brazil", userList[2]);
-            board.getTerritoryName("Brazil").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("NorthAfrica"));
-            board.setUserOccupant("NorthAfrica", userList[2]);
-            board.getTerritoryName("NorthAfrica").setArmyPower(1);
-
-            // Add player 4's countries to HashMap
-            userList[3] = new User(playerNames[3], startingArmyPowerPerPlayer);
-            userList[3].addTerritory(board.getTerritoryName("Egypt"));
-            board.setUserOccupant("Egypt", userList[3]);
-            board.getTerritoryName("Egypt").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("EastAfrica"));
-            board.setUserOccupant("EastAfrica", userList[3]);
-            board.getTerritoryName("EastAfrica").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("Argentina"));
-            board.setUserOccupant("Argentina", userList[3]);
-            board.getTerritoryName("Argentina").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("Congo"));
-            board.setUserOccupant("Congo", userList[3]);
-            board.getTerritoryName("Congo").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("Kamchatka"));
-            board.setUserOccupant("Kamchatka", userList[3]);
-            board.getTerritoryName("Kamchatka").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("Siberia"));
-            board.setUserOccupant("Siberia", userList[3]);
-            board.getTerritoryName("Siberia").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("NewGuinea"));
-            board.setUserOccupant("NewGuinea", userList[3]);
-            board.getTerritoryName("NewGuinea").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("WesternAustralia"));
-            board.setUserOccupant("WesternAustralia", userList[3]);
-            board.getTerritoryName("WesternAustralia").setArmyPower(1);
-
-            // Add player 5's countries to HashMap
-            userList[4] = new User(playerNames[4], startingArmyPowerPerPlayer);
-            userList[4].addTerritory(board.getTerritoryName("Siam"));
-            board.setUserOccupant("Siam", userList[4]);
-            board.getTerritoryName("Siam").setArmyPower(1);
-            userList[4].addTerritory(board.getTerritoryName("India"));
-            board.setUserOccupant("India", userList[4]);
-            board.getTerritoryName("India").setArmyPower(1);
-            userList[4].addTerritory(board.getTerritoryName("China"));
-            board.setUserOccupant("China", userList[4]);
-            board.getTerritoryName("China").setArmyPower(1);
-            userList[4].addTerritory(board.getTerritoryName("Mongolia"));
-            board.setUserOccupant("Mongolia", userList[4]);
-            board.getTerritoryName("Mongolia").setArmyPower(1);
-            userList[4].addTerritory(board.getTerritoryName("Peru"));
-            board.setUserOccupant("Peru", userList[4]);
-            board.getTerritoryName("Peru").setArmyPower(1);
-            userList[4].addTerritory(board.getTerritoryName("Quebec"));
-            board.setUserOccupant("Quebec", userList[4]);
-            board.getTerritoryName("Quebec").setArmyPower(1);
-            userList[4].addTerritory(board.getTerritoryName("WesternUnitedStates"));
-            board.setUserOccupant("WesternUnitedStates", userList[4]);
-            board.getTerritoryName("WesternUnitedStates").setArmyPower(1);
-            userList[4].addTerritory(board.getTerritoryName("CentralAmerica"));
-            board.setUserOccupant("CentralAmerica", userList[4]);
-            board.getTerritoryName("CentralAmerica").setArmyPower(1);
-        }
-        else // Number of Players is 6
-        {
-            // Add player 1's countries to HashMap
-            userList[0] = new User(playerNames[0], startingArmyPowerPerPlayer);
-            userList[0].addTerritory(board.getTerritoryName("Alaska"));
-            board.setUserOccupant("Alaska", userList[0]);
-            board.getTerritoryName("Alaska").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("NorthwestTerritory"));
-            board.setUserOccupant("NorthwestTerritory", userList[0]);
-            board.getTerritoryName("NorthwestTerritory").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Greenland"));
-            board.setUserOccupant("Greenland", userList[0]);
-            board.getTerritoryName("Greenland").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Alberta"));
-            board.setUserOccupant("Alberta", userList[0]);
-            board.getTerritoryName("Alberta").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Ontario"));
-            board.setUserOccupant("Ontario", userList[0]);
-            board.getTerritoryName("Ontario").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Venezuela"));
-            board.setUserOccupant("Venezuela", userList[0]);
-            board.getTerritoryName("Venezuela").setArmyPower(1);
-            userList[0].addTerritory(board.getTerritoryName("Brazil"));
-            board.setUserOccupant("Brazil", userList[0]);
-            board.getTerritoryName("Brazil").setArmyPower(1);
-
-            // Add player 2's countries to HashMap
-            userList[1] = new User(playerNames[1], startingArmyPowerPerPlayer);
-            userList[1].addTerritory(board.getTerritoryName("NorthAfrica"));
-            board.setUserOccupant("NorthAfrica", userList[1]);
-            board.getTerritoryName("NorthAfrica").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Egypt"));
-            board.setUserOccupant("Egypt", userList[1]);
-            board.getTerritoryName("Egypt").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("EastAfrica"));
-            board.setUserOccupant("EastAfrica", userList[1]);
-            board.getTerritoryName("EastAfrica").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("NorthernEurope"));
-            board.setUserOccupant("NorthernEurope", userList[1]);
-            board.getTerritoryName("NorthernEurope").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("SouthernEurope"));
-            board.setUserOccupant("SouthernEurope", userList[1]);
-            board.getTerritoryName("SouthernEurope").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("WesternEurope"));
-            board.setUserOccupant("WesternEurope", userList[1]);
-            board.getTerritoryName("WesternEurope").setArmyPower(1);
-            userList[1].addTerritory(board.getTerritoryName("Indonesia"));
-            board.setUserOccupant("Indonesia", userList[1]);
-            board.getTerritoryName("Indonesia").setArmyPower(1);
-
-            // Add player 3's countries to HashMap
-            userList[2] = new User(playerNames[2], startingArmyPowerPerPlayer);
-            userList[2].addTerritory(board.getTerritoryName("NewGuinea"));
-            board.setUserOccupant("NewGuinea", userList[2]);
-            board.getTerritoryName("NewGuinea").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("WesternAustralia"));
-            board.setUserOccupant("WesternAustralia", userList[2]);
-            board.getTerritoryName("WesternAustralia").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Siam"));
-            board.setUserOccupant("Siam", userList[2]);
-            board.getTerritoryName("Siam").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("India"));
-            board.setUserOccupant("India", userList[2]);
-            board.getTerritoryName("India").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("China"));
-            board.setUserOccupant("China", userList[2]);
-            board.getTerritoryName("China").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Mongolia"));
-            board.setUserOccupant("Mongolia", userList[2]);
-            board.getTerritoryName("Mongolia").setArmyPower(1);
-            userList[2].addTerritory(board.getTerritoryName("Peru"));
-            board.setUserOccupant("Peru", userList[2]);
-            board.getTerritoryName("Peru").setArmyPower(1);
-
-            // Add player 4's countries to HashMap
-            userList[3] = new User(playerNames[3], startingArmyPowerPerPlayer);
-            userList[3].addTerritory(board.getTerritoryName("Quebec"));
-            board.setUserOccupant("Quebec", userList[3]);
-            board.getTerritoryName("Quebec").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("WesternUnitedStates"));
-            board.setUserOccupant("WesternUnitedStates", userList[3]);
-            board.getTerritoryName("WesternUnitedStates").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("EasternUnitedStates"));
-            board.setUserOccupant("EasternUnitedStates", userList[3]);
-            board.getTerritoryName("EasternUnitedStates").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("CentralAmerica"));
-            board.setUserOccupant("CentralAmerica", userList[3]);
-            board.getTerritoryName("CentralAmerica").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("Argentina"));
-            board.setUserOccupant("Argentina", userList[3]);
-            board.getTerritoryName("Argentina").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("Congo"));
-            board.setUserOccupant("Congo", userList[3]);
-            board.getTerritoryName("Congo").setArmyPower(1);
-            userList[3].addTerritory(board.getTerritoryName("SouthAfrica"));
-            board.setUserOccupant("SouthAfrica", userList[3]);
-            board.getTerritoryName("SouthAfrica").setArmyPower(1);
-
-            // Add player 5's countries to HashMap
-            userList[4] = new User(playerNames[4], startingArmyPowerPerPlayer);
-            userList[4].addTerritory(board.getTerritoryName("Madagascar"));
-            board.setUserOccupant("Madagascar", userList[4]);
-            board.getTerritoryName("Madagascar").setArmyPower(1);
-            userList[4].addTerritory(board.getTerritoryName("Iceland"));
-            board.setUserOccupant("Iceland", userList[4]);
-            board.getTerritoryName("Iceland").setArmyPower(1);
-            userList[4].addTerritory(board.getTerritoryName("Scandinavia"));
-            board.setUserOccupant("Scandinavia", userList[4]);
-            board.getTerritoryName("Scandinavia").setArmyPower(1);
-            userList[4].addTerritory(board.getTerritoryName("Ukraine"));
-            board.setUserOccupant("Ukraine", userList[4]);
-            board.getTerritoryName("Ukraine").setArmyPower(1);
-            userList[4].addTerritory(board.getTerritoryName("GreatBritian"));
-            board.setUserOccupant("GreatBritian", userList[4]);
-            board.getTerritoryName("GreatBritian").setArmyPower(1);
-            userList[4].addTerritory(board.getTerritoryName("EasternAustralia"));
-            board.setUserOccupant("EasternAustralia", userList[4]);
-            board.getTerritoryName("EasternAustralia").setArmyPower(1);
-            userList[4].addTerritory(board.getTerritoryName("Japan"));
-            board.setUserOccupant("Japan", userList[4]);
-            board.getTerritoryName("Japan").setArmyPower(1);
-
-            // Add player 6's countries to HashMap
-            userList[5] = new User(playerNames[5], startingArmyPowerPerPlayer);
-            userList[5].addTerritory(board.getTerritoryName("Irkutsk"));
-            board.setUserOccupant("Irkutsk", userList[5]);
-            board.getTerritoryName("Irkutsk").setArmyPower(1);
-            userList[5].addTerritory(board.getTerritoryName("Yakutsk"));
-            board.setUserOccupant("Yakutsk", userList[5]);
-            board.getTerritoryName("Yakutsk").setArmyPower(1);
-            userList[5].addTerritory(board.getTerritoryName("Kamchatka"));
-            board.setUserOccupant("Kamchatka", userList[5]);
-            board.getTerritoryName("Kamchatka").setArmyPower(1);
-            userList[5].addTerritory(board.getTerritoryName("Siberia"));
-            board.setUserOccupant("Siberia", userList[5]);
-            board.getTerritoryName("Siberia").setArmyPower(1);
-            userList[5].addTerritory(board.getTerritoryName("Afghanistan"));
-            board.setUserOccupant("Afghanistan", userList[5]);
-            board.getTerritoryName("Afghanistan").setArmyPower(1);
-            userList[5].addTerritory(board.getTerritoryName("Ural"));
-            board.setUserOccupant("Ural", userList[5]);
-            board.getTerritoryName("Ural").setArmyPower(1);
-            userList[5].addTerritory(board.getTerritoryName("MiddleEast"));
-            board.setUserOccupant("MiddleEast", userList[5]);
-            board.getTerritoryName("MiddleEast").setArmyPower(1);
-        }
-
-        // Spawn deck
-        Deck deck = new Deck(board.getBoardTerritories());
-
-        // More Testing
-        System.out.println(userList[0].getUsername());
-
-        Scanner attack = new Scanner(System.in);
-        Scanner attackRedo = new Scanner(System.in);
-        Scanner attackAmt = new Scanner(System.in);
-        Scanner fortifyChoice = new Scanner(System.in);
-        Scanner attackerLocation = new Scanner(System.in);
-        Scanner attackAdjCheck = new Scanner(System.in);
-        Scanner finalAttackChoice = new Scanner(System.in);
-
-        // Testing for now
-        board.getTerritoryName("Alaska").setArmyPower(20);
-        board.getTerritoryName("NorthwestTerritory").setArmyPower(20);
-
-        // Game flag. Remove players from array who do not have territories. When one is left, he wins and game ends
-        // WHEN TESTING ON INTELLIJ YOU MUST STOP THE PROGRAM MANUALLY AS THIS IS AN INFINITE LOOP RIGHT NOW
-        while((userList.length) != 1)
-        {
-
-            // Loop through each players turn. They must attack for right now
-            for(int i = 0; i < (userList.length); i++)
-            {
-                // Display credit costs for purchasing features
-                System.out.println("Here are the features you can purchase with credits and their amounts: ");
-                System.out.println("Undo attack: 5 credits");
-                System.out.println("Draw an extra card: 3 credits");
-                System.out.println("Transfer credits to another player: 10 credits");
-                System.out.println();
-
-                // Have the User draw a card
-                Card drawnCard = deck.card_draw();
-                System.out.println(drawnCard.getName());
-                userList[i].addCard(drawnCard);
-
-                //Test drawn card
-                System.out.println(userList[i].getHand());
-
-                // Each player gets 1 new credit at the beginning of the turn
-                userList[i].incrementCredit();
-                System.out.println(userList[i].getUsername() + " , you have gained 1 credit this turn");
-                /*
-                    Update Twitter counts with:
-                    tp.incrementCount(1);
-                    userList[i].incrementTwitterCount(1);
-                    when they conquer a territory
-                */
-
-                // Check if User has to turn in cards (ignoring for now)
-
-                // Increment total armies (ignoring Continent Bonus for now)
-                // Increment armies based off number of territories, userList[i].numArmiesAdd();
-                addedArmies = userList[i].numArmiesAdded();
-                userList[i].numArmiesAdded();
-
-                // Will add while loop later to allow them to place at different territories
-                // Prompt to see where they want to place them
-                boolean fortifyFlag = true;
-                while(fortifyFlag) {
-                    System.out.println("Player " + userList[i].getUsername() + " you have gained " + addedArmies + " armies, " +
-                            "wheat Territory would you like to place them at?");
-
-                    // Store their territories in a variable
-                    ArrayList<Territory> userTerritories = userList[i].getUserTerritories();
-
-                    // Iterate through that variable to display string
-                    for (int j = 0; j < userTerritories.size(); j++) {
-                        System.out.println(userTerritories.get(j).getName());
-                    }
-
-                    // Store their choice
-                    String fortify = fortifyChoice.nextLine();
-
-                    if(board.getTerritoryName(fortify).getUser() == userList[i]) {
-                        // Query the board and update the chosen territory's army power
-                        board.getTerritoryName(fortify).incrementArmies(addedArmies);
-                        System.out.println(fortify + " now has " + board.getTerritoryName(fortify).getArmyPower() + " armies");
-                        writer.println(userList[i].getUsername() + " is fortifying the territory of: " + fortify);
-                        fortifyFlag = false;
-                    }
-                    else {
-                        System.out.println("That territory is not under your control, please try again");
-                    }
-                }
-                // Based on result, increment/decrement that country's armies
-                // If country army total has 0 leftover, remove from defeated player's HashMap
-                // Add that country to victor's HashMap
-                // Call function to increment twitter count by 1
-                // Decrement original country by 1 and add it to victor's new country
-                // Check if defeated player's HashMap size is equal to 0
-                // If it is equal to 0, remove them from userList
-                attackFlag = true;
-                int conqueredCount = 0;
-                while(attackFlag)
-                {
-                    boolean adjacentFlag = true;
-                    while(adjacentFlag) {
-                        //prompt user for country they are attacking from
-                        System.out.println(userList[i].getUsername() + ", what territory would you like to attack from?");
-
-                        String attackPlace = attackerLocation.nextLine();
-
-                        ArrayList<Territory> listAdjacencies = board.getAdjacencies(attackPlace);
-                        /*
-                        System.out.println(listAdjacencies.get(0).getTerritory());
-                        System.out.println(listAdjacencies.get(1).getTerritory());
-                        */
-                        for(int j = 0; j < listAdjacencies.size(); j++)
-                        {
-                            System.out.println(listAdjacencies.get(j).getTerritory());
-                        }
-
-                        //prompt user for country to attack
-                        System.out.println(userList[i].getUsername() + ", what territory would you like to attack?");
-                        String attackTarget = attackAdjCheck.nextLine();
-                        boolean isAdj = board.checkAdjacencies(attackPlace, attackTarget);
-
-                        if(isAdj){
-                            adjacentFlag = false;
-                        }
-                        else{
-                            System.out.println("That territory is not an adjacency");
-                        }
-                    }
-                    System.out.println("Please confirm the territory you are attacking from");
-                    String finalChoice = finalAttackChoice.nextLine();
-
-                    System.out.println("Please confirm the territory you wish to attack: ");
-                    String attackChoice = attack.nextLine();
-
-                    User user1 = userList[i];
-                    User user2 = board.getTerritoryName(attackChoice).getUser();
-
-                    // Display alert to user, per Demo 0.4 requirements
-                    System.out.println("Player " + user2.getUsername() + " your territory is under attack!");
-
-                    System.out.println("Enter the number of armies attacking: ");
-                    int amount = attackAmt.nextInt();
-
-                    // Write to file
-                    writer.println(user1 + " is attacking with " + amount + " of armies");
-
-                    Dice d1 = new Dice();
-                    Dice d2 = new Dice();
-
-                    int user1Die = d1.getFaceValue();
-                    int user2Die = d2.getFaceValue();
-
-                    if(user1Die > user2Die) {
-                        System.out.println("Attacking player has won the duel \n");
-                        user2.removeArmyPower(amount);
-                        board.getTerritoryName(attackChoice).decrementArmies(amount);
-                        System.out.println("Territory " + board.getTerritoryName(attackChoice).getTerritory() + " now has " +
-                                board.getTerritoryName(attackChoice).getArmyPower() + " armies remaining");
-
-                        writer.println(user2 + " has lost " + amount + " of armies in " + board.getTerritoryName(attackChoice).getTerritory());
-
-                        // Check if they would like to undo
-                        System.out.println("Would you like to undo this action?");
-                        String attackUndoCheck = attackRedo.nextLine();
-
-                        if (attackUndoCheck.equals("Yes")) {
-                            writer.println(user1 + " is undoing there actions, resetting armies to previous");
-                            user2.addArmyPower(amount);
-                            System.out.println("User 2's army power: " + user2.getArmyPower());
-
-                            board.getTerritoryName(attackChoice).incrementArmies(amount);
-                            System.out.println(board.getTerritoryName(attackChoice).getTerritory() + "'s army power has increased to " +
-                                    board.getTerritoryName(attackChoice).getArmyPower());
-                        } else if (attackUndoCheck.equals("No")) {
-                            attackFlag = false;
-                        }
-                    }
-
-                    else if(user1Die <= user2Die){
-                        System.out.println("Defending player has successfully defended! \n");
-                        user1.removeArmyPower(amount);
-                        board.getTerritoryName(finalChoice).decrementArmies(amount);
-
-                        System.out.println("Territory " + board.getTerritoryName(finalChoice).getTerritory() + " now has " +
-                                board.getTerritoryName(finalChoice).getArmyPower() + " armies remaining");
-
-                        writer.println(user1 + " has lost " + amount + " of armies in " + board.getTerritoryName(finalChoice).getTerritory());
-
-                        // Check if they would like to undo
-                        System.out.println("Would you like to undo this action?");
-                        String attackUndoCheck = attackRedo.nextLine();
-
-                        if (attackUndoCheck.equals("Yes")) {
-                            writer.println(user1 + " is undoing there actions, resetting armies to previous");
-                            user1.addArmyPower(amount);
-                            System.out.println("User 1's army power: " + user1.getArmyPower());
-
-                            board.getTerritoryName(finalChoice).incrementArmies(amount);
-                            System.out.println(board.getTerritoryName(finalChoice).getTerritory() + "'s army power has increased to " +
-                                    board.getTerritoryName(finalChoice).getArmyPower());
-                        } else if (attackUndoCheck.equals("No")) {
-                            attackFlag = false;
-                        }
-
-                    }
-                }
-
-                tp.postTurnStatus(userList[i], tp.getCount());
-
-                /*
-                Twitter twitter = TwitterFactory.getSingleton();
-                String message = "Player " + userList[i].getUsername() + " has conquered " + conqueredCount + " territories";
-                Status status = twitter.updateStatus(message);
-                */
-
-                /*
-                // Post amount of territories conquered by player this turn
-                tp.postTurnStatus(userList[i], tp.getCount());
-
-                // Reset turn count to 0 to keep track of next player in loop
-                tp.resetCount();
-                */
-
-
-                // Shuffle deck
-                deck.shuffle();
-
-            }
-        }
-
-        // Pushing to Amazon
-        //s3client.putObject(new PutObjectRequest("risk-game4353", "Replay", new File(parentDir + "/src/resources/replay.txt")));
-
-        // Begin posting final twitter status messages
-        for(int i = 0; i < numPlayers; i++){
-            tp.postFinalStatus(twitterList[i]);
-        }
-
-        System.out.println("Congratulations " + userList[0].getUsername() + " on winning the game of Risk!");
+import java.util.HashMap;
+import java.util.ArrayList;
+
+/**
+ * The User class contains the information used to setup User objects and
+ * call functions to ensure functionality of the game. These include adding
+ * territories, grabbing the username, setting army power, incrementing User
+ * credits etc.
+ * @author Aaron Mitchell
+ * @author Alex Milligan
+ * @author Luis Florez
+ * @version 0.4
+ */
+
+public class User {
+	private String username;
+	private int turnPosition;
+	private int score;
+	private int armyPower;
+	private int twitterCount;
+	private int credits;
+	private boolean hasCredits;
+	private HashMap<String,Territory> territoriesHeld;
+	private HashMap<String,Continent> continentsHeld;
+	private Hand playingHand;
+	private boolean creditFlag;
+	/*
+	public enum Actions {
+		MOVE, ATTACK, PLACE_ARMY
+	}
+
+	public void Action(Actions a) {
+		Scanner sc = new Scanner(System.in);
+		switch (a){
+			case MOVE:
+				System.out.println("Which territory would you like to move from?");
+				//This should actually point to the territory object that matches the input string
+				String moveFrom = sc.nextLine();
+				//Check if territory belongs to user. else...
+				System.out.println("Which territory would you like to move to?");
+				//Check if territory belongs to user, else...
+				String moveTo = sc.nextLine();
+				System.out.println("How many armies?");
+				//Check actual amount of armies on both territories before changing.
+				int amt = sc.nextInt();
+				sc.nextLine();
+
+				System.out.println(username + " is Moving __ units from __ to __");
+
+				//from.armyPower - amt
+				//to.armyPower
+				break;
+			case ATTACK:
+				System.out.println("Which territory are you attacking from?");
+				String attackFrom = sc.nextLine();
+				System.out.println("Which territory are you attacking?");
+				String attackTo = sc.nextLine();
+				System.out.println("How many units are you attacking with?");
+				int attackingArmy = sc.nextInt();
+				sc.nextLine();
+				//remove attackingArmy from the total territory armies at the start of the battle, then add it back if there are any left afterwards.
+
+				String attackedUsername="";
+				int attackedTerritoryArmyAmount=0;
+
+				System.out.println(attackedUsername + " how many units would you like to defend with? You have " + attackedTerritoryArmyAmount);
+				int defendingArmy = sc.nextInt();
+
+				System.out.println(username + " is Attacking __ from __ with __ units\n" + attackedUsername + " is defending with " + defendingArmy);
+				int[] p1DiceRolls = new int[attackingArmy];
+				int[] p2DiceRolls = new int[defendingArmy];
+				// two sets of dice rolls depending on previous vars
+				Dice d = new Dice();
+				for(int i=0; i<attackingArmy; i++){
+					d.roll();
+					p1DiceRolls[i] = d.getFaceValue();
+				}
+				for(int i = 0; i< defendingArmy; i++){
+					d.roll();
+					p2DiceRolls[i] = d.getFaceValue();
+				}
+
+				Arrays.sort(p1DiceRolls);
+				Arrays.sort(p2DiceRolls);
+				if(attackingArmy>defendingArmy || attackingArmy == defendingArmy){
+					for(int i=defendingArmy; i>=0; i--){
+						if(p1DiceRolls[i] > p2DiceRolls[i])
+							defendingArmy--;
+						else
+							attackingArmy--;
+					}
+				}
+				else{
+
+				}
+				//add back attackingArmy and defendingArmy to the territories, then change territory ownership accordingly
+				break;
+			case PLACE_ARMY:
+				System.out.println(username + " is placing an army at__");
+				//this is a comment
+				break;
+
+
+		}
+	} // Move, Battle, Place Army
+	*/
+
+	/**
+	 * Spawns a user with the chosen name and army power (which is based off the total number
+	 * of players playing the game). The User will also have a count for the amount of territories
+	 * that they conquered over the course of the game which will be posted on Twitter (the variable
+	 * being twitterCount. The credits variable keeps track of the User's score (how many games they
+	 * have won), and each User will gain 1 credit every turn. Each User will have a HashMap of the
+	 * territories they control, and the continents they control as well and each User will have their
+	 * own hand, which holds the Risk cards drawn each turn
+	 * @param name The name the User selects at the beginning of the game
+	 * @param startingArmy The amount of army power a player starts with (based off number of total players)
+	 * @see User
+	 * @see TweetPoster
+	 * @see Territory
+	 * @see Continent
+	 * @see Hand
+	 */
+	public User(String name, int startingArmy) {
+		this.username = name;
+		this.armyPower = startingArmy;
+		score = 0;
+		this.twitterCount = 0;
+		this.credits = 0;
+
+		territoriesHeld = new HashMap<String,Territory>();
+		continentsHeld = new HashMap<String,Continent>();
+		playingHand = new Hand();
+	}
+
+	/**
+	 * Adds the card drawn from the deck to the User's playing hand
+	 * @param drawnCard The card that was drawn from the deck
+	 * @see User
+	 * @see Deck
+	 * @see Card
+	 * @see Hand
+	 */
+	public void addCard(Card drawnCard) {
+
+		playingHand.add(drawnCard);
+	}
+
+	/**
+	 * Returns the ArrayList of Cards in the User's playing hand
+	 * @see User
+	 * @see Deck
+	 * @see Card
+	 * @see Hand
+	 */
+	public ArrayList<Card> getHand() {
+
+		return playingHand.getCardsInHand();
+	}
+
+	/**
+	 * Returns the actual Hand object in memory to reference or
+	 * call further functions on
+	 * @see User
+	 * @see Deck
+	 * @see Card
+	 * @see Hand
+	 */
+	public Hand getHandClass() {
+
+		return playingHand;
+	}
+
+	/**
+	 * Checks if the User is allowed to purchase an undo function
+	 * @return Returns True or False depending on whether User has enough credits
+	 * @see User
+	 */
+	public boolean checkPurchaseUndo(){
+		if(credits >= 5){
+			creditFlag = true;
+		}
+		else{
+			creditFlag = false;
+			System.out.println("You do not have enough credits to purchase an undo");
+		}
+		return creditFlag;
+	}
+
+	/**
+	 * Checks if the User is able to purchase an extra Risk card
+	 * @return True or false depending on if User has enough credits
+	 * @see User
+	 * @see Hand
+	 * @see Deck
+	 * @see Card
+	 */
+	public boolean checkPurchaseCard(){
+		if(credits >= 3){
+			creditFlag = true;
+		}
+		else{
+			creditFlag = false;
+			System.out.println("You do not have enough credits to purchase a card");
+		}
+		return creditFlag;
+	}
+
+	/**
+	 * Checks if the User is able to transfer credits to another User
+	 * @return True or false depending on if User has enough credits
+	 * @see User
+	 */
+	public boolean checkPurchaseTransfer(){
+		if(credits >= 10){
+			creditFlag = true;
+		}
+		else{
+			creditFlag = false;
+			System.out.println("You do not have enough credits to transfer to another player");
+		}
+		return creditFlag;
+	}
+
+	/**
+	 * Sets the User's turn position
+	 * @param position Specifies the User's turn position
+	 * @see User
+	 */
+	public void setTurnPosition(int position) {
+		turnPosition = position;
+	}
+
+	/**
+	 * After grabbing the index of the 3 cards the player wants to turn in through our main function,
+	 * we store those indexes into an integer array and pass that to this function. This function will
+	 * call the "deleteCardsFromHand" function to remove those cards from the User's hand. We will also
+	 * need to remember to add those cards back to the main deck before continuing
+	 * @param cardsTurnedInIndex Integer array of cards to turn in
+	 * @see Hand
+	 * @see Deck
+	 * @see Card
+	 */
+	public void removeCards(int[] cardsTurnedInIndex) {
+
+		playingHand.deleteCardsFromHand(cardsTurnedInIndex[0], cardsTurnedInIndex[1], cardsTurnedInIndex[2]);
+	}
+
+	/**
+	 * Checks if the User has to turn in Risk cards. If a User has 5 or more cards
+	 * in hand, then they either have 3 of a different type, or 3 of the same type
+	 * and they must turn in cards according to the game rules. This function
+	 * will set a flag if they are required to turn in cards or not
+	 * @return True or false depending on the User's hand size
+	 * @see User
+	 * @see Hand
+	 * @see Deck
+	 * @see Card
+	 */
+	public boolean hasToTurnInCards() {
+
+		return playingHand.hasToTurnInCards();
+	}
+
+	/**
+	 * Returns the turn position
+	 * @return User's turn position
+	 * @see User
+	 */
+	public int getTurnPosition() {
+		return turnPosition;
+	}
+
+	/**
+	 * Adds to the user's army power
+	 * @param p The power to add to the User's army power
+	 * @return User's updated army power
+	 * @throws IllegalArgumentException if number entered is negative
+	 * @see User
+	 */
+	public int addArmyPower(int p) {
+		if (p < 0)
+			throw new java.lang.IllegalArgumentException();
+
+		armyPower = armyPower + p;
+		return armyPower;
+	}
+
+
+	/**
+	 * Keeps track of User's total conquered territories over the course of the game
+	 * @param increase The amount to add to User's total conquered territories
+	 * @return User's updated conquered territory total
+	 * @see User
+	 * @see TweetPoster
+	 */
+	public int incrementTwitterCount(int increase){
+	    twitterCount = twitterCount + increase;
+
+	    return twitterCount;
     }
+
+
+	/**
+	 * Returns User's current count of conquered territories in the game so far
+	 * @return User's current conquered territory amount
+	 * @see User
+	 * @see TweetPoster
+	 */
+    public int getTwitterCount(){
+		return twitterCount;
+	}
+
+	/**
+	 * Removes army power if User has been attacked and lost the duel
+	 * @param p The power to remove from the User's army power
+	 * @return User's updated total number of armies
+	 * @throws IllegalArgumentException if the number entered is negative
+	 * @see User
+	 */
+	public int removeArmyPower(int p) {
+		if (p < 0)
+			throw new java.lang.IllegalArgumentException();
+
+		if (p > armyPower)
+			armyPower = 0;
+
+		else
+			armyPower = armyPower - p;
+
+		return armyPower;
+	}
+
+	/**
+	 * Keeps track of User's total win amount
+	 * @param newScore The value to update score to
+	 * @see User
+	 */
+	public void setScore(int newScore){
+		score = newScore;
+	}
+
+	/**
+	 * Grabs User's total win amount
+	 * @return User's current win amount
+	 * @see User
+	 */
+	public int getScore(){
+		return score;
+	}
+
+
+	/**
+	 * Grabs User's username they chose at the beginning of the game
+	 * @return User's name
+	 * @see User
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * Adds specified territory to User's HashMap. Each user will have a HashMap to keep track
+	 * @param territory The territory to add to User's HashMap
+	 * of their conquered territories
+	 * @see User
+	 * @see Territory
+	 */
+	public void addTerritory(Territory territory) {
+
+		System.out.println(username + " now occupies " + territory.getName() + "!");
+		territoriesHeld.put(territory.getName(), territory);
+	}
+
+	/**
+	 * Deletes specified territory from User's HashMap. Each user will have a HashMap to keep track
+	 * of their conquered territories
+	 * @param territoryName The territory name to remove from User's HashMap
+	 * @see User
+	 * @see Territory
+	 */
+	public void deleteTerritory(String territoryName)
+	{
+		System.out.println(username + " has lost control of " + territoryName);
+		territoriesHeld.remove(territoryName);
+	}
+
+	/**
+	 * Increments User's current amount of credits. Each User will gain 1 credit per turn.
+	 * Credit can be used to buy cards, purchase an undo feature, buy armies or transfer
+	 * their credits to another player
+	 * @return User's credits
+	 * @see User
+	 */
+	public int incrementCredit(){
+		credits = credits + 1;
+		return credits;
+	}
+
+
+	/**
+	 * Used to figure out how many armies to give a User at the beginning of their turn
+	 * @return Number of armies to give to User
+	 * @see User
+	 */
+	public int numArmiesAdded(){
+		int add = territoriesHeld.size() / 3;
+
+		if(add < 3){
+			add = 3;
+		}
+
+		return add;
+	}
+
+	/**
+	 * Decrements User's current amount of credits. Each User will gain 1 credit per turn.
+	 * Credit can be used to buy cards, purchase an undo feature, buy armies or transfer
+	 * their credits to another player
+	 * @param creditAmount The amount of credit to remove from User's credits
+	 * @return User's credits
+	 * @see User
+	 */
+	public int removeCredit(int creditAmount){
+		if((credits - creditAmount) < 0)
+		{
+			credits = 0;
+		}
+		else {
+			credits = credits - creditAmount;
+		}
+		return credits;
+	}
+
+	/**
+	 * Used to check whether a User is allowed to purchase things with their credits
+	 * @param numRequiredCredits The amount of credits required for the User to buy what they are requesting
+	 * @return True if they have enough credits, False if they do not
+	 * @see User
+	 */
+	public boolean enoughCredits(int numRequiredCredits){
+		int remainingCredits = credits - numRequiredCredits;
+
+		if(remainingCredits < 0){
+			hasCredits = false;
+		}
+		else{
+			hasCredits = true;
+			credits = remainingCredits;
+		}
+		return hasCredits;
+	}
+
+	/**
+	 * Transfers credits between players
+	 * @param user1 The User who is transfering the credits
+	 * @param user2 The User who is receiving the credits
+	 * @see User
+	 */
+	public void transferCredits(User user1, User user2){
+		user2.credits += user1.credits;
+		user1.credits = 0;
+	}
+
+	/**
+	 * Returns the User's number of credits
+	 * @return User's credit amount
+	 * @see User
+	 */
+	public int getCredits(){
+		return credits;
+	}
+
+	/**
+	 * Returns all the territories a User has control of
+	 * @return All territories occupied by User
+	 * @see User
+	 * @see Territory
+	 */
+	public ArrayList<Territory> getUserTerritories()
+	{
+		return new ArrayList<Territory>(territoriesHeld.values());
+	}
+
+
+	/**
+	 * Returns User's total army power
+	 * @return User's total number of armies
+	 * @see User
+	 */
+	public int getArmyPower(){
+		return armyPower;
+	}
+
+	/**
+	 * Add continent to User's continent HashMap. Each user has a continent HashMap
+	 * that is used to store their controlled continents
+	 * @param continent The continent to add to User's HashMap
+	 * @see User
+	 * @see Continent
+	 */
+	public void addContinent(Continent continent)
+	{
+		System.out.println(username + " is dominating the continent of " + continent);
+		continentsHeld.put(continent.getName(), continent);
+	}
+
+	/**
+	 * Delete continent from User's continent HashMap. Each user has a continent HashMap
+	 * that is used to store their controlled continents
+	 * @param continentName The continent name to query to add to User's HashMap
+	 * @see User
+	 * @see Territory
+	 */
+	public void deleteContinent(String continentName)
+	{
+		System.out.println(username + " is no longer dominating the continent of " + continentName);
+		continentsHeld.remove(continentName);
+	}
+
+	/**
+	 * Alerts a User to the fact that their territory is under attack
+	 * @param user The User that needs to be alerted to their territory being attacked
+	 * @see User
+	 * @see Territory
+	 */
+	public void alertUser(User user){
+		System.out.println(user.getUsername() + ", your territory is under attack");
+	}
 }
