@@ -1,4 +1,6 @@
-# RiskProject [![Build Status](https://travis-ci.com/rambleRamblePie/RiskProject.svg?branch=master)](https://travis-ci.com/rambleRamblePie/RiskProject)<br>
+# RiskProject [![Build Status](https://travis-ci.com/rambleRamblePie/RiskProject.svg?branch=master)](https://travis-ci.com/rambleRamblePie/RiskProject)  
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8f4737f970a94fce9da7f63ebcd8745e)](https://app.codacy.com/app/AlexMilligan/RiskProject?utm_source=github.com&utm_medium=referral&utm_content=rambleRamblePie/RiskProject&utm_campaign=Badge_Grade_Settings)
+[![Codecov Badge](https://codecov.io/gh/rambleRamblePie/RiskProject/branch/master/graph/badge.svg)](https://codecov.io/gh/rambleRamblePie/RiskProject)
 This repository holds project 1 of **TeamHAL** from COSC 4353 Software Design
 
 https://docs.google.com/document/d/1d5d2bB72MDlnfXZmAud7WaaHd31uRfvRchUe9y6lsEA/edit?usp=sharing
