@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * The User class contains the information used to setup User objects and
  * call functions to ensure functionality of the game. These include adding
  * territories, grabbing the username, setting army power, incrementing User
+ * credits etc.
  * @author Aaron Mitchell
  * @author Alex Milligan
  * @author Luis Florez
@@ -230,37 +231,6 @@ public class User {
 	 */
 	public void setTurnPosition(int position) {
 		turnPosition = position;
-	}
-
-	/**
-	 * After grabbing the index of the 3 cards the player wants to turn in through our main function,
-	 * we store those indexes into an integer array and pass that to this function. This function will
-	 * call the "deleteCardsFromHand" function to remove those cards from the User's hand. We will also
-	 * need to remember to add those cards back to the main deck before continuing
-	 * @param cardsTurnedInIndex Integer array of cards to turn in
-	 * @see Hand
-	 * @see Deck
-	 * @see Card
-	 */
-	public void removeCards(int[] cardsTurnedInIndex) {
-
-		playingHand.deleteCardsFromHand(cardsTurnedInIndex[0], cardsTurnedInIndex[1], cardsTurnedInIndex[2]);
-	}
-
-	/**
-	 * Checks if the User has to turn in Risk cards. If a User has 5 or more cards
-	 * in hand, then they either have 3 of a different type, or 3 of the same type
-	 * and they must turn in cards according to the game rules. This function
-	 * will set a flag if they are required to turn in cards or not
-	 * @return True or false depending on the User's hand size
-	 * @see User
-	 * @see Hand
-	 * @see Deck
-	 * @see Card
-	 */
-	public boolean hasToTurnInCards() {
-
-		return playingHand.hasToTurnInCards();
 	}
 
 	/**
