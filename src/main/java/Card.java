@@ -25,17 +25,7 @@ public class Card {
      */
     public String getName()
     {
-        return territory.getName() + " with type " + type;
-    }
-
-    /**
-     * Grabs the Territory assigned to the card
-     * @return Returns the Territory assigned to the card
-     * @see Card
-     */
-    public Territory getTerritory()
-    {
-        return territory;
+        return territory.getName();
     }
 
     /**
