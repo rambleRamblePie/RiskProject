@@ -13,7 +13,6 @@ import java.util.*;
 public class Hand {
 
     private ArrayList<Card> user_hand;
-    private boolean checkHand;
 
     /**
      * Constructor for the User's hand
