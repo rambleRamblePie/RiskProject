@@ -907,6 +907,9 @@ public class Main {
                 int conqueredCount = 0;
                 while(attackFlag)
                 {
+                    // put timer thread here.
+                    // rest of this code in a try block
+
                     boolean adjacentFlag = true;
                     while(adjacentFlag) {
                         //prompt user for country they are attacking from
