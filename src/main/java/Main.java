@@ -870,6 +870,7 @@ public class Main {
                 // Will add while loop later to allow them to place at different territories
                 // Prompt to see where they want to place them
                 boolean fortifyFlag = true;
+                boolean outOfTimeFlag = false;
                 while(fortifyFlag) {
                     System.out.println("Player " + userList[i].getUsername() + " you have gained " + addedArmies + " armies, " +
                             "wheat Territory would you like to place them at?");
@@ -883,7 +884,17 @@ public class Main {
                     }
 
                     // Store their choice
-                    String fortify = fortifyChoice.nextLine();
+                    String fortify = "";
+                    GameTimer turnTimer = new GameTimer();
+                        if(turnTimer.getTimedInput()) {
+                           fortify = turnTimer.getLastInput();
+                        } else{
+                            System.out.println("You ran out of time! Skipping your turn...");
+                            fortifyFlag = false;
+                            outOfTimeFlag = true;
+                            continue;
+                        }
+                    //String fortify = fortifyChoice.nextLine();
 
                     if(board.getTerritoryName(fortify).getUser() == userList[i]) {
                         // Query the board and update the chosen territory's army power
@@ -895,6 +906,9 @@ public class Main {
                     else {
                         System.out.println("That territory is not under your control, please try again");
                     }
+                }
+                if(outOfTimeFlag){
+                    continue;
                 }
                 // Based on result, increment/decrement that country's armies
                 // If country army total has 0 leftover, remove from defeated player's HashMap
