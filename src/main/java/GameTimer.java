@@ -32,7 +32,9 @@ class GameTimer {
                     lastInput = s.nextLine();
                     break;
                 }
+                System.out.println("You have " + (maxTime - currentTime) + " seconds remaining!");
                 Thread.sleep(1000);
+
                 currentTime++;
             } catch (Exception e) {
                 System.out.println("EXCEPTION REACHED: " + e.getMessage());
@@ -50,7 +52,7 @@ class GameTimer {
             if (currentTime > maxTime) {
                 System.out.println();
                 System.out.println("Time's up!");
-                s.nextLine();
+                //s.nextLine();
                 return false;
             } else {
                 return true;
@@ -63,5 +65,6 @@ class GameTimer {
 
     public String getLastInput() {
         // should return lastInput
+        return lastInput;
     }
 }
