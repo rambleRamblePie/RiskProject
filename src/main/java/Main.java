@@ -829,10 +829,12 @@ public class Main {
 
         // Game flag. Remove players from array who do not have territories. When one is left, he wins and game ends
         // WHEN TESTING ON INTELLIJ YOU MUST STOP THE PROGRAM MANUALLY AS THIS IS AN INFINITE LOOP RIGHT NOW
+
         while((userList.length) != 1)
         {
 
             // Loop through each players turn. They must attack for right now
+            userloop:
             for(int i = 0; i < (userList.length); i++)
             {
                 // Display credit costs for purchasing features
@@ -870,7 +872,6 @@ public class Main {
                 // Will add while loop later to allow them to place at different territories
                 // Prompt to see where they want to place them
                 boolean fortifyFlag = true;
-                boolean outOfTimeFlag = false;
                 while(fortifyFlag) {
                     System.out.println("Player " + userList[i].getUsername() + " you have gained " + addedArmies + " armies, " +
                             "wheat Territory would you like to place them at?");
@@ -890,8 +891,6 @@ public class Main {
                            fortify = turnTimer.getLastInput();
                         } else{
                             System.out.println("You ran out of time! Skipping your turn...");
-                            fortifyFlag = false;
-                            outOfTimeFlag = true;
                             continue;
                         }
                     //String fortify = fortifyChoice.nextLine();
@@ -906,9 +905,6 @@ public class Main {
                     else {
                         System.out.println("That territory is not under your control, please try again");
                     }
-                }
-                if(outOfTimeFlag){
-                    continue;
                 }
                 // Based on result, increment/decrement that country's armies
                 // If country army total has 0 leftover, remove from defeated player's HashMap
@@ -929,7 +925,15 @@ public class Main {
                         //prompt user for country they are attacking from
                         System.out.println(userList[i].getUsername() + ", what territory would you like to attack from?");
 
-                        String attackPlace = attackerLocation.nextLine();
+
+                        String attackPlace = "";
+                        GameTimer turnTimer = new GameTimer();
+                        if(turnTimer.getTimedInput()) {
+                            attackPlace = turnTimer.getLastInput();
+                        } else{
+                            System.out.println("You ran out of time! Skipping your turn...");
+                            continue userloop;
+                        }
 
                         ArrayList<Territory> listAdjacencies = board.getAdjacencies(attackPlace);
                         /*
@@ -943,7 +947,14 @@ public class Main {
 
                         //prompt user for country to attack
                         System.out.println(userList[i].getUsername() + ", what territory would you like to attack?");
-                        String attackTarget = attackAdjCheck.nextLine();
+                        String attackTarget = "";
+                        //GameTimer turnTimer = new GameTimer();
+                        if(turnTimer.getTimedInput()) {
+                            attackTarget = turnTimer.getLastInput();
+                        } else{
+                            System.out.println("You ran out of time! Skipping your turn...");
+                            continue userloop;
+                        }
                         boolean isAdj = board.checkAdjacencies(attackPlace, attackTarget);
 
                         if(isAdj){
@@ -966,7 +977,14 @@ public class Main {
                     System.out.println("Player " + user2.getUsername() + " your territory is under attack!");
 
                     System.out.println("Enter the number of armies attacking: ");
-                    int amount = attackAmt.nextInt();
+                    int amount;
+                    GameTimer turnTimer = new GameTimer();
+                    if(turnTimer.getTimedInput()) {
+                        amount = Integer.parseInt(turnTimer.getLastInput());
+                    } else{
+                        System.out.println("You ran out of time! Skipping your turn...");
+                        continue userloop;
+                    }
 
                     // Write to file
                     writer.println(user1 + " is attacking with " + amount + " of armies");
