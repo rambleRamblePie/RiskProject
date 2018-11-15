@@ -32,7 +32,7 @@ class GameTimer {
                     lastInput = s.nextLine();
                     break;
                 }
-                System.out.println("You have " + (maxTime - currentTime) + " seconds remaining!");
+                //System.out.println("You have " + (maxTime - currentTime) + " seconds remaining!");
                 Thread.sleep(1000);
 
                 currentTime++;
