@@ -14,6 +14,15 @@ import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.*;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.ApiContextInitializer;
+import java.lang.Thread;
+
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException, TwitterException{
@@ -31,6 +40,17 @@ public class Main {
 
         // Used to write to file for upload
         PrintWriter writer = new PrintWriter(myFile);
+        
+        // Telegram Bot call
+        ApiContextInitializer.init();
+
+        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+
+        try {
+            telegramBotsApi.registerBot(new DadBot());
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
 
         boolean attackFlag;
         int controlledNum = 0;
