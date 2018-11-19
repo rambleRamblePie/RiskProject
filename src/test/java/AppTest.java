@@ -2,10 +2,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
+/* Needed when running Twitter test case
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+*/
 
 
 public class AppTest
@@ -65,15 +67,17 @@ public class AppTest
         Assert.assertEquals(card.getType(), "Infantry");
     }
 
-    /* Commenting out for Travis CI purposes
-    @Test
+
+    //@Test
     // If an exception is thrown, change the number being passed to incrementTwitterCount
+    /*
     public void testPostingToTwitter() throws TwitterException {
         user.incrementTwitterCount(1);
         Twitter twitter = TwitterFactory.getSingleton();
         String message = "Player " + user.getUsername() + " has conquered " + user.getTwitterCount() + " territories";
         Status status = twitter.updateStatus(message);
         // You can verify the post on Twitter, Team HAL @hal_team
-    }*/
+    }
+    */
 
 }
