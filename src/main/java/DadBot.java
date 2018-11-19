@@ -3,7 +3,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.*;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.ApiContextInitializer;
+//import org.telegram.telegrambots.ApiContextInitializer;
 import java.util.*;
 
 public class DadBot extends TelegramLongPollingBot{
@@ -54,8 +54,8 @@ public class DadBot extends TelegramLongPollingBot{
 
                 // Spawn board, deck and Twitter
                 board.setupBoard();
-                Deck deck = new Deck(board.getBoardTerritories());
-                TweetPoster tp = new TweetPoster();
+                //Deck deck = new Deck(board.getBoardTerritories());
+                //TweetPoster tp = new TweetPoster();
 
                 try {
                     execute(message); // Sending our message object to user
