@@ -1,16 +1,16 @@
 import java.util.*;
 
-class GameSetup {
-	
+public class GameSetup {
+
 	private World world;
 	private int numPlayers;
 	private int startingArmyPowerPerPlayer;
 	private ArrayList<User> players;
-	
-	GameSetup(int nPlayers, String[] names) {
+
+	GameSetup(int nPlayers, ArrayList<String> names) {
 		world = new World();
 		numPlayers = nPlayers;
-		int armyLeftToPlaceTotal;
+		//int armyLeftToPlaceTotal;
 		switch(numPlayers) {
 			case 2:
 				startingArmyPowerPerPlayer = 40;
@@ -29,23 +29,23 @@ class GameSetup {
 				break;
 			default: // throw invalid input error (because nPlayers should already be checked in the calling function)
 		}
-		
-		armyLeftToPlaceTotal = numPlayers * startingArmyPowerPerPlayer;
-		
+
+		//armyLeftToPlaceTotal = numPlayers * startingArmyPowerPerPlayer;
+
 		// create players
 		players = new ArrayList<User>();
 		for (int i = 0; i < numPlayers; i++) {
-			players.add(new User(names[i], startingArmyPowerPerPlayer));
+			players.add(new User(names.get(i), startingArmyPowerPerPlayer));
 		}
-		
+
 		determineTurns();
 		placeBeginningArmies();
 	}
-	
+
 	public World getWorldInstance() {
 		return world;
 	}
-	
+
 	private void determineTurns() {
 		// determine turn positions of players
 		/*
@@ -67,12 +67,12 @@ class GameSetup {
 		*/
 		// instead, player 1 goes first
 	}
-	
+
 	private void placeBeginningArmies() {
 		// take turns placing armies on the board
 		int turn = 0;
 		boolean successfulArmyPlacement = false;
-		Territory selectedTerritory;
+		//Territory selectedTerritory;
 		User currentPlayer;
 		int armyLeftToPlaceTotal = numPlayers * startingArmyPowerPerPlayer;
 		while(armyLeftToPlaceTotal > 0) {
@@ -80,34 +80,32 @@ class GameSetup {
 			// give player a list of territories that are available
 			// (use a function)
 			// player can enter in a number instead of typing the territory name
-			
+
 			//selectedTerritory = world.getTerritory(ui.prompt(currentPlayer.getUsername()));
-			selectedTerritory = null;
+			//selectedTerritory = null;
 			// world has empty territories
 			/*if () {
-				
+
+			//} else */ //if (selectedTerritory.getUser() != currentPlayer) {
 				// display territory occupied
-				successfulArmyPlacement = false;
-			}/* else if () // ??? */
-			
-			if (!successfulArmyPlacement) {
-				continue;
-			}
-			
+				//successfulArmyPlacement = false;
+			//}/* else if () // ??? */
+
+			//if (!successfulArmyPlacement) {
+				//continue;
+			//}
+
 			// set occupying user of selectedTerritory to the currentPlayer
 			// set army to 1 if unoccipied, else army++
-			
+
 			turn += 1;
 			turn %= numPlayers;
-			armyLeftToPlaceTotal--;
+			//armyLeftToPlaceTotal--;
 		}
 	}
-	
-	public World getWorld() {
-		return world;
-	}
-	
+
+
 	// need a function to add cards to a deck
 	// and store deck in this class
-	
+
 }
