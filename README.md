@@ -1,23 +1,34 @@
-# RiskProject [![Build Status](https://travis-ci.com/rambleRamblePie/RiskProject.svg?branch=master)](https://travis-ci.com/rambleRamblePie/RiskProject)  
+# RiskProject  
+[![Build Status](https://travis-ci.com/rambleRamblePie/RiskProject.svg?branch=master)](https://travis-ci.com/rambleRamblePie/RiskProject)  
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8f4737f970a94fce9da7f63ebcd8745e)](https://app.codacy.com/app/AlexMilligan/RiskProject?utm_source=github.com&utm_medium=referral&utm_content=rambleRamblePie/RiskProject&utm_campaign=Badge_Grade_Settings)
-[![Codecov Badge](https://codecov.io/gh/rambleRamblePie/RiskProject/branch/aaron/graph/badge.svg)](https://codecov.io/gh/rambleRamblePie/RiskProject)
-
+[![Codecov Badge](https://codecov.io/gh/rambleRamblePie/RiskProject/branch/master/graph/badge.svg)](https://codecov.io/gh/rambleRamblePie/RiskProject)
 
 This repository holds project 1 of **TeamHAL** from COSC 4353 Software Design
 
-https://docs.google.com/document/d/1d5d2bB72MDlnfXZmAud7WaaHd31uRfvRchUe9y6lsEA/edit?usp=sharing
+[doc of ideas](https://docs.google.com/document/d/1d5d2bB72MDlnfXZmAud7WaaHd31uRfvRchUe9y6lsEA/edit?usp=sharing)
 
-maven guide: https://spring.io/guides/gs/maven/
+[maven guide](https://spring.io/guides/gs/maven/)
 
-How to compile and run test cases: `mvn test`
-How to run the program: `java -cp target/risk-game-0.1.jar Main`
-Both require you to be in the root directory.
+**How to compile and run test cases**:  
+`mvn test`
 
-Twitter -
+**How to run the program**:  
+`java -cp target/risk-game-0.1.jar Main`  
+_Version may be different as specified in pom.xml_
+
+_Both require you to be in the root project directory._
+
+---------
+For the undoable actions, maybe refactor that code into the command design pattern:  
+<http://gameprogrammingpatterns.com/command.html>
+<https://matt.berther.io/2004/09/16/using-the-command-pattern-for-undo-functionality/>
+
+---------
+##Twitter -
 ----------------
 We have added Twitter functionality to our game. Follow us on Twitter, `Team HAL @hal_team` for status updates
 
-Updates - 
+###Updates - 
 -----------------
 Todo: I am working on the Twitter API --Aaron
 
