@@ -21,6 +21,7 @@ _Both require you to be in the root project directory._
 ---------
 For the undoable actions, maybe refactor that code into the command design pattern:  
 <http://gameprogrammingpatterns.com/command.html>
+
 <https://matt.berther.io/2004/09/16/using-the-command-pattern-for-undo-functionality/>
 
 ---------
