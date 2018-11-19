@@ -1,11 +1,7 @@
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Arrays;
 
 public class TerritoryTest {
 
@@ -55,6 +51,11 @@ public class TerritoryTest {
 
         Alaska.decrementArmies(100);
         Assert.assertEquals(Alaska.getArmyPower(), 0); // Is check working to set to 0?
+    }
+
+    @Test
+    public void testGetName(){
+        Assert.assertEquals(Alaska.getName(), "Alaska"); // Is name assigning correctly?
     }
 
 }
