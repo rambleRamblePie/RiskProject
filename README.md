@@ -24,11 +24,11 @@ For the undoable actions, maybe refactor that code into the command design patte
 <https://matt.berther.io/2004/09/16/using-the-command-pattern-for-undo-functionality/>
 
 ---------
-##Twitter -
+## Twitter -
 ----------------
 We have added Twitter functionality to our game. Follow us on Twitter, `Team HAL @hal_team` for status updates
 
-###Updates - 
+### Updates - 
 -----------------
 Todo: I am working on the Twitter API --Aaron
 
