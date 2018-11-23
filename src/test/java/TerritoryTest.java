@@ -72,8 +72,7 @@ public class TerritoryTest {
     }
 
     @Test
-    public void testGetContinent(){
-        Assert.assertEquals(NorthAmerica.getName(), "NorthAmerica"); // Is continent functioning and spawning properly?
+    public void testGetContinent() {
+        Alaska.getContinent();
     }
-
 }
