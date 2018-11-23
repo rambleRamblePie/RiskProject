@@ -24,6 +24,7 @@ public class AppTest
     Deck deck;
     Board board;
     Hand hand;
+    TweetPoster tp;
 
     @Before
     public void setup() throws Exception {
@@ -38,8 +39,7 @@ public class AppTest
         testCountForTwitter = 1;
         deck = new Deck(board.getBoardTerritories());
         hand = new Hand();
-
-
+        tp = new TweetPoster();
     }
 
     @Test
@@ -80,15 +80,26 @@ public class AppTest
         Assert.assertEquals(card.getName(), "Brazil");
     }
 
-    @Test
+    @Test // for Hand class
     public void testAdd(){
         hand.add(card);
-        Assert.assertTrue(hand.getCardsInHand().size() == 1);
+        Assert.assertTrue(hand.getCardsInHand().size() == 1); // Is hand updating?
     }
 
-    @Test
+    @Test // for Hand class
     public void testGetCardsInHand(){
         Assert.assertTrue(hand.getCardsInHand().size() == 0);
+    } // Is hand returning cards?
+
+    @Test // for User class
+    public void testAddCard(){
+        user.addCard(card);
+        Assert.assertTrue(user.getHand().size() == 1); // Is user's hand updating?
+    }
+
+    @Test // for User class
+    public void testGetHand(){
+        Assert.assertTrue(user.getHand().size() == 0); // Is user's hand returning cards?
     }
 
     //@Test
