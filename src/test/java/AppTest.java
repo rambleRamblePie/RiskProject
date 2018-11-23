@@ -67,6 +67,11 @@ public class AppTest
         Assert.assertEquals(card.getType(), "Infantry");
     }
 
+    @Test
+    public void testGetName(){
+        Assert.assertEquals(card.getName(), "Brazil");
+    }
+
 
     //@Test
     // If an exception is thrown, change the number being passed to incrementTwitterCount
