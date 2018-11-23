@@ -14,12 +14,14 @@ public class TerritoryTest {
 
     @Before
     public void setup() throws Exception {
+        territories.add(Quebec);
         Alaska = new Territory("Alaska");
         Quebec = new Territory("Quebec");
         NorthAmerica = new Continent("NorthAmerica", 5, territories);
         Aaron = new User("Aaron", 25);
         Alaska.setOccupyingUser(Aaron);
         Alaska.setArmyPower(50);
+        Alaska.addAdjacencies(territories);
     }
 
     @Test
@@ -56,6 +58,22 @@ public class TerritoryTest {
     @Test
     public void testGetName(){
         Assert.assertEquals(Alaska.getName(), "Alaska"); // Is name assigning correctly?
+    }
+
+    @Test
+    public void testSetNumArmies(){
+        Alaska.setNumArmies(100);
+        Assert.assertEquals(Alaska.getArmyPower(), 100); // Is the army count being updated properly?
+    }
+
+    @Test
+    public void testGetAdjacentTerritories(){
+        Assert.assertEquals(Alaska.getAdjacentTerritories().size(), 1); // Are adjacencies actually being added?
+    }
+
+    @Test
+    public void testGetContinent(){
+        Assert.assertEquals(NorthAmerica.getName(), "NorthAmerica"); // Is continent functioning and spawning properly?
     }
 
 }
