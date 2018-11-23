@@ -32,6 +32,7 @@ public class AppTest
     Board board;
     Hand hand;
     TweetPoster tp;
+    GameTimer gt;
 
     @Before
     public void setup() throws Exception {
@@ -47,6 +48,7 @@ public class AppTest
         deck = new Deck(board.getBoardTerritories());
         hand = new Hand();
         tp = new TweetPoster();
+        gt = new GameTimer();
 
         ApiContextInitializer.init();
 
@@ -137,6 +139,22 @@ public class AppTest
         tp.incrementCount(2);
         Assert.assertEquals(tp.getCount(), 2);
     }
+
+    @Test
+    public void testGetTimedInput(){
+        gt.getTimedInput();
+    }
+
+    @Test
+    public void testGetLastInput(){
+        gt.getLastInput();
+    }
+
+    @Test
+    public void testGetTimedInputParameter(){
+        gt.getTimedInput(30);
+    }
+
 
     //@Test
     // If an exception is thrown, change the number being passed to incrementTwitterCount
