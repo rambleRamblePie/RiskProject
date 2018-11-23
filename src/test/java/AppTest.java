@@ -2,6 +2,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.*;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.ApiContextInitializer;
 /* Needed when running Twitter test case
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -40,6 +47,17 @@ public class AppTest
         deck = new Deck(board.getBoardTerritories());
         hand = new Hand();
         tp = new TweetPoster();
+
+        ApiContextInitializer.init();
+
+        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+
+        try {
+            telegramBotsApi.registerBot(new DadBot());
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Test
@@ -100,6 +118,24 @@ public class AppTest
     @Test // for User class
     public void testGetHand(){
         Assert.assertTrue(user.getHand().size() == 0); // Is user's hand returning cards?
+    }
+
+    @Test
+    public void testIncrementCount(){
+        tp.incrementCount(1);
+        Assert.assertEquals(tp.getCount(), 1);
+    }
+
+    @Test
+    public void testResetCount(){
+        tp.incrementCount(1);
+        Assert.assertEquals(tp.resetCount(), 0);
+    }
+
+    @Test
+    public void testGetCount(){
+        tp.incrementCount(2);
+        Assert.assertEquals(tp.getCount(), 2);
     }
 
     //@Test
