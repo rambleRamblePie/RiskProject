@@ -21,9 +21,14 @@ public class AppTest
     Card card;
     ArrayList<Territory> territories = new ArrayList<Territory>();
     int testCountForTwitter;
+    Deck deck;
+    Board board;
+    Hand hand;
 
     @Before
     public void setup() throws Exception {
+        board = new Board();
+        board.setupBoard();
         user = new User("Aaron", 25);
         dice = new Dice();
         territory = new Territory("Brazil");
@@ -31,6 +36,9 @@ public class AppTest
         card = new Card("Infantry", territory);
         continent = new Continent("South America", 2, territories);
         testCountForTwitter = 1;
+        deck = new Deck(board.getBoardTerritories());
+        hand = new Hand();
+
 
     }
 
@@ -72,6 +80,16 @@ public class AppTest
         Assert.assertEquals(card.getName(), "Brazil");
     }
 
+    @Test
+    public void testAdd(){
+        hand.add(card);
+        Assert.assertTrue(hand.getCardsInHand().size() == 1);
+    }
+
+    @Test
+    public void testGetCardsInHand(){
+        Assert.assertTrue(hand.getCardsInHand().size() == 0);
+    }
 
     //@Test
     // If an exception is thrown, change the number being passed to incrementTwitterCount
