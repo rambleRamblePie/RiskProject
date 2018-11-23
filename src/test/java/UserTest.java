@@ -209,4 +209,9 @@ public class UserTest {
     public void testCheckPurchaseUndoFalse(){
         Assert.assertFalse(user1.checkPurchaseUndo());
     }
+
+    @Test
+    public void testGetHandClass(){
+        user1.getHandClass();
+    }
 }
