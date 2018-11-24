@@ -38,30 +38,26 @@ public class DadBot extends TelegramLongPollingBot{
 
             message_text = container.get(0);
 
-            if(container.size() == 2){
-                System.out.println(container.get(1));
-            }
-
-
-
 
             // Start the game. Sets up the board, deck and Twitter functionality
             if(message_text.equals("/start@TeamHALBot")){
+                /*
                 SendMessage message = new SendMessage().setChatId(chat_id).setText(
                         "Welcome to the game of Risk, please enter /join@TeamHALBot " +
                         "to join. 3 players must be present to begin game! The first player will be player 1 and " +
                         "the next player will be player 2, while the final player will be player 3.");
-
+                */
                 // Spawn board, deck and Twitter
                 board.setupBoard();
                 //Deck deck = new Deck(board.getBoardTerritories());
                 //TweetPoster tp = new TweetPoster();
-
+                /*
                 try {
                     execute(message); // Sending our message object to user
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
+                */
                 container.clear();
             }
 
@@ -158,20 +154,6 @@ public class DadBot extends TelegramLongPollingBot{
 
                 container.clear();
             }
-
-            // Otherwise copy the message and return it
-            else {
-                SendMessage message = new SendMessage() // Create a message object object
-                        .setChatId(chat_id)
-                        .setText(message_text);
-                try {
-                    execute(message); // Sending our message object to user
-                } catch (TelegramApiException e) {
-                    e.printStackTrace();
-                }
-
-                container.clear();
-            }
         }
     }
 
@@ -192,25 +174,19 @@ public class DadBot extends TelegramLongPollingBot{
         // Add player 1's countries to HashMap
         userList.get(0).addTerritory(board.getTerritoryName("Alaska"));
         board.setUserOccupant("Alaska", userList.get(0));
-        board.getTerritoryName("Alaska").setArmyPower(1);
         userList.get(0).addTerritory(board.getTerritoryName("NorthwestTerritory"));
         board.setUserOccupant("NorthwestTerritory", userList.get(0));
-        board.getTerritoryName("NorthwestTerritory").setArmyPower(1);
 
         // Add player 2's countries to HashMap
         userList.get(1).addTerritory(board.getTerritoryName("Quebec"));
         board.setUserOccupant("Quebec", userList.get(1));
-        board.getTerritoryName("Quebec").setArmyPower(1);
         userList.get(1).addTerritory(board.getTerritoryName("WesternUnitedStates"));
         board.setUserOccupant("WesternUnitedStates", userList.get(1));
-        board.getTerritoryName("WesternUnitedStates").setArmyPower(1);
         
         // Add player 3's countries to HashMap  
         userList.get(2).addTerritory(board.getTerritoryName("NorthAfrica"));
         board.setUserOccupant("NorthAfrica", userList.get(2));
-        board.getTerritoryName("NorthAfrica").setArmyPower(1);
         userList.get(2).addTerritory(board.getTerritoryName("Egypt"));
         board.setUserOccupant("Egypt", userList.get(2));
-        board.getTerritoryName("Egypt").setArmyPower(1);
     }
 }
