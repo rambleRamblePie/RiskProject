@@ -155,6 +155,24 @@ public class AppTest
         gt.getTimedInput(30);
     }
 
+    @Test
+    public void testShuffle(){
+        Card firstCard = deck.card_draw();
+        deck.addCard(firstCard);
+        deck.shuffle();
+        Assert.assertTrue(deck.card_draw() != firstCard);
+    }
+
+    @Test
+    public void testCardDraw(){
+        deck.card_draw();
+    }
+
+    @Test // Test addCard for Deck class
+    public void testAddCardDeck(){
+        deck.addCard(card);
+    }
+
 
     //@Test
     // If an exception is thrown, change the number being passed to incrementTwitterCount
