@@ -31,14 +31,16 @@ public class Main {
         */
 
         // Grabbing correct file
+        /*
         File currentDir = new File(".");
         File parentDir = currentDir.getAbsoluteFile();
         File myFile = new File(parentDir + "/src/resources/replay.txt");
-
+        */
         // Used to write to file for upload
-        PrintWriter writer = new PrintWriter(myFile);
+        //PrintWriter writer = new PrintWriter(myFile);
 
         // Telegram Bot call
+        /*
         ApiContextInitializer.init();
 
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
@@ -48,11 +50,12 @@ public class Main {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+        */
 
-        boolean attackFlag;
-        int controlledNum = 0;
+        //boolean attackFlag;
+        //int controlledNum = 0;
         int twitterCounter = 0;
-        int addedArmies;
+        //int addedArmies;
         User[] userList;
         User[] twitterList;
         Scanner sc = new Scanner(System.in);
@@ -80,7 +83,7 @@ public class Main {
         twitterList = new User[numPlayers];
 
         // Set Starting Army Power Here
-        int startingArmyPowerPerPlayer = 0;
+        //int startingArmyPowerPerPlayer = 0;
 
         Board board = new Board();
         board.setupBoard();
@@ -100,14 +103,16 @@ public class Main {
             for(int i = 0; i < (userList.length); i++)
             {
                 // Display credit costs for purchasing features
+                /*
                 System.out.println("Here are the features you can purchase with credits and their amounts: ");
                 System.out.println("Undo attack: 5 credits");
                 System.out.println("Draw an extra card: 3 credits");
                 System.out.println("Transfer credits to another player: 10 credits");
                 System.out.println();
+                */
 
 
-                tp.postTurnStatus(userList[i], tp.getCount());
+                // tp.postTurnStatus(userList[i], tp.getCount());
 
                 /*
                 Twitter twitter = TwitterFactory.getSingleton();
@@ -124,7 +129,7 @@ public class Main {
                 */
 
                 // Shuffle deck
-                deck.shuffle();
+                // deck.shuffle();
 
             }
         }
@@ -133,10 +138,12 @@ public class Main {
         //s3client.putObject(new PutObjectRequest("risk-game4353", "Replay", new File(parentDir + "/src/resources/replay.txt")));
 
         // Begin posting final twitter status messages
+        /*
         for(int i = 0; i < numPlayers; i++){
             tp.postFinalStatus(twitterList[i]);
         }
+        */
 
-        System.out.println("Congratulations " + userList[0].getUsername() + " on winning the game of Risk!");
+        //System.out.println("Congratulations " + userList[0].getUsername() + " on winning the game of Risk!");
     }
 }
