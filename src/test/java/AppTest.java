@@ -1,5 +1,6 @@
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import java.util.ArrayList;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -33,6 +34,7 @@ public class AppTest
     Hand hand;
     TweetPoster tp;
     GameTimer gt;
+    Update update;
 
     @Before
     public void setup() throws Exception {
@@ -49,7 +51,10 @@ public class AppTest
         hand = new Hand();
         tp = new TweetPoster();
         gt = new GameTimer();
+    }
 
+    @BeforeClass
+    public static void setupBot(){
         ApiContextInitializer.init();
 
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
@@ -59,7 +64,6 @@ public class AppTest
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-
     }
 
     @Test
@@ -171,6 +175,16 @@ public class AppTest
     @Test // Test addCard for Deck class
     public void testAddCardDeck(){
         deck.addCard(card);
+    }
+
+    @Test
+    public void testOnUpdateReceived(){
+
+    }
+
+    @Test
+    public void testSetupTelegramTerritories(){
+
     }
 
 
