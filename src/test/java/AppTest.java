@@ -253,6 +253,21 @@ public class AppTest
         Assert.assertFalse(board.checkAdjacencies("Alaska", "Yakutsk"));
     }
 
+    @Test
+    public void testUndoFortify(){
+        board.getTerritoryName("Greenland").setNumArmies(20);
+        board.undoFortify("Greenland", 2);
+        Assert.assertEquals(board.getNumArmies("Greenland"), 18);
+    }
+
+    @Test
+    public void testUndoAttack(){
+        board.getTerritoryName("Alberta").setNumArmies(20);
+        board.undoAttack("Alberta", 2);
+        Assert.assertEquals(board.getNumArmies("Alberta"), 22);
+    }
+
+
 
     //@Test
     // If an exception is thrown, change the number being passed to incrementTwitterCount
