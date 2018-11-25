@@ -1,7 +1,5 @@
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Arrays;
 
 /**
@@ -573,6 +571,25 @@ public class Board {
         return territoryContainer.get(territoryName).getAdjacentTerritories();
     }
 
+    /**
+     * Undoes the User's fortify step
+     * @param territory The territory of choice
+     * @param armyAmount The amount of armies to take away
+     * @see Board
+     */
+    public void undoFortify(String territory, int armyAmount){
+        territoryContainer.get(territory).decrementArmies(armyAmount);
+    }
+
+    /**
+     * Undoes the User's attack step
+     * @param territory The territory of choice
+     * @param armyAmount The amount of armies to add back
+     * @see Board
+     */
+    public void undoAttack(String territory, int armyAmount){
+        territoryContainer.get(territory).incrementArmies(armyAmount);
+    }
 
     /**
      * Checks if the attacking territory is adjacent to the attacked territory
