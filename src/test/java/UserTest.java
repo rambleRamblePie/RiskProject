@@ -2,6 +2,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.sound.midi.SysexMessage;
+import javax.validation.constraints.Null;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,8 +15,13 @@ public class UserTest {
 
     User user1;
     User user2;
+    User user3;
     Territory Alaska;
     Territory Quebec;
+    Territory Congo;
+    Continent NorthAmerica;
+    Continent Africa;
+    Continent Asia;
     HashMap<String, Territory> territoriesHeld;
     HashMap<String, Continent> continentsHeld;
 
@@ -22,10 +29,17 @@ public class UserTest {
     public void setup() {
         user1 = new User("Aaron", 25);
         user2 = new User("Henry", 20);
+        user3 = new User("Alex", 30);
         Alaska = new Territory("Alaska");
         Quebec = new Territory("Quebec");
+        Congo = new Territory("Congo");
         user1.addTerritory(Alaska);
         user2.addTerritory(Quebec);
+        user3.addTerritory(Congo);
+        NorthAmerica = new Continent("North America", 5, user1.getUserTerritories());
+        Africa = new Continent("Africa", 3, user3.getUserTerritories());
+        user1.addContinent(NorthAmerica);
+        user3.addContinent(Africa);
         user1.setScore(5);
         user1.incrementTwitterCount(5);
         user2.incrementTwitterCount(1);
@@ -96,7 +110,20 @@ public class UserTest {
     public void testGetArmyPower() {
         Assert.assertEquals(user1.getArmyPower(), 25);
         Assert.assertEquals(user2.getArmyPower(), 20);
-        // henry
+
+    }
+
+    @Test
+    public void testGetUserTerritories() throws Exception {
+        Assert.assertEquals(user1.getUserTerritories().get(0), Alaska);
+        Assert.assertEquals(user2.getUserTerritories().get(0), Quebec);
+    }
+
+    @Test
+    public void testGetUserHeldContinents() {
+        Assert.assertEquals(user1.getUserHeldContinents().get(0), NorthAmerica);
+        Assert.assertEquals(user3.getUserHeldContinents().get(0), Africa);
+
     }
 
 

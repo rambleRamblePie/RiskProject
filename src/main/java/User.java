@@ -482,6 +482,7 @@ public class User {
 	 * @param continentName The continent name to query to add to User's HashMap
 	 * @see User
 	 * @see Territory
+     * @see Continent
 	 */
 	public void deleteContinent(String continentName)
 	{
@@ -489,6 +490,16 @@ public class User {
 		continentsHeld.remove(continentName);
 	}
 
+    /**
+     * Returns all continents a User has control of.
+     *
+     * @return All continents occupied by a User
+     * @see User
+     * @see Continent
+     */
+    public ArrayList<Continent> getUserHeldContinents() {
+        return new ArrayList<Continent>(continentsHeld.values());
+    }
 	/**
 	 * Alerts a User to the fact that their territory is under attack
 	 * @param user The User that needs to be alerted to their territory being attacked
