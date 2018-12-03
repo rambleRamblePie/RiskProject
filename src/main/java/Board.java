@@ -446,11 +446,11 @@ public class Board {
 
         // Adding continents to container for main game
         continentsContainer.put("North America", NorthAmerica);
-        continentsContainer.put("South America", NorthAmerica);
-        continentsContainer.put("Europe", NorthAmerica);
-        continentsContainer.put("Africa", NorthAmerica);
-        continentsContainer.put("Asia", NorthAmerica);
-        continentsContainer.put("Australia", NorthAmerica);
+        continentsContainer.put("South America", SouthAmerica);
+        continentsContainer.put("Europe", Europe);
+        continentsContainer.put("Africa", Africa);
+        continentsContainer.put("Asia", Asia);
+        continentsContainer.put("Australia", Australia);
 
     }
 
