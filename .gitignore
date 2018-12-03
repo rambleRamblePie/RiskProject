@@ -36,3 +36,6 @@ launch.json
 .vscode/tasks.json
 .vscode/launch.json
 .vscode/settings.json
+
+#Maven libraries.
+.idea/libraries
