@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.ArrayList;
 
 /**
  * The Continent class is used to spawn the continents with parameters such as
