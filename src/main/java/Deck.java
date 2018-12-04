@@ -26,7 +26,6 @@ public class Deck {
      * @see Deck
      */
     public Deck(ArrayList<Territory> territories){
-
         // Initialize card_deck
         card_deck = new ArrayList<Card>();
 
@@ -39,18 +38,17 @@ public class Deck {
         while (i <= 41) {
             if (j == 3) {
                 j = 0;
-                card_deck.add(new Card(cardDeck[j], territories.get(i)));
             }
+            card_deck.add(new Card(cardDeck[j], territories.get(i)));
             i++;
             j++;
-            System.out.println("i :" + i + "j: " + j);
         }
 
 
-        /* Testing
-        System.out.println(card_deck.get(0).getType());
-        System.out.println(card_deck.get(0).getName());
-        */
+        //Testing
+//        System.out.println(card_deck.get(0).getType());
+//        System.out.println(card_deck.get(0).getName());
+
 
         // Shuffle the card_deck
         Collections.shuffle(card_deck);
@@ -73,8 +71,8 @@ public class Deck {
      */
     public Card card_draw(){
         draw = card_deck.get(0);
+        System.out.println();
         card_deck.remove(0);
-
         return draw;
     }
 
